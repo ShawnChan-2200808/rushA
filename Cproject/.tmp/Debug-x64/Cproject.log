@@ -1,0 +1,7 @@
+﻿  main.c
+C:\1_Shawn\Trimester1\1_SEP_CSD1401\Cproject\Src\main.c(17,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\1_SEP_CSD1401\Cproject\Src\main.c(17,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  Cproject.vcxproj -> C:\1_Shawn\Trimester1\1_SEP_CSD1401\Cproject\bin\Debug-x64\Cproject.exe
+  1 File(s) copied
+  1 File(s) copied
+  1 File(s) copied
