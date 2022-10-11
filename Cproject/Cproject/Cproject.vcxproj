@@ -100,7 +100,11 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Src\level.c" />
     <ClCompile Include="..\Src\main.c" />
+    <ClCompile Include="..\Src\SampleLevel.c" />
+    <ClCompile Include="..\Src\splashscreen.c" />
+    <ClCompile Include="..\Src\utils.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
