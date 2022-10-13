@@ -9,13 +9,14 @@
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
-#include "level.h"
+#include "weihao.h"
 #include "splashscreen.h"
 
 int main(void)
 {
 	//CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
 	CP_Engine_SetNextGameState(Splash_Screen_Init, Splash_Screen_Update, Splash_Screen_Exit);
+	//CP_Engine_SetNextGameState(weihao_Init, weihao_Update, weihao_Exit);
 	CP_Engine_Run();
 	return 0;
 }

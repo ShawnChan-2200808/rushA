@@ -14,19 +14,16 @@
 //#include "stdio.h" 
 //#include "stdlib.h"
 
-extern CP_Color gray;
 
 void Level_Init()
 {
-	
-}
 
+
+}
 void Level_Update()
 {
-	CP_Graphics_ClearBackground(gray);
-}
 
+}
 void Level_Exit()
 {
-
 }
