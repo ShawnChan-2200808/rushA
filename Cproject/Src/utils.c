@@ -38,11 +38,14 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	return 0;
 }
 
-/*
+
+
 CP_Vector AngleToVector(float radian_angle)
 {
     // TODO 
     CP_Vector ret;
+	float x = cosf(radian_angle), y = sinf(radian_angle);
+	ret = CP_Vector_Set(x, y);
+
     return ret;
 }
-*/
