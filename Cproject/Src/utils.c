@@ -51,7 +51,7 @@ struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
 	int speed, alive;
-	float HP, weapon;
+	float HP, damage;
 }; struct Enemy quiz1, lab1, assignment1;
 
 float circleSize, deltaTime;
@@ -77,12 +77,10 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 	(*enemy).tempPos = CP_Vector_Normalize(update);
 	(*enemy).tempPos = CP_Vector_Scale((*enemy).tempPos, (*enemy).speed * deltaTime);
 	(*enemy).EnemyPos = CP_Vector_Add((*enemy).EnemyPos, (*enemy).tempPos);
-
 }
 
-//void meleeVec(struct Player* player) {
-//	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-//	(*player).weaponPos = CP_Vector_Normalize(update);
-//	(*player).weaponPos.x + 5;
-//	(*player).weaponPos.y + 5;
-//}
+void meleeVec(struct Player* player) {
+	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
+	CP_Vector temp = CP_Vector_Normalize(update);
+	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
+}

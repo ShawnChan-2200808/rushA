@@ -8,3 +8,4 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 void moveForward(struct Player* player, CP_Vector direction);
 void moveBack(struct Player* player, CP_Vector direction);
 void enemyChase(struct Enemy* enemy, struct Player* player);
+void meleeVec(struct Player* player);

@@ -27,7 +27,7 @@ extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
 	int speed, alive;
-	float HP, weapon;
+	float HP, damage;
 };
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
@@ -53,13 +53,14 @@ void shawn_Level_Init()
 	player.GPA = 5.00f;
 	player.damage = 1;
 	player.timer = 0;
-	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
+	player.weaponPos = CP_Vector_Set(player.playerPos.x+5, player.playerPos.y+5);
 
 
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
 	quiz1.speed = 300;
 	quiz1.alive = 1;
 	quiz1.HP = 2;
+	quiz1.damage = 0.05f;
 	circleSize = 50.0f;
 
 	// Setting the window width and height
@@ -82,7 +83,7 @@ void shawn_Level_Init()
 
 void shawn_Level_Update()
 {
-	// BOUNDARIES
+	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
 		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 1)
 		{
@@ -92,37 +93,50 @@ void shawn_Level_Update()
 		{
 			moveForward(&player, Left);
 		}
-		if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < 1080)
+		if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < windowHeight)
 		{
 			moveForward(&player, Down);
 		}
-		if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < 1920)
+		if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < windowWidth)
 		{
 			moveForward(&player, Right);
 		}
 
-		//if (CP_Input_MouseClicked() && player.timer <= 0) {
-		//	// get vector and spawn hit point
-		//	// set timer
-		//	// render hit point
-		//	// timer--
+		if (CP_Input_MouseClicked()){ //&& player.timer <= 0) {
+			// get vector and spawn hit point
+			//player.timer = 2;
+			meleeVec(&player);
+			CP_Settings_Fill(blue);
+			CP_Graphics_DrawRect(player.weaponPos.x,player.weaponPos.y,10,10);
+			// set timerx	
+			// render hit point
+			// timer--
+		}
+		CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
 
-		//}
-
-
+		// RENDER HEALTHBAR
 		CP_Settings_Fill(green);
-		CP_Graphics_DrawRect(20, 20, player.GPA * 100, 30);
+		CP_Graphics_DrawRect(windowWidth/10, windowHeight/54, player.GPA * 100, 30);
 	}
+	 
+	// RENDER TEXT (GPA)
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Settings_TextSize(windowWidth/38);
+	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
+	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+	CP_Settings_TextAlignment(horizontal, vertical);
+	CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 30);
+
+	// RENDER HEALTHBAR PLACEHOLDER
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-	CP_Graphics_DrawRect(20, 20, 500, 30);
+	CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
 
 	if (isCircleEntered(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize, player.playerPos.x, player.playerPos.y) && player.alive) {
-		player.GPA -= 0.01;
+		player.GPA -= quiz1.damage;
 	}
 
-	if (player.GPA <= 0) {
-		player.alive = 0;
-	}
+	player.alive = player.GPA <= 0 ? 0 : 1;
+	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
@@ -135,9 +149,12 @@ void shawn_Level_Update()
 	//}
 
 	CP_Graphics_ClearBackground(gray);
-	enemyChase(&quiz1, &player);
-	CP_Settings_Fill(red);
-	CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize);
+
+	if (quiz1.alive) {
+		enemyChase(&quiz1, &player);
+		CP_Settings_Fill(red);
+		CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize);
+	}
 
 	if (player.alive) {
 		CP_Settings_Fill(blue);
