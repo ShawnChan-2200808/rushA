@@ -1,8 +1,14 @@
 ﻿  shawn.c
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(24,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(31,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(106,12): warning C4013: 'meleeVec' undefined; assuming extern returning int
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(122,21): warning C4305: '-=': truncation from 'double' to 'float'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(119,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(119,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(124,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(128,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(128,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(132,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(132,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(158,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied

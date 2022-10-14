@@ -80,7 +80,7 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 }
 
 void meleeVec(struct Player* player) {
-	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
+	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX()-(*player).playerPos.x, CP_Input_GetMouseY()-(*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
 }

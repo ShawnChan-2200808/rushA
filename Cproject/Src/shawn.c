@@ -53,11 +53,11 @@ void shawn_Level_Init()
 	player.GPA = 5.00f;
 	player.damage = 1;
 	player.timer = 0;
-	player.weaponPos = CP_Vector_Set(player.playerPos.x+5, player.playerPos.y+5);
+	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
 
 
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
-	quiz1.speed = 300;
+	quiz1.speed = 400;
 	quiz1.alive = 1;
 	quiz1.HP = 2;
 	quiz1.damage = 0.05f;
@@ -102,26 +102,26 @@ void shawn_Level_Update()
 			moveForward(&player, Right);
 		}
 
-		if (CP_Input_MouseClicked()){ //&& player.timer <= 0) {
+		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
-			//player.timer = 2;
 			meleeVec(&player);
 			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect(player.weaponPos.x,player.weaponPos.y,10,10);
-			// set timerx	
-			// render hit point
-			// timer--
+			CP_Settings_RectMode(CP_POSITION_CENTER);
+			CP_Graphics_DrawRect(player.weaponPos.x,player.weaponPos.y,80,80);
+			if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
+				quiz1.HP -= player.damage;
+			}
 		}
-		CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
-
+		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
+		CP_Settings_RectMode(CP_POSITION_CORNER);
 		// RENDER HEALTHBAR
 		CP_Settings_Fill(green);
 		CP_Graphics_DrawRect(windowWidth/10, windowHeight/54, player.GPA * 100, 30);
 	}
-	 
+
 	// RENDER TEXT (GPA)
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Settings_TextSize(windowWidth/38);
+	CP_Settings_TextSize(windowWidth / 38);
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
@@ -153,13 +153,32 @@ void shawn_Level_Update()
 	if (quiz1.alive) {
 		enemyChase(&quiz1, &player);
 		CP_Settings_Fill(red);
-		CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize);
+		CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
+
+		CP_Settings_TextSize(windowWidth / 60);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText("quiz", quiz1.EnemyPos.x, quiz1.EnemyPos.y);
+	}
+	else {
+		quiz1.EnemyPos.x = -100;
+		quiz1.EnemyPos.y = -100;
+	}
+
+	if (!quiz1.alive) {
+		quiz1.HP = 2;
+		quiz1.EnemyPos.x = 10;
+		quiz1.EnemyPos.y = 10;
+		quiz1.alive = 1;
 	}
 
 	if (player.alive) {
 		CP_Settings_Fill(blue);
 		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, circleSize);
 	}
+
+	//if (totalElapsedTime >= 20) {
+	//	CP_Engine_Terminate();
+	//}
 }
 
 void shawn_Level_Exit()
