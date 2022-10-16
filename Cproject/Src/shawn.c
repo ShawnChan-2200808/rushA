@@ -152,7 +152,14 @@ void shawn_Level_Update()
 
 	if (quiz1.alive) {
 		enemyChase(&quiz1, &player);
-		CP_Settings_Fill(red);
+		if (quiz1.HP == 1) {
+			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
+		}
+		else
+		{
+			CP_Settings_Fill(red);
+		}
+		//CP_Settings_Fill(red);
 		CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
 
 		CP_Settings_TextSize(windowWidth / 60);
