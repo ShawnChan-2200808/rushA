@@ -4,7 +4,7 @@
 @section    A
 @team		RushA
 @date        / /2022 (last updated)
-@brief      This file contains all the shared ultilities that is global throughout
+@brief      This file contains all the shared utilities that is global throughout
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"

@@ -36,6 +36,7 @@ extern int windowWidth, windowHeight;
 extern float fps;
 extern float circleSize, totalElapsedTime;
 extern CP_Vector Up, Left, Down, Right;
+int chSize = 10;
 
 extern float deltaTime;
 
@@ -84,6 +85,11 @@ void shawn_Level_Init()
 
 void shawn_Level_Update()
 {
+	// PLAYER CROSSHAIR
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
+	CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
+
+
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
 		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 1)
@@ -103,12 +109,13 @@ void shawn_Level_Update()
 			moveForward(&player, Right);
 		}
 
-		//SWITCH WEAPON
+		// SWITCH WEAPON
 		if (CP_Input_KeyReleased(KEY_Q))
 		{
 			player.weapon = switchWeapon(player.weapon);
 		}
 
+		// ATTACK
 		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
 			{
@@ -128,11 +135,26 @@ void shawn_Level_Update()
 				}
 			}
 		}
+
+
+		// UI AND HUD
 		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
 		CP_Settings_RectMode(CP_POSITION_CORNER);
 		// RENDER HEALTHBAR
 		CP_Settings_Fill(green);
 		CP_Graphics_DrawRect(windowWidth/10, windowHeight/54, player.GPA * 100, 30);
+	}
+
+	// GAME OVER SCREEN + RESET BUTTON
+	else
+	{
+		CP_Settings_Fill(red);
+		CP_Font_DrawText("GAME OVER", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
+		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 20);
+		if (CP_Input_KeyReleased(KEY_ESCAPE))
+		{
+			CP_Engine_SetNextGameStateForced(shawn_Level_Init, shawn_Level_Update, NULL);
+		}
 	}
 
 	// RENDER TEXT (GPA)
@@ -151,7 +173,17 @@ void shawn_Level_Update()
 		player.GPA -= quiz1.damage;
 	}
 
+	//DEBUG USE: SHOW CURRENT WEAPON
+	CP_Settings_Fill(blue);
+	if (player.weapon == 1)
+	{
+		CP_Font_DrawText("Current weapon: Ranged", 249, 90);
+	}
+	else CP_Font_DrawText("Current weapon: Melee", 250, 90);
+
+
 	player.alive = player.GPA <= 0 ? 0 : 1;
+	//quiz1.alive = 0;
 	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
 
 	deltaTime = CP_System_GetDt();
@@ -202,14 +234,6 @@ void shawn_Level_Update()
 	//if (totalElapsedTime >= 20) {
 	//	CP_Engine_Terminate();
 	//}
-
-	//DEBUG USE: Show current weapon
-	if (player.weapon == 1)
-	{
-		
-		CP_Font_DrawText("Current weapon: Ranged", 250, 90);
-	}
-	else CP_Font_DrawText("Current weapon: Melee", 250, 90);
 }
 
 void shawn_Level_Exit()
