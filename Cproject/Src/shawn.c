@@ -177,7 +177,7 @@ void shawn_Level_Update()
 	CP_Settings_Fill(blue);
 	if (player.weapon == 1)
 	{
-		CP_Font_DrawText("Current weapon: Ranged", 249, 90);
+		CP_Font_DrawText("Current weapon: Ranged", 250, 90);
 	}
 	else CP_Font_DrawText("Current weapon: Melee", 250, 90);
 
