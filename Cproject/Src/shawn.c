@@ -39,8 +39,17 @@ extern CP_Vector Up, Left, Down, Right;
 
 extern float deltaTime;
 
+CP_Image Spritesheet;
+CP_Image Floor;
+int frameIndex, speedOfAnim = 15;//= 40;
+static const float DISPLAY_DURATION = 2.0f;
+float SpriteWidth = 32.0f, SpriteHeight = 32.0f, AnimTotalElapsedTime;
+
 void shawn_Level_Init()
 {
+	Spritesheet = CP_Image_Load("Assets/QUIZ.png");
+	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
+
 	Up = CP_Vector_Set(0, -1);
 	Down = CP_Vector_Set(0, 1);
 	Right = CP_Vector_Set(1, 0);
@@ -83,6 +92,16 @@ void shawn_Level_Init()
 
 void shawn_Level_Update()
 {
+	AnimTotalElapsedTime += deltaTime * speedOfAnim;
+	for (int row = 0; row < 6; row++)
+	{
+		for (int col = 0; col < 9; col++)
+		{
+			CP_Settings_ImageMode(CP_POSITION_CORNER);
+			CP_Image_Draw(Floor, col * (CP_System_GetWindowWidth() / 9), row * (CP_System_GetWindowHeight() / 6), CP_Image_GetWidth(Floor), CP_Image_GetHeight(Floor), 255);
+		}
+	}
+
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
 		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 1)
@@ -148,23 +167,34 @@ void shawn_Level_Update()
 	//	player.GPA = 5.00f;
 	//}
 
-	CP_Graphics_ClearBackground(gray);
+	CP_Graphics_ClearBackground(CP_Color_Create(0,0,0,255));
 
 	if (quiz1.alive) {
 		enemyChase(&quiz1, &player);
-		if (quiz1.HP == 1) {
+		/*if (quiz1.HP == 1) {
 			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
 		}
 		else
 		{
 			CP_Settings_Fill(red);
-		}
+		}*/
 		//CP_Settings_Fill(red);
-		CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
+		//CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
+		CP_Settings_ImageMode(CP_POSITION_CENTER);
+		CP_Image_DrawSubImage(Spritesheet,
+			// RENDERED POS AND SIZE
+			quiz1.EnemyPos.x, quiz1.EnemyPos.y, 96, 96, // (float)CP_Image_GetWidth(Spritesheet), (float)CP_Image_GetHeight(Spritesheet),
+			   // POS AND SIZE FROM SPRITESHEET
+			frameIndex * SpriteWidth, 0, (frameIndex + 1) * SpriteWidth,SpriteHeight, // Frame 
+			255);
+		if (AnimTotalElapsedTime >= DISPLAY_DURATION) {
+			frameIndex = (frameIndex + 1) % 6;
+			AnimTotalElapsedTime = 0.0f;
+		}
 
-		CP_Settings_TextSize(windowWidth / 60);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText("quiz", quiz1.EnemyPos.x, quiz1.EnemyPos.y);
+		//CP_Settings_TextSize(windowWidth / 60);
+		//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		//CP_Font_DrawText("quiz", quiz1.EnemyPos.x, quiz1.EnemyPos.y);
 	}
 	else {
 		quiz1.EnemyPos.x = -100;
@@ -183,6 +213,8 @@ void shawn_Level_Update()
 		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, circleSize);
 	}
 
+
+
 	//if (totalElapsedTime >= 20) {
 	//	CP_Engine_Terminate();
 	//}
@@ -190,5 +222,6 @@ void shawn_Level_Update()
 
 void shawn_Level_Exit()
 {
-
+	CP_Image_Free(&Spritesheet);
+	CP_Image_Free(&Floor);
 }
