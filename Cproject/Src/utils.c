@@ -84,3 +84,8 @@ void meleeVec(struct Player* player) {
 	CP_Vector temp = CP_Vector_Normalize(update);
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
 }
+
+int switchWeapon(int weapon)
+{
+	return !weapon;
+}

@@ -30,7 +30,7 @@ extern struct Enemy {
 	float HP, damage;
 };
 extern struct Player player;
-extern struct Enemy quiz1, lab1, assignment1;
+extern struct Enemy quiz1, lab, assignment;
 extern CP_Color gray,blue,green,red;
 extern int windowWidth, windowHeight;
 extern float fps;
@@ -54,12 +54,13 @@ void shawn_Level_Init()
 	player.damage = 1;
 	player.timer = 0;
 	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
+	player.weapon = 0;
 
 
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
 	quiz1.speed = 400;
 	quiz1.alive = 1;
-	quiz1.HP = 2;
+	quiz1.HP = 3;
 	quiz1.damage = 0.05f;
 	circleSize = 50.0f;
 
@@ -102,14 +103,29 @@ void shawn_Level_Update()
 			moveForward(&player, Right);
 		}
 
+		//SWITCH WEAPON
+		if (CP_Input_KeyReleased(KEY_Q))
+		{
+			player.weapon = switchWeapon(player.weapon);
+		}
+
 		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
-			meleeVec(&player);
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			CP_Graphics_DrawRect(player.weaponPos.x,player.weaponPos.y,80,80);
-			if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
-				quiz1.HP -= player.damage;
+			{
+				if (player.weapon == 1)
+				{
+					CP_Font_DrawText("BANG", 500, 500);
+				}
+				else
+				{
+					meleeVec(&player);
+					CP_Settings_Fill(blue);
+					CP_Settings_RectMode(CP_POSITION_CENTER);
+					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
+					if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
+						quiz1.HP -= player.damage;
+					}
+				}
 			}
 		}
 		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
@@ -186,6 +202,14 @@ void shawn_Level_Update()
 	//if (totalElapsedTime >= 20) {
 	//	CP_Engine_Terminate();
 	//}
+
+	//DEBUG USE: Show current weapon
+	if (player.weapon == 1)
+	{
+		
+		CP_Font_DrawText("Current weapon: Ranged", 250, 90);
+	}
+	else CP_Font_DrawText("Current weapon: Melee", 250, 90);
 }
 
 void shawn_Level_Exit()
