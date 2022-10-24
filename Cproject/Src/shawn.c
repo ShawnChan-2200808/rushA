@@ -18,9 +18,9 @@
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos;
-	int speed, alive, damage, weapon, attacking;
-	float GPA, timer;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
 };
 
 extern struct Enemy {
@@ -56,6 +56,7 @@ void shawn_Level_Init()
 	player.timer = 0;
 	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
 	player.weapon = 0;
+	player.ammo = 10;
 
 
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
@@ -121,7 +122,15 @@ void shawn_Level_Update()
 			{
 				if (player.weapon == 1)
 				{
-					CP_Font_DrawText("BANG", 500, 500);
+					if (player.ammo > 0)
+					{
+						meleeVec(&player);
+						CP_Settings_Fill(red);
+						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
+
+					}
+
+					
 				}
 				else
 				{
@@ -177,14 +186,16 @@ void shawn_Level_Update()
 	CP_Settings_Fill(blue);
 	if (player.weapon == 1)
 	{
-		CP_Font_DrawText("Current weapon: Ranged", 250, 90);
+		CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
 	}
-	else CP_Font_DrawText("Current weapon: Melee", 250, 90);
+	else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
 
 
+
+	//SPAWNS
 	player.alive = player.GPA <= 0 ? 0 : 1;
-	//quiz1.alive = 0;
-	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
+	quiz1.alive = 0;
+	//quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;

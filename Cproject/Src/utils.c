@@ -42,9 +42,9 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos;
-	int speed, alive, damage, weapon, attacking;
-	float GPA, timer;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
 }; struct Player player;
 
 struct Enemy {
