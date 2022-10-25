@@ -1,17 +1,17 @@
 ﻿  shawn.c
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(24,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(31,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(101,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(101,104): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(101,130): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(101,157): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(138,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(138,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(143,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(147,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(147,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(151,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(151,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(36,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(114,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(114,104): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(114,130): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(114,157): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(151,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(151,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(156,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(160,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(160,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(164,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(164,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied

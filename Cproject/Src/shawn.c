@@ -12,7 +12,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-//#include "level.h"
+#include "anim.h"
 //#include "stdio.h" 
 //#include "stdlib.h"
 
@@ -28,6 +28,11 @@ extern struct Enemy {
 	CP_Vector weaponPos;
 	int speed, alive;
 	float HP, damage;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
 };
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
@@ -41,9 +46,8 @@ extern float deltaTime;
 
 CP_Image Spritesheet;
 CP_Image Floor;
-int frameIndex, speedOfAnim = 15;//= 40;
-static const float DISPLAY_DURATION = 2.0f;
-float SpriteWidth = 32.0f, SpriteHeight = 32.0f, AnimTotalElapsedTime;
+//int frameIndex, speedOfAnim = 15;//= 40;
+//static const float DISPLAY_DURATION = 2.0f;
 
 void shawn_Level_Init()
 {
@@ -64,13 +68,23 @@ void shawn_Level_Init()
 	player.timer = 0;
 	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
 
-
+	// QUIZ 1
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
 	quiz1.speed = 400;
 	quiz1.alive = 1;
 	quiz1.HP = 2;
 	quiz1.damage = 0.05f;
 	circleSize = 50.0f;
+	//animation
+	quiz1.animationElapsedTime = 0.0f;
+	quiz1.animationSpeed = 15;
+	quiz1.currentFrame = 0;
+	quiz1.animTotalFrames = 6;
+	quiz1.worldSizeW = 96.0f;
+	quiz1.worldSizeH = 96.0f;
+	quiz1.spriteWidth = 32.0f;
+	quiz1.SpriteHeight = 32.0f;
+	quiz1.displayTime = 2.0f;
 
 	// Setting the window width and height
 	windowWidth = 1920;
@@ -92,7 +106,6 @@ void shawn_Level_Init()
 
 void shawn_Level_Update()
 {
-	AnimTotalElapsedTime += deltaTime * speedOfAnim;
 	for (int row = 0; row < 6; row++)
 	{
 		for (int col = 0; col < 9; col++)
@@ -180,17 +193,20 @@ void shawn_Level_Update()
 		}*/
 		//CP_Settings_Fill(red);
 		//CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
-		CP_Settings_ImageMode(CP_POSITION_CENTER);
-		CP_Image_DrawSubImage(Spritesheet,
-			// RENDERED POS AND SIZE
-			quiz1.EnemyPos.x, quiz1.EnemyPos.y, 96, 96, // (float)CP_Image_GetWidth(Spritesheet), (float)CP_Image_GetHeight(Spritesheet),
-			   // POS AND SIZE FROM SPRITESHEET
-			frameIndex * SpriteWidth, 0, (frameIndex + 1) * SpriteWidth,SpriteHeight, // Frame 
-			255);
-		if (AnimTotalElapsedTime >= DISPLAY_DURATION) {
-			frameIndex = (frameIndex + 1) % 6;
-			AnimTotalElapsedTime = 0.0f;
-		}
+
+		UpdateEnemyAnimation(&quiz1,deltaTime);
+		EnemyAnimation(Spritesheet, &quiz1);
+		//CP_Settings_ImageMode(CP_POSITION_CENTER);
+		//CP_Image_DrawSubImage(Spritesheet,
+		//	// RENDERED POS AND SIZE
+		//	quiz1.EnemyPos.x, quiz1.EnemyPos.y, 96, 96, // (float)CP_Image_GetWidth(Spritesheet), (float)CP_Image_GetHeight(Spritesheet),
+		//	   // POS AND SIZE FROM SPRITESHEET
+		//	frameIndex * SpriteWidth, 0, (frameIndex + 1) * SpriteWidth, SpriteHeight, // Frame 
+		//	255);
+		//if (AnimTotalElapsedTime >= DISPLAY_DURATION) {
+		//	frameIndex = (frameIndex + 1) % 6;
+		//	AnimTotalElapsedTime = 0.0f;
+		//}
 
 		//CP_Settings_TextSize(windowWidth / 60);
 		//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));

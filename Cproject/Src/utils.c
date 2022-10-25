@@ -52,6 +52,11 @@ struct Enemy {
 	CP_Vector weaponPos;
 	int speed, alive;
 	float HP, damage;
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+
 }; struct Enemy quiz1, lab1, assignment1;
 
 float circleSize, deltaTime;

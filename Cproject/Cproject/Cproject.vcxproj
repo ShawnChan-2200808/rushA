@@ -100,6 +100,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Src\anim.c" />
     <ClCompile Include="..\Src\level.c">
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
@@ -120,6 +121,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Src\anim.h" />
     <ClInclude Include="..\Src\shawn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

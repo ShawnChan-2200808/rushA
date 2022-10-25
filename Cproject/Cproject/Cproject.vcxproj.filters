@@ -33,9 +33,15 @@
     <ClCompile Include="..\Src\shawn.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Src\shawn.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\anim.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
