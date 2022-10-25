@@ -107,6 +107,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\main.c">
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
+    <ClCompile Include="..\Src\player.c" />
     <ClCompile Include="..\Src\SampleLevel.c">
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
@@ -121,7 +122,9 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Src\anim - Copy.h" />
     <ClInclude Include="..\Src\anim.h" />
+    <ClInclude Include="..\Src\player.h" />
     <ClInclude Include="..\Src\shawn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

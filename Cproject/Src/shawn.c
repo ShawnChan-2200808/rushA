@@ -13,6 +13,7 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "anim.h"
+#include "player.h"
 //#include "stdio.h" 
 //#include "stdlib.h"
 
@@ -21,6 +22,11 @@ extern struct Player {
 	CP_Vector weaponPos, bulletPos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
 };
 
 extern struct Enemy {
@@ -55,21 +61,7 @@ void shawn_Level_Init()
 	Spritesheet = CP_Image_Load("Assets/QUIZ.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 
-	Up = CP_Vector_Set(0, -1);
-	Down = CP_Vector_Set(0, 1);
-	Right = CP_Vector_Set(1, 0);
-	Left = CP_Vector_Set(-1, 0);
-
-
-	player.playerPos = CP_Vector_Set(1920/2, 1080/2);
-	player.speed = 500;
-	player.alive = 1;
-	player.GPA = 5.00f;
-	player.damage = 1;
-	player.timer = 0;
-	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
-	player.weapon = 0;
-	player.ammo = 10;
+	playerInit(&player);
 
 	// QUIZ 1
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);

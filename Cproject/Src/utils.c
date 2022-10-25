@@ -40,12 +40,17 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 	return 0;
 }
 
-struct Player {
+extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
 	CP_Vector weaponPos, bulletPos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
-}; struct Player player;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+}; extern struct Player player;
 
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -60,21 +65,6 @@ struct Enemy {
 }; struct Enemy quiz1, lab1, assignment1;
 
 float circleSize, deltaTime;
-CP_Vector Up, Left, Down, Right;
-
-// Move forward
-void moveForward(struct Player* player, CP_Vector direction) {
-	(*player).tempPos = CP_Vector_Normalize(direction);
-	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
-	(*player).playerPos = CP_Vector_Add((*player).playerPos, (*player).tempPos);
-}
-
-// Move backwards
-void moveBack(struct Player* player, CP_Vector direction) {
-	(*player).tempPos = CP_Vector_Normalize(direction);
-	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
-	(*player).playerPos = CP_Vector_Subtract((*player).playerPos, (*player).tempPos);
-}
 
 // Move forward
 void enemyChase(struct Enemy* enemy, struct Player* player) {
@@ -84,13 +74,3 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 	(*enemy).EnemyPos = CP_Vector_Add((*enemy).EnemyPos, (*enemy).tempPos);
 }
 
-void meleeVec(struct Player* player) {
-	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX()-(*player).playerPos.x, CP_Input_GetMouseY()-(*player).playerPos.y);
-	CP_Vector temp = CP_Vector_Normalize(update);
-	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
-}
-
-int switchWeapon(int weapon)
-{
-	return !weapon;
-}
