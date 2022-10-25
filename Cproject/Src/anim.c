@@ -11,22 +11,18 @@
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
-//#include "enemy.c"
 
-extern CP_Color gray; 
 extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
 	int speed, alive;
 	float HP, damage;
 	//animation
-	int animationSpeed,
-		currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH,
-		spriteWidth, SpriteHeight,
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
 
-}; struct Enemy quiz1, lab1, assignment1;
+}; extern struct Enemy quiz1, lab1, assignment1;
 
 void UpdateEnemyAnimation(struct Enemy* enemy, float dt) {
 	(*enemy).animationElapsedTime += dt * (*enemy).animationSpeed;
@@ -45,3 +41,4 @@ void EnemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
 		(*enemy).animationElapsedTime = 0.0f;
 	}
 }
+

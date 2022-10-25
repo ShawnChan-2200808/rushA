@@ -3,17 +3,47 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date        / /2022 (last updated)
+@date       25/10/2022 (last updated)
 @brief      This file contains all the shared utilities that is global throughout
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
 
-
-
-CP_Color gray,blue, green, red;
+CP_Color black,white,gray ,blue, green, red;
 int windowWidth, windowHeight;
 float fps;
+
+void initGame() {
+	// Setting the window width and height
+	windowWidth = 1920;
+	windowHeight = 1080;
+
+	// Set the colour for gray
+	black = CP_Color_Create(0, 0, 0, 255);
+	white = CP_Color_Create(255, 255, 255, 255);
+	gray = CP_Color_Create(120, 120, 120, 255);
+	blue = CP_Color_Create(50, 50, 255, 255);
+	green = CP_Color_Create(0, 255, 0, 255);
+	red = CP_Color_Create(255, 0, 0, 255);
+
+	fps = 120.0f;
+	// Set fps to 120fps
+	CP_System_SetFrameRate(fps);
+
+	// Set the window when executed to the size of the splashscreen image
+	CP_System_SetWindowSize(windowWidth, windowHeight);
+}
+
+void SpawnBG(CP_Image BG,int numberRow,int numberCol) {
+	for (int row = 0; row < numberRow; row++)
+	{
+		for (int col = 0; col < numberCol; col++)
+		{
+			CP_Settings_ImageMode(CP_POSITION_CORNER);
+			CP_Image_Draw(BG, col * (CP_System_GetWindowWidth() / numberCol), row * (CP_System_GetWindowHeight() / numberRow), CP_Image_GetWidth(BG), CP_Image_GetHeight(BG), 255);
+		}
+	}
+}
 
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
@@ -40,37 +70,4 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 	return 0;
 }
 
-extern struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Player player;
-
-struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	int speed, alive;
-	float HP, damage;
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-
-}; struct Enemy quiz1, lab1, assignment1;
-
-float circleSize, deltaTime;
-
-// Move forward
-void enemyChase(struct Enemy* enemy, struct Player* player) {
-	CP_Vector update = CP_Vector_Set((*player).playerPos.x- (*enemy).EnemyPos.x,(*player).playerPos.y- (*enemy).EnemyPos.y);
-	(*enemy).tempPos = CP_Vector_Normalize(update);
-	(*enemy).tempPos = CP_Vector_Scale((*enemy).tempPos, (*enemy).speed * deltaTime);
-	(*enemy).EnemyPos = CP_Vector_Add((*enemy).EnemyPos, (*enemy).tempPos);
-}
 

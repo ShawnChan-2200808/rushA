@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "anim.h"
 #include "player.h"
+#include "enemy.h"
 //#include "stdio.h" 
 //#include "stdlib.h"
 
@@ -45,7 +46,7 @@ extern struct Enemy quiz1, lab, assignment;
 extern CP_Color gray,blue,green,red;
 extern int windowWidth, windowHeight;
 extern float fps;
-extern float circleSize, totalElapsedTime;
+extern float hitCircleSize, totalElapsedTime;
 extern CP_Vector Up, Left, Down, Right;
 int chSize = 10;
 
@@ -58,57 +59,17 @@ CP_Image Floor;
 
 void shawn_Level_Init()
 {
+	initGame();
 	Spritesheet = CP_Image_Load("Assets/QUIZ.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 
 	playerInit(&player);
-
-	// QUIZ 1
-	quiz1.EnemyPos = CP_Vector_Set(300, 300);
-	quiz1.speed = 400;
-	quiz1.alive = 1;
-	quiz1.HP = 3;
-	quiz1.damage = 0.05f;
-	circleSize = 50.0f;
-	//animation
-	quiz1.animationElapsedTime = 0.0f;
-	quiz1.animationSpeed = 15;
-	quiz1.currentFrame = 0;
-	quiz1.animTotalFrames = 6;
-	quiz1.worldSizeW = 96.0f;
-	quiz1.worldSizeH = 96.0f;
-	quiz1.spriteWidth = 32.0f;
-	quiz1.SpriteHeight = 32.0f;
-	quiz1.displayTime = 2.0f;
-
-	// Setting the window width and height
-	windowWidth = 1920;
-	windowHeight = 1080;
-
-	// Set the colour for gray
-	gray = CP_Color_Create(120, 120, 120, 255);
-	blue = CP_Color_Create(50, 50, 255, 255);
-	green = CP_Color_Create(0,255,0,255);
-	red = CP_Color_Create(255, 0, 0, 255);
-
-	fps = 120.0f;
-	// Set fps to 120fps
-	CP_System_SetFrameRate(fps);
-
-	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	quizInit(&quiz1,300,300);
 }
 
 void shawn_Level_Update()
 {
-	for (int row = 0; row < 6; row++)
-	{
-		for (int col = 0; col < 9; col++)
-		{
-			CP_Settings_ImageMode(CP_POSITION_CORNER);
-			CP_Image_Draw(Floor, col * (CP_System_GetWindowWidth() / 9), row * (CP_System_GetWindowHeight() / 6), CP_Image_GetWidth(Floor), CP_Image_GetHeight(Floor), 255);
-		}
-	}
+	SpawnBG(Floor, 6, 9);
 	// PLAYER CROSSHAIR
 	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	//CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
@@ -201,9 +162,11 @@ void shawn_Level_Update()
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
 	CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
 
-	if (isCircleEntered(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize, player.playerPos.x, player.playerPos.y) && player.alive) {
-		player.GPA -= quiz1.damage;
-	}
+	//If enemy come into contact with player deal damage
+	damagePlayer(&quiz1,&player);
+	//if (isCircleEntered(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize, player.playerPos.x, player.playerPos.y) && player.alive) {
+	//	player.GPA -= quiz1.damage;
+	//}
 
 	//DEBUG USE: SHOW CURRENT WEAPON
 	CP_Settings_Fill(blue);
@@ -216,9 +179,9 @@ void shawn_Level_Update()
 
 
 	//SPAWNS
-	player.alive = player.GPA <= 0 ? 0 : 1;
+	isPlayerAlive(&player);
 	//quiz1.alive = 0;
-	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
+	isEnemyAlive(&quiz1);
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
@@ -232,7 +195,11 @@ void shawn_Level_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0,0,0,255));
 
+	// Enemy is rendered chase player
 	if (quiz1.alive && player.alive) {
+
+		UpdateEnemyAnimation(&quiz1, deltaTime);
+		EnemyAnimation(Spritesheet, &quiz1);
 		enemyChase(&quiz1, &player);
 		/*if (quiz1.HP == 1) {
 			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
@@ -243,31 +210,18 @@ void shawn_Level_Update()
 		}*/
 		//CP_Settings_Fill(red);
 		//CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
-
-		UpdateEnemyAnimation(&quiz1,deltaTime);
-		EnemyAnimation(Spritesheet, &quiz1);
-		//CP_Settings_ImageMode(CP_POSITION_CENTER);
-		//CP_Image_DrawSubImage(Spritesheet,
-		//	// RENDERED POS AND SIZE
-		//	quiz1.EnemyPos.x, quiz1.EnemyPos.y, 96, 96, // (float)CP_Image_GetWidth(Spritesheet), (float)CP_Image_GetHeight(Spritesheet),
-		//	   // POS AND SIZE FROM SPRITESHEET
-		//	frameIndex * SpriteWidth, 0, (frameIndex + 1) * SpriteWidth, SpriteHeight, // Frame 
-		//	255);
-		//if (AnimTotalElapsedTime >= DISPLAY_DURATION) {
-		//	frameIndex = (frameIndex + 1) % 6;
-		//	AnimTotalElapsedTime = 0.0f;
-		//}
-
 		//CP_Settings_TextSize(windowWidth / 60);
 		//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		//CP_Font_DrawText("quiz", quiz1.EnemyPos.x, quiz1.EnemyPos.y);
 	}
 	else {
+		// move dead enemy to out of screen
 		quiz1.EnemyPos.x = -100;
 		quiz1.EnemyPos.y = -100;
 	}
 
 	if (!quiz1.alive) {
+		// reset enemy values
 		quiz1.HP = 2;
 		quiz1.EnemyPos.x = 10;
 		quiz1.EnemyPos.y = 10;
@@ -276,7 +230,7 @@ void shawn_Level_Update()
 
 	if (player.alive) {
 		CP_Settings_Fill(blue);
-		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, circleSize);
+		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, hitCircleSize);
 	}
 
 

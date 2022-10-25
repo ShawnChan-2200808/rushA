@@ -5,13 +5,12 @@
 @section    A
 @team		RushA
 @date       25/10/2022 (last updated)
-@brief      Make prototype functions and test it here. Copy and paste from current level
-			to see if it works before we integrate it into the main game
-		*** AND MAKE A COPY for yourself + DONT FORGET TO MAKE .H file to test ***
+@brief      contains defininition of Player functions
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
 
+// MAIN PLAYER STRUCT
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
 	CP_Vector weaponPos, bulletPos;
@@ -25,7 +24,10 @@ struct Player {
 }; struct Player player;
 
 CP_Vector Up, Left, Down, Right;
-extern float deltaTime;
+extern CP_Color white, green;
+extern float deltaTime,windowHeight,windowWidth;
+
+// Initiallize player settings
 void playerInit(struct Player* player) {
 
 	Up = CP_Vector_Set(0, -1);
@@ -41,6 +43,11 @@ void playerInit(struct Player* player) {
 	(*player).weaponPos = CP_Vector_Set((*player).playerPos.x, (*player).playerPos.y);
 	(*player).weapon = 0;
 	(*player).ammo = 10;
+
+}
+
+void isPlayerAlive(struct Player* player) {
+	(*player).alive = (*player).GPA <= 0 ? 0 : 1;
 }
 
 // Move forward
@@ -57,6 +64,7 @@ void moveBack(struct Player* player, CP_Vector direction) {
 	(*player).playerPos = CP_Vector_Subtract((*player).playerPos, (*player).tempPos);
 }
 
+// Get position from player to direction of mouse
 void meleeVec(struct Player* player) {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);
