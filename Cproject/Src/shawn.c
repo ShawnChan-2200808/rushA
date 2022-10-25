@@ -118,8 +118,8 @@ void shawn_Level_Update()
 		}
 	}
 	// PLAYER CROSSHAIR
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
-	CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
+	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
+	//CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
 
 
 	// PLAYER MOVEMENT + BOUNDARIES
@@ -225,8 +225,8 @@ void shawn_Level_Update()
 
 	//SPAWNS
 	player.alive = player.GPA <= 0 ? 0 : 1;
-	quiz1.alive = 0;
-	//quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
+	//quiz1.alive = 0;
+	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
@@ -240,7 +240,7 @@ void shawn_Level_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0,0,0,255));
 
-	if (quiz1.alive) {
+	if (quiz1.alive && player.alive) {
 		enemyChase(&quiz1, &player);
 		/*if (quiz1.HP == 1) {
 			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
