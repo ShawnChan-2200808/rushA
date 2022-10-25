@@ -4,7 +4,7 @@
 @section    A
 @team		RushA
 @date        / /2022 (last updated)
-@brief      This file contains all the shared ultilities that is global throughout
+@brief      This file contains all the shared utilities that is global throughout
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -42,9 +42,9 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos;
-	int speed, alive, damage, weapon, attacking;
-	float GPA, timer;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
 }; struct Player player;
 
 struct Enemy {
@@ -88,4 +88,9 @@ void meleeVec(struct Player* player) {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX()-(*player).playerPos.x, CP_Input_GetMouseY()-(*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
+}
+
+int switchWeapon(int weapon)
+{
+	return !weapon;
 }

@@ -18,9 +18,9 @@
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos;
-	int speed, alive, damage, weapon, attacking;
-	float GPA, timer;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
 };
 
 extern struct Enemy {
@@ -35,12 +35,13 @@ extern struct Enemy {
 		animationElapsedTime, displayTime;
 };
 extern struct Player player;
-extern struct Enemy quiz1, lab1, assignment1;
+extern struct Enemy quiz1, lab, assignment;
 extern CP_Color gray,blue,green,red;
 extern int windowWidth, windowHeight;
 extern float fps;
 extern float circleSize, totalElapsedTime;
 extern CP_Vector Up, Left, Down, Right;
+int chSize = 10;
 
 extern float deltaTime;
 
@@ -67,12 +68,14 @@ void shawn_Level_Init()
 	player.damage = 1;
 	player.timer = 0;
 	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
+	player.weapon = 0;
+	player.ammo = 10;
 
 	// QUIZ 1
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
 	quiz1.speed = 400;
 	quiz1.alive = 1;
-	quiz1.HP = 2;
+	quiz1.HP = 3;
 	quiz1.damage = 0.05f;
 	circleSize = 50.0f;
 	//animation
@@ -114,6 +117,10 @@ void shawn_Level_Update()
 			CP_Image_Draw(Floor, col * (CP_System_GetWindowWidth() / 9), row * (CP_System_GetWindowHeight() / 6), CP_Image_GetWidth(Floor), CP_Image_GetHeight(Floor), 255);
 		}
 	}
+	// PLAYER CROSSHAIR
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
+	CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
+
 
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
@@ -134,21 +141,60 @@ void shawn_Level_Update()
 			moveForward(&player, Right);
 		}
 
+		// SWITCH WEAPON
+		if (CP_Input_KeyReleased(KEY_Q))
+		{
+			player.weapon = switchWeapon(player.weapon);
+		}
+
+		// ATTACK
 		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
-			meleeVec(&player);
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			CP_Graphics_DrawRect(player.weaponPos.x,player.weaponPos.y,80,80);
-			if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
-				quiz1.HP -= player.damage;
+			{
+				if (player.weapon == 1)
+				{
+					if (player.ammo > 0)
+					{
+						meleeVec(&player);
+						CP_Settings_Fill(red);
+						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
+
+					}
+
+					
+				}
+				else
+				{
+					meleeVec(&player);
+					CP_Settings_Fill(blue);
+					CP_Settings_RectMode(CP_POSITION_CENTER);
+					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
+					if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
+						quiz1.HP -= player.damage;
+					}
+				}
 			}
 		}
+
+
+		// UI AND HUD
 		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
 		CP_Settings_RectMode(CP_POSITION_CORNER);
 		// RENDER HEALTHBAR
 		CP_Settings_Fill(green);
 		CP_Graphics_DrawRect(windowWidth/10, windowHeight/54, player.GPA * 100, 30);
+	}
+
+	// GAME OVER SCREEN + RESET BUTTON
+	else
+	{
+		CP_Settings_Fill(red);
+		CP_Font_DrawText("GAME OVER", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
+		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 20);
+		if (CP_Input_KeyReleased(KEY_ESCAPE))
+		{
+			CP_Engine_SetNextGameStateForced(shawn_Level_Init, shawn_Level_Update, NULL);
+		}
 	}
 
 	// RENDER TEXT (GPA)
@@ -167,8 +213,20 @@ void shawn_Level_Update()
 		player.GPA -= quiz1.damage;
 	}
 
+	//DEBUG USE: SHOW CURRENT WEAPON
+	CP_Settings_Fill(blue);
+	if (player.weapon == 1)
+	{
+		CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
+	}
+	else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
+
+
+
+	//SPAWNS
 	player.alive = player.GPA <= 0 ? 0 : 1;
-	quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
+	quiz1.alive = 0;
+	//quiz1.alive = quiz1.HP <= 0 ? 0 : 1;
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
