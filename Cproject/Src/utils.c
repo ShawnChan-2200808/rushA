@@ -11,7 +11,9 @@
 
 CP_Color gray;
 int windowWidth, windowHeight;
-float fps;
+float fps, deltaTime;
+CP_Vector Up, Down, Left, Right;
+
 
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
@@ -37,6 +39,37 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 		}
 	return 0;
 }
+
+struct player
+{
+	CP_Color color;
+	float pointx;
+	float pointy;
+	float diameter;
+	CP_Vector direction, temppos, playerpos;
+	int speed;
+	//float hp;
+};
+struct player player1;
+
+// Move forward
+void moveForward(struct player* player1, CP_Vector direction)
+{
+	(*player1).temppos = CP_Vector_Normalize(direction);
+	(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
+	(*player1).playerpos = CP_Vector_Add((*player1).playerpos, (*player1).temppos);
+}
+
+// Move backward
+void moveBackward(struct player* player1, CP_Vector direction)
+{
+	(*player1).temppos = CP_Vector_Normalize(direction);
+	(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
+	(*player1).playerpos = CP_Vector_Subtract((*player1).playerpos, (*player1).temppos);
+}
+
+
+
 
 /*
 CP_Vector AngleToVector(float radian_angle)
