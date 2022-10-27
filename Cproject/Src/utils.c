@@ -9,7 +9,7 @@
 
 #include "cprocessing.h"
 
-CP_Color gray;
+CP_Color gray,blue,green,red;
 int windowWidth, windowHeight;
 float fps, deltaTime;
 CP_Vector Up, Down, Left, Right;
@@ -48,7 +48,7 @@ struct player
 	float diameter;
 	CP_Vector direction, temppos, playerpos;
 	int speed;
-	//float hp;
+	float GPA;
 };
 struct player player1;
 
