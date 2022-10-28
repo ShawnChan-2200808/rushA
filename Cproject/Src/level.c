@@ -53,11 +53,13 @@ extern float deltaTime;
 
 CP_Image Spritesheet;
 CP_Image Floor;
+CP_Image playerSS;
 
 void Level_Init()
 {
 	initGame();
 	Spritesheet = CP_Image_Load("Assets/QUIZ.png");
+	playerSS = CP_Image_Load("Assets/player_idle_64h.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 
 	playerInit(&player);
@@ -74,19 +76,19 @@ void Level_Update()
 
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
-		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 1)
+		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 		{
 			moveForward(&player, Up);
 		}
-		if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 1)
+		if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
 		{
 			moveForward(&player, Left);
 		}
-		if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < windowHeight)
+		if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight-50))
 		{
 			moveForward(&player, Down);
 		}
-		if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < windowWidth)
+		if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth-50))
 		{
 			moveForward(&player, Right);
 		}
@@ -110,8 +112,6 @@ void Level_Update()
 						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
 
 					}
-
-
 				}
 				else
 				{
@@ -140,7 +140,7 @@ void Level_Update()
 	{
 		CP_Settings_Fill(red);
 		CP_Font_DrawText("GAME OVER", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 20);
+		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
@@ -166,7 +166,7 @@ void Level_Update()
 	//}
 
 	// DEBUG USE: SHOW CURRENT WEAPON
-	CP_Settings_Fill(blue);
+	CP_Settings_Fill(CP_Color_Create(255,255,255,255));
 	if (player.weapon == 1)
 	{
 		CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
@@ -197,8 +197,8 @@ void Level_Update()
 	// Enemy is rendered chase player
 	if (quiz1.alive && player.alive) {
 
-		UpdateEnemyAnimation(&quiz1, deltaTime);
-		EnemyAnimation(Spritesheet, &quiz1);
+		updateEnemyAnimation(&quiz1, deltaTime);
+		enemyAnimation(Spritesheet, &quiz1);
 		enemyChase(&quiz1, &player);
 		/*if (quiz1.HP == 1) {
 			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
@@ -228,8 +228,12 @@ void Level_Update()
 	}
 
 	if (player.alive) {
+		playerAnimation(playerSS,&player);
+		updatePlayerAnimation(&player,deltaTime);
+		/*
 		CP_Settings_Fill(blue);
 		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, hitCircleSize);
+		*/
 	}
 
 

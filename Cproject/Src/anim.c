@@ -11,6 +11,17 @@
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
+extern struct Player {
+	CP_Vector playerPos, tempPos, direction;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+}; extern struct Player player;
 
 extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -24,11 +35,11 @@ extern struct Enemy {
 
 }; extern struct Enemy quiz1, lab1, assignment1;
 
-void UpdateEnemyAnimation(struct Enemy* enemy, float dt) {
+void updateEnemyAnimation(struct Enemy* enemy, float dt) {
 	(*enemy).animationElapsedTime += dt * (*enemy).animationSpeed;
 }
 
-void EnemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
+void enemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(Spritesheet,
 		// RENDERED POS AND SIZE
@@ -41,4 +52,24 @@ void EnemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
 		(*enemy).animationElapsedTime = 0.0f;
 	}
 }
+
+void updatePlayerAnimation(struct Player* player, float dt) {
+	(*player).animationElapsedTime += dt * (*player).animationSpeed;
+}
+
+void playerAnimation(CP_Image Spritesheet, struct Player* player) {
+	CP_Settings_ImageMode(CP_POSITION_CENTER);
+	CP_Image_DrawSubImage(Spritesheet,
+		// RENDERED POS AND SIZE
+		(*player).playerPos.x, (*player).playerPos.y, (*player).worldSizeW, (*player).worldSizeH,
+		// POS AND SIZE FROM SPRITESHEET
+		(*player).currentFrame * (*player).spriteWidth, 0, ((*player).currentFrame + 1) * (*player).spriteWidth, (*player).SpriteHeight, //row1col1, row1col2 ... L to R
+		255);
+	if ((*player).animationElapsedTime >= (*player).displayTime) {
+		(*player).currentFrame = ((*player).currentFrame + 1) % (*player).animTotalFrames;
+		(*player).animationElapsedTime = 0.0f;
+	}
+}
+
+
 

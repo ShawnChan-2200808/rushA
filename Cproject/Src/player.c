@@ -44,6 +44,17 @@ void playerInit(struct Player* player) {
 	(*player).weapon = 0;
 	(*player).ammo = 10;
 
+	//animation idle
+	(*player).animationElapsedTime = 0.0f;
+	(*player).animationSpeed = 15;
+	(*player).currentFrame = 0;
+	(*player).animTotalFrames = 2;
+	(*player).worldSizeW = 120.0f;
+	(*player).worldSizeH = 120.0f;
+	(*player).spriteWidth = 64.0f;
+	(*player).SpriteHeight = 64.0f;
+	(*player).displayTime = 2.0f;
+
 }
 
 void isPlayerAlive(struct Player* player) {
