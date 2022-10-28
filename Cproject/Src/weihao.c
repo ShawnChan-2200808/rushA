@@ -45,7 +45,7 @@ void weihao_Init()
     player1.speed = 50;
     player1.diameter = 60.0;
 
-    Up = CP_Vector_Set(0, -1);
+    Up = CP_Vector_Set(0, -1000);
     Down = CP_Vector_Set(0, 1);
     Right = CP_Vector_Set(1, 0);
     Left = CP_Vector_Set(-1,0);
@@ -59,9 +59,9 @@ void weihao_Update()
 {
     deltaTime = CP_System_GetDt();
     CP_Graphics_ClearBackground(gray);
+    //draw player
     CP_Settings_Fill(red);
-    CP_Graphics_DrawCircle(player1.pointx, player1.pointy, player1.diameter);
-
+    CP_Graphics_DrawCircle(player1.playerpos.x, player1.playerpos.y, player1.diameter);
 
     if (CP_Input_KeyDown(KEY_W) && player1.playerpos.y > 1)
     {
@@ -79,6 +79,10 @@ void weihao_Update()
     {
         moveForward(&player1,Right);
     }
+
+    
+
+
 
     CP_Settings_RectMode(CP_POSITION_CORNER);
     // RENDER HEALTHBAR

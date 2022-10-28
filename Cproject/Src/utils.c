@@ -56,7 +56,7 @@ struct player player1;
 void moveForward(struct player* player1, CP_Vector direction)
 {
 	(*player1).temppos = CP_Vector_Normalize(direction);
-	(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
+	//(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
 	(*player1).playerpos = CP_Vector_Add((*player1).playerpos, (*player1).temppos);
 }
 
