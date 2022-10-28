@@ -1,24 +1,4 @@
-﻿  player.c
-  shawn.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(31,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(43,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(138,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(138,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(145,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(145,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(146,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(146,112): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(149,53): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(149,73): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(155,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(159,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(159,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(163,39): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(163,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(175,61): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\shawn.c(177,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
+﻿  Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
   3 File(s) copied

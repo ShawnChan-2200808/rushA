@@ -21,16 +21,10 @@
     <ClCompile Include="..\Src\level.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\SampleLevel.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Src\splashscreen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\utils.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Src\shawn.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\anim.c">
@@ -44,16 +38,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Src\shawn.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Src\anim.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\anim - Copy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\enemy.h">
