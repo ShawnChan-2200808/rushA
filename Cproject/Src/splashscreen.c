@@ -10,7 +10,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-//#include "level.h"
+#include "level.h"
 	
 extern CP_Color gray;
 extern int windowWidth, windowHeight;
@@ -94,12 +94,14 @@ void Splash_Screen_Update(void)
 	*/
 
 	// Change scene upon splashscreen end
-	if (totalElapsedTime > 4)
+	//if (totalElapsedTime > 4)
+	if (totalElapsedTime > 2)
 	{
-		CP_Engine_Terminate();
+		//CP_Engine_Terminate();
 
 		// Change to state
 		//CP_Engine_SetNextGameState(Main_Menu_init, Main_Menu_update, Main_Menu_exit);
+		CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
 	}
 }
 
