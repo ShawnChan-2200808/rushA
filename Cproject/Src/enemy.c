@@ -39,23 +39,63 @@ extern struct Player {
 		animationElapsedTime, displayTime;
 }; extern struct Player player;
 
-void quizInit(struct Enemy *quiz,float posX, float posY) {
-	// QUIZ 1
-	(*quiz).EnemyPos = CP_Vector_Set(posX, posY);
-	(*quiz).speed = 400;
-	(*quiz).alive = 1;
-	(*quiz).HP = 3;
-	(*quiz).damage = 0.05f;
+void quizInit(struct Enemy *enemy,float posX, float posY) {
+	// QUIZ
+	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).speed = 400;
+	(*enemy).alive = 1;
+	(*enemy).HP = 3;
+	(*enemy).damage = 0.05f;
 	//animation
-	(*quiz).animationElapsedTime = 0.0f;
-	(*quiz).animationSpeed = 15;
-	(*quiz).currentFrame = 0;
-	(*quiz).animTotalFrames = 6;
-	(*quiz).worldSizeW = 96.0f;
-	(*quiz).worldSizeH = 96.0f;
-	(*quiz).spriteWidth = 32.0f;
-	(*quiz).SpriteHeight = 32.0f;
-	(*quiz).displayTime = 2.0f;
+	(*enemy).animationElapsedTime = 0.0f;
+	(*enemy).animationSpeed = 15;
+	(*enemy).currentFrame = 0;
+	(*enemy).animTotalFrames = 6;
+	(*enemy).worldSizeW = 96.0f;
+	(*enemy).worldSizeH = 96.0f;
+	(*enemy).spriteWidth = 64.0f;
+	(*enemy).SpriteHeight = 64.0f;
+	(*enemy).displayTime = 2.0f;
+	hitCircleSize = 50.0f;
+}
+
+void assInit(struct Enemy *enemy, float posX, float posY) {
+	// ASSIGNMENT
+	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).speed = 0;
+	(*enemy).alive = 1;
+	(*enemy).HP = 3;
+	(*enemy).damage = 0.0f;
+	//animation
+	(*enemy).animationElapsedTime = 0.0f;
+	(*enemy).animationSpeed = 15;
+	(*enemy).currentFrame = 0;
+	(*enemy).animTotalFrames = 8;
+	(*enemy).worldSizeW = 96.0f;
+	(*enemy).worldSizeH = 96.0f;
+	(*enemy).spriteWidth = 64.0f;
+	(*enemy).SpriteHeight = 64.0f;
+	(*enemy).displayTime = 2.0f;
+	hitCircleSize = 50.0f;
+}
+
+void labInit(struct Enemy *enemy, float posX, float posY) {
+	// LAB
+	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).speed = 0;
+	(*enemy).alive = 1;
+	(*enemy).HP = 3;
+	(*enemy).damage = 0.00f;
+	//animation
+	(*enemy).animationElapsedTime = 0.0f;
+	(*enemy).animationSpeed = 5;
+	(*enemy).currentFrame = 0;
+	(*enemy).animTotalFrames = 8;
+	(*enemy).worldSizeW = 128.0f;
+	(*enemy).worldSizeH = 128.0f;
+	(*enemy).spriteWidth = 64.0f;
+	(*enemy).SpriteHeight = 64.0f;
+	(*enemy).displayTime = 2.0f;
 	hitCircleSize = 50.0f;
 }
 

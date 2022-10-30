@@ -41,7 +41,7 @@ extern struct Enemy {
 };
 
 extern struct Player player;
-extern struct Enemy quiz1, lab, assignment;
+extern struct Enemy quiz1, lab1, assignment1;
 extern CP_Color gray, blue, green, red;
 extern int windowWidth, windowHeight;
 extern float fps;
@@ -51,19 +51,28 @@ int chSize = 10;
 
 extern float deltaTime;
 
-CP_Image Spritesheet;
-CP_Image Floor;
 CP_Image playerSS;
+CP_Image QuizSS;
+CP_Image AssSS;
+CP_Image LabSS;
+CP_Image Floor;
+
+
 
 void Level_Init()
 {
 	initGame();
-	Spritesheet = CP_Image_Load("Assets/QUIZ.png");
+
 	playerSS = CP_Image_Load("Assets/player_idle_64h.png");
+	QuizSS = CP_Image_Load("Assets/QUIZ.png");
+	AssSS = CP_Image_Load("Assets/ASS_SS_64.png");
+	LabSS = CP_Image_Load("Assets/LAB_SS_64.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 
 	playerInit(&player);
 	quizInit(&quiz1, 300, 300);
+	assInit(&assignment1, 500, 300);
+	labInit(&lab1, 1000,300);
 }
 
 void Level_Update()
@@ -192,13 +201,19 @@ void Level_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
+
+
 	// ENEMY
 	// 
+	 updateEnemyAnimation(&assignment1, deltaTime);
+	enemyAnimation(AssSS, &assignment1);
+	updateEnemyAnimation(&lab1, deltaTime);
+	enemyAnimation(LabSS, &lab1);
 	// Enemy is rendered chase player
 	if (quiz1.alive && player.alive) {
 
 		updateEnemyAnimation(&quiz1, deltaTime);
-		enemyAnimation(Spritesheet, &quiz1);
+		enemyAnimation(QuizSS, &quiz1);
 		enemyChase(&quiz1, &player);
 		/*if (quiz1.HP == 1) {
 			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
@@ -246,6 +261,9 @@ void Level_Update()
 
 void Level_Exit()
 {
-	CP_Image_Free(&Spritesheet);
+	CP_Image_Free(&QuizSS);
+	CP_Image_Free(&playerSS);
+	CP_Image_Free(&LabSS);
+	CP_Image_Free(&AssSS);
 	CP_Image_Free(&Floor);
 }
