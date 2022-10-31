@@ -4,10 +4,8 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       25/10/2022 (last updated)
-@brief      Make prototype functions and test it here. Copy and paste from current level
-			to see if it works before we integrate it into the main game
-		*** AND MAKE A COPY for yourself + DONT FORGET TO MAKE .H file to test ***
+@date       31/10/2022 (last updated)
+@brief      Definition of animation functions for player, enemy and boss.
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"

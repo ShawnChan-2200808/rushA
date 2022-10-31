@@ -1,6 +1,5 @@
 /*!
 @file       player.c
-@author		Shawn Chan Weng Kwang (shawnwengkwang.chan@digipen.edu)
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
@@ -76,10 +75,10 @@ void moveBack(struct Player* player, CP_Vector direction) {
 }
 
 // Get position from player to direction of mouse
-void meleeVec(struct Player* player) {
+void meleeVec(struct Player* player, int scale) {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);
-	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, 100));
+	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, scale));
 }
 
 int switchWeapon(int weapon)

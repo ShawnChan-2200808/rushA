@@ -1,11 +1,10 @@
 /*!
-@file       player.c
-@author		Shawn Chan Weng Kwang (shawnwengkwang.chan@digipen.edu)
+@file       enemy.c
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       25/10/2022 (last updated)
-@brief      contains defininition of Player functions
+@date       31/10/2022 (last updated)
+@brief      contains defininition of Enemy functions
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -90,7 +89,7 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 5;
 	(*enemy).currentFrame = 0;
-	(*enemy).animTotalFrames = 8;
+	(*enemy).animTotalFrames = 1; //8;
 	(*enemy).worldSizeW = 128.0f;
 	(*enemy).worldSizeH = 128.0f;
 	(*enemy).spriteWidth = 64.0f;

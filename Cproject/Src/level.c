@@ -3,7 +3,7 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date        / /2022 (last updated)
+@date       31/10/2022 (last updated)
 @brief      This file contains the main level that we integrate 
 		*** ONLY UPDATE THIS AFTER APPROVAL OF TEAM ***
 *//*_________________________________________________________________________*/
@@ -106,7 +106,14 @@ void Level_Update()
 		if (CP_Input_KeyReleased(KEY_Q))
 		{
 			player.weapon = switchWeapon(player.weapon);
+			
+			//TESTING THE LAB TRANSITION
+			lab1.currentFrame+=1;
+			if (lab1.currentFrame >7) {
+				lab1.currentFrame = 0;
+			}
 		}
+
 
 		// ATTACK
 		if (CP_Input_MouseClicked()) {
@@ -116,7 +123,7 @@ void Level_Update()
 				{
 					if (player.ammo > 0)
 					{
-						meleeVec(&player);
+						meleeVec(&player,300);
 						CP_Settings_Fill(red);
 						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
 
@@ -124,7 +131,7 @@ void Level_Update()
 				}
 				else
 				{
-					meleeVec(&player);
+					meleeVec(&player,100);
 					CP_Settings_Fill(blue);
 					CP_Settings_RectMode(CP_POSITION_CENTER);
 					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
@@ -205,9 +212,9 @@ void Level_Update()
 
 	// ENEMY
 	// 
-	 updateEnemyAnimation(&assignment1, deltaTime);
+	updateEnemyAnimation(&assignment1, deltaTime);
 	enemyAnimation(AssSS, &assignment1);
-	updateEnemyAnimation(&lab1, deltaTime);
+	//updateEnemyAnimation(&lab1, deltaTime);
 	enemyAnimation(LabSS, &lab1);
 	// Enemy is rendered chase player
 	if (quiz1.alive && player.alive) {
