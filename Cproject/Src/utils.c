@@ -9,7 +9,7 @@
 
 #include "cprocessing.h"
 
-CP_Color gray,blue,green,red;
+CP_Color gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps, deltaTime;
 CP_Vector Up, Down, Left, Right;
@@ -20,13 +20,13 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	// check if the x and y pos of the is within the width and height
 	if (click_x <= area_center_x + area_width / 2 && click_x >= area_center_x - area_width / 2 &&
 		click_y <= area_center_y + area_height / 2 && click_y >= area_center_y - area_height / 2)
-		{
-			/*
-			Returns 1 if the point given by click_xand click_y is within the rectangle given by
-			area_center_x, area_center_y, area_width and area_height. Otherwise it will return 0.
-			*/
-			return 1;
-		}
+	{
+		/*
+		Returns 1 if the point given by click_xand click_y is within the rectangle given by
+		area_center_x, area_center_y, area_width and area_height. Otherwise it will return 0.
+		*/
+		return 1;
+	}
 	return 0;
 }
 
@@ -34,9 +34,9 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 {
 	if (click_x <= circle_center_x + diameter / 2 && click_x >= circle_center_x - diameter / 2 &&
 		click_y <= circle_center_y + diameter / 2 && click_y >= circle_center_y - diameter / 2)
-		{
-			return 1;
-		}
+	{
+		return 1;
+	}
 	return 0;
 }
 
@@ -46,17 +46,23 @@ struct player
 	float pointx;
 	float pointy;
 	float diameter;
+	float radius;
 	CP_Vector direction, temppos, playerpos;
 	int speed;
 	float GPA;
 };
 struct player player1;
 
+struct wall
+{
+	int x, y, width, height;
+}wall1;
+
 // Move forward
 void moveForward(struct player* player1, CP_Vector direction)
 {
 	(*player1).temppos = CP_Vector_Normalize(direction);
-	//(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
+	(*player1).temppos = CP_Vector_Scale((*player1).temppos, (*player1).speed * deltaTime);
 	(*player1).playerpos = CP_Vector_Add((*player1).playerpos, (*player1).temppos);
 }
 
@@ -68,6 +74,38 @@ void moveBackward(struct player* player1, CP_Vector direction)
 	(*player1).playerpos = CP_Vector_Subtract((*player1).playerpos, (*player1).temppos);
 }
 
+int collision(struct player* player1, CP_Vector playerpos)
+{
+	//if (((*player1).playerpos.x - (*player1).radius) > (wall1.x + 50) || ((*player1).playerpos.x + (*player1).radius) < (wall1.x - 50) || ((*player1).playerpos.y - (*player1).radius) > (wall1.y + 50) || ((*player1).playerpos.y + (*player1).radius) < (wall1.y - 50))
+	//{
+	//	//not collided
+	//	return 0;
+	//}
+
+	if (((*player1).playerpos.x - (*player1).radius) < (wall1.x + 50))
+	{
+		//collide with right
+		return 1;
+	}
+	if (((*player1).playerpos.x + (*player1).radius) > (wall1.x - 50))
+	{
+		//collide with left
+		return 2;
+	}
+	if (((*player1).playerpos.y - (*player1).radius) > (wall1.y + 50))
+	{
+		//collide with bottom
+		return 3;
+	}
+	if (((*player1).playerpos.y + (*player1).radius) < (wall1.y - 50))
+	{
+		//collide with top
+		return 4;
+	}
+	//not colliding 
+	player1->color = green;
+	return 0;
+}
 
 
 

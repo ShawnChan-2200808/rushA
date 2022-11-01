@@ -11,7 +11,7 @@
 #include "cprocessing.h"
 #include "utils.h"
 //#include "level.h"
-//#include "stdio.h" 
+#include "stdio.h" 
 //#include "stdlib.h"
 
 extern CP_Color gray,blue,green,red;
@@ -24,11 +24,17 @@ extern struct player
     float pointx;
     float pointy;
     float diameter;
+    float radius;
     CP_Vector direction, temppos, playerpos;
     int speed;
     float GPA;
 };
 extern struct player player1;
+
+extern struct wall
+{
+    int x, y, width, height;
+}wall1;
 
 extern CP_Vector Up, Down, Left, Right; 
 
@@ -42,8 +48,15 @@ void weihao_Init()
     player1.pointx = windowWidth / 2;
     player1.pointy = windowHeight / 2;
     player1.playerpos = CP_Vector_Set(player1.pointx, player1.pointy);
-    player1.speed = 50;
+    player1.speed = 300;
     player1.diameter = 60.0;
+    player1.radius = player1.diameter / 2;
+
+    wall1.x = windowWidth / 4;
+    wall1.y = windowHeight / 4;
+    wall1.width = 100;
+    wall1. height = 100;
+
 
     Up = CP_Vector_Set(0, -1000);
     Down = CP_Vector_Set(0, 1);
@@ -100,6 +113,38 @@ void weihao_Update()
     // RENDER HEALTHBAR PLACEHOLDER
     CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
     CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
+
+
+    CP_Settings_Fill(green);
+    CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+
+    int push = 0;
+    int collided = collision(&player1, player1.playerpos);
+    //collide with right
+    while (collided == 1)
+    {
+        push += (wall1.x + 50) - (player1.playerpos.x - player1.radius);
+        player1.playerpos.x += push;
+    }
+    //collide with left
+    while (collided == 2)
+    {
+        push += (player1.playerpos.x + player1.radius) - (wall1.x - 50);
+        player1.playerpos.x -= push;
+    }
+    //collide with bottom
+    while (collided == 3)
+    {
+        push += (wall1.y + 50) - (player1.playerpos.y - player1.radius);
+        player1.playerpos.y += push;
+    }
+    //collide with top
+    while (collided == 4)
+    {
+        push += (player1.playerpos.y + player1.radius) - (wall1.y - 50);
+        player1.playerpos.y -= push;
+    }
+
 
 
 }
