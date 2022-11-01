@@ -1,9 +1,6 @@
 struct Bullet
 {
     CP_Vector Pos, Vector;
-    int velocity, active, ready;
+    int active, diameter, damage;
+    float velocity;
 };
-
-void bulletInit(struct Bullet* currentBullet);
-void updatePosition(struct Bullet* currentBullet);
-void drawBullet(struct Bullet* currentBullet);

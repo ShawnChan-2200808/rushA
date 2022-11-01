@@ -35,7 +35,7 @@ extern struct Enemy {
 	int speed, alive;
 	float HP, damage;
 
-	//animation
+	//animationdd
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
@@ -78,7 +78,8 @@ void Level_Init()
 
 	for (int i = 0; i < 10; ++i)
 	{
-		bulletInit(&bullets[i]);
+		bullets[i].active = 0;
+		bullets[i].velocity = 0;
 	}
 }
 
@@ -124,20 +125,23 @@ void Level_Update()
 		// ATTACK
 		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
-			{
 				if (player.weapon == 1)
 				{
-					if (player.ammo > 0)
-					{
 						for (int i = 0; i < 10; ++i)
 						{
-							if (bullets[i].ready == 1)
+							if (bullets[i].active == 0)
 							{
 								bullets[i].active = 1;
-								bullets[i].velocity = 1;
+								bullets[i].velocity = 1000;
+								bullets[i].diameter = 20;
+								bullets[i].damage = 5;
+								bullets[i].Pos = player.playerPos;
+								bullets[i].Vector = CP_Vector_Set((CP_Input_GetMouseX() - player.playerPos.x), (CP_Input_GetMouseY() - player.playerPos.y));
+								bullets[i].Vector = CP_Vector_Normalize(bullets[i].Vector);
+								bullets[i].Vector = CP_Vector_Scale(bullets[i].Vector, bullets[i].velocity);
+								break;
 							}
 						}
-					}
 				}
 				else
 				{
@@ -149,7 +153,6 @@ void Level_Update()
 					damageEnemy(&assignment1, &player, 150, 150);
 					damageEnemy(&lab1, &player, 150, 150);
 				}
-			}
 		}
 	}
 
@@ -174,11 +177,22 @@ void Level_Update()
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 
-
+	// BULLET SIMULATION (UPDATING POSITION)
 	for (int i = 0; i < 10; ++i)
 	{
-		updatePosition(&bullets[i]);
-		CP_Graphics_DrawCircle(bullets[i].Pos.x, bullets[i].Pos.y, 20);
+		if (bullets[i].active == 1)
+		{
+			bullets[i].Pos.x += bullets[i].Vector.x * deltaTime;
+			bullets[i].Pos.y += bullets[i].Vector.y * deltaTime;
+			if (bullets[i].Pos.x < 0 || bullets[i].Pos.x >= CP_System_GetWindowWidth() || bullets[i].Pos.y < 0 || bullets[i].Pos.y >= CP_System_GetWindowHeight())
+			{
+				bullets[i].active = 0;
+			}
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Graphics_DrawCircle(bullets[i].Pos.x, bullets[i].Pos.y, bullets[i].diameter);
+
+		}
+
 	}
 
 	//testing GPA

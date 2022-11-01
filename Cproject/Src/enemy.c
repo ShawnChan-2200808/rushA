@@ -9,6 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
+#include "bullet.h"
 
 // MAIN ENEMY STRUCT
 struct Enemy {
