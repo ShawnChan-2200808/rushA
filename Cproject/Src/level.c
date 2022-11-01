@@ -182,7 +182,9 @@ void Level_Update()
 	// QUIZ is rendered and chase player
 	if (quiz1.alive && player.alive) {
 		// If enemy come into contact with player deal damage
-		laser(&quiz1, &player);
+		if (1 == laser(&quiz1, &player)) {
+			player.GPA -= quiz1.damage;
+		}
 		updateEnemyAnimation(&quiz1, deltaTime);
 		enemyAnimation(QuizSS, &quiz1);
 		enemyChase(&quiz1, &player);

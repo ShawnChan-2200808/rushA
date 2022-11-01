@@ -38,10 +38,12 @@ extern struct Player {
 		animationElapsedTime, displayTime;
 }; extern struct Player player;
 
+extern CP_Color red;
+
 void quizInit(struct Enemy *enemy,float posX, float posY) {
 	// QUIZ
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
-	(*enemy).speed = 1;
+	(*enemy).speed = 50;
 	(*enemy).alive = 1;
 	(*enemy).HP = 3;
 	(*enemy).damage = 0.05f;
@@ -56,6 +58,9 @@ void quizInit(struct Enemy *enemy,float posX, float posY) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	hitCircleSize = 50.0f;
+
+	// Set laser color for quiz
+	(*enemy).lasercolour = red;
 }
 
 void assInit(struct Enemy *enemy, float posX, float posY) {
@@ -75,6 +80,7 @@ void assInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+
 	hitCircleSize = 50.0f;
 }
 

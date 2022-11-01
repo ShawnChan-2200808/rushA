@@ -16,8 +16,13 @@
 float playerangle;
 float laserw, laserh;
 float vectorX, vectorY;
+float rotation;
 // angleflag , 1 for updown, 2 for leftright
 int angleflag;
+
+float elapsedtime = 0;
+
+extern CP_Color red;
 
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -44,71 +49,69 @@ struct Player {
 }; struct Player;
 
 
-float elapsedtime =0;
+
+
 int laser(struct Enemy* enemy, struct Player* player)
 {
-
-	CP_Color lasercolourchargeup;
+	CP_Color lasercolourchargeup = (*enemy).lasercolour;
 	float deltaTime = CP_System_GetDt();
 	elapsedtime += (deltaTime*1000);
-	lasercolourchargeup = CP_Color_Create((*enemy).lasercolour.r, (*enemy).lasercolour.g, (*enemy).lasercolour.b, (*enemy).lasercolour.a - 100);
+	lasercolourchargeup = CP_Color_Create((*enemy).lasercolour.r, (*enemy).lasercolour.g +30 , (*enemy).lasercolour.b +30, (*enemy).lasercolour.a - 80);
 	int lasertime = (int)elapsedtime % 5000;
-	//printf("total elsapse:%f\n", totalElapsedTimeMS);
+	//printf("total elsapse:%f\n", elapsedtime);
 
 	//Break down laser into timing
 	//laser x and y draw coordinates
-	if (lasertime < 10) {
+	if (lasertime < 100) {
 		//gets which rect to print based on angle and centralise laser beam to enemy
 		playerangle = enemyPlayerAngle(enemy, player);
 		printf("angle:%f\n", playerangle);
+
+		//simple no rotation
 		if (playerangle > 135 && playerangle < 225) {
-			laserw = 100;
-			laserh = 500;
+			laserw = 400;
+			laserh = 900;
 			angleflag = 1;
+			rotation = 0;
 			printf("down");
 		}
 		if (playerangle > 45 && playerangle < 135) {
-			laserw = 500;
-			laserh = 100;
+			laserw = 900;
+			laserh = 400;
+			rotation = 0;
 			printf("right");
 			angleflag = 2;
 		}
 		if (playerangle > 225 && playerangle < 315)
 		{
-			laserw = -500;
-			laserh = 100;
+			laserw = -900;
+			laserh = 400;
+			rotation = 0;
 			printf("left");
 			angleflag = 2;
 		}
 		if (playerangle < 45 || playerangle > 315) {
-			laserw = 100;
-			laserh = -500;
+			laserw = 400;
+			laserh = -900;
+			rotation = 0;
 			printf("up");
 			angleflag = 1;
 		}
+
+		//advacned shit with rotation
 	}
-
-	if (lasertime < 375) {
-		//if ()
-
-		(* enemy).lasercolour = lasercolourchargeup;
+	else if (lasertime < 2000) {
 		CP_Settings_Fill(lasercolourchargeup);
 		if (angleflag == 1)
 			CP_Graphics_DrawRect((*enemy).EnemyPos.x - laserw / 2, (*enemy).EnemyPos.y, laserw, laserh);
 		else
 			CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - laserh / 2, laserw, laserh);
-	}
-	else if (lasertime < 525) {
-		(*enemy).lasercolour = lasercolourchargeup;
-		CP_Settings_Fill(lasercolourchargeup);
-		if (angleflag == 1)
-			CP_Graphics_DrawRect((*enemy).EnemyPos.x - laserw / 2, (*enemy).EnemyPos.y, laserw, laserh);
-		else
-			CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - laserh / 2, laserw, laserh);
+
+		printf("recharging");
 		//vectorX = player.playerPos.x - quiz1.EnemyPos.x;
 		//vectorY = player.playerPos.y - quiz1.EnemyPos.y;
 	}
-	else if (lasertime < 2000) {
+	else if (lasertime < 4000) {
 		if (angleflag == 1) {
 			CP_Settings_Fill((*enemy).lasercolour);
 			CP_Graphics_DrawRect((* enemy).EnemyPos.x - laserw / 2, (*enemy).EnemyPos.y, laserw, laserh);
