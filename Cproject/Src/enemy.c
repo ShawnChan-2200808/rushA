@@ -116,3 +116,21 @@ void damagePlayer(struct Enemy* enemy, struct Player* player) {
 	}
 }
 
+void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY) {
+	if (IsAreaClicked((*player).weaponPos.x, (*player).weaponPos.y, hitboxX, hitboxY, (*enemy).EnemyPos.x, (*enemy).EnemyPos.y) && (*enemy).alive) {
+		(*enemy).HP -= (*player).damage;
+	}
+}
+
+void respawnEnemy(struct Enemy *enemy, float posX, float posY) {
+	(*enemy).HP = 2;
+	(*enemy).EnemyPos.x = posX;
+	(*enemy).EnemyPos.y = posY;
+	(*enemy).alive = 1;
+}
+
+void removeEnemy(struct Enemy* enemy) {
+	(*enemy).EnemyPos.x = -100;
+	(*enemy).EnemyPos.y = -100;
+}
+

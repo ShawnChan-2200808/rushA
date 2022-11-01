@@ -12,3 +12,6 @@ void labInit(struct Enemy* quiz, float posX, float posY);
 void isEnemyAlive(struct Enemy* enemy);
 void enemyChase(struct Enemy* enemy, struct Player* player);
 void damagePlayer(struct Enemy* enemy, struct Player* player);
+void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY);
+void respawnEnemy(struct Enemy* enemy, float posX, float posY);
+void removeEnemy(struct Enemy* enemy);

@@ -77,14 +77,13 @@ void Level_Init()
 
 void Level_Update()
 {
-	SpawnBG(Floor, 6, 9);
 	// PLAYER CROSSHAIR
 	//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
 	//CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
 
-
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
+		SpawnBG(Floor, 6, 9);
 		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 		{
 			moveForward(&player, Up);
@@ -135,70 +134,36 @@ void Level_Update()
 					CP_Settings_Fill(blue);
 					CP_Settings_RectMode(CP_POSITION_CENTER);
 					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
-					if (IsAreaClicked(player.weaponPos.x, player.weaponPos.y, 120, 120, quiz1.EnemyPos.x, quiz1.EnemyPos.y) && quiz1.alive) {
-						quiz1.HP -= player.damage;
-					}
+					damageEnemy(&quiz1,&player, 150, 150);
+					damageEnemy(&assignment1, &player, 150, 150);
+					damageEnemy(&lab1, &player, 150, 150);
 				}
 			}
 		}
-
-
-		// UI AND HUD
-		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
-		CP_Settings_RectMode(CP_POSITION_CORNER);
-		// RENDER HEALTHBAR
-		CP_Settings_Fill(green);
-		CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, player.GPA * 100, 30);
 	}
 
 	// GAME OVER SCREEN + RESET BUTTON
 	else
 	{
 		CP_Settings_Fill(red);
-		CP_Font_DrawText("GAME OVER", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+		CP_Font_DrawText("He failed this trimester :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
+		CP_Font_DrawText("Press Esc to retest", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
 		}
 	}
 
-	// RENDER TEXT (GPA)
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Settings_TextSize(windowWidth / 38);
-	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
-	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
-	CP_Settings_TextAlignment(horizontal, vertical);
-	CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 30);
-
-	// RENDER HEALTHBAR PLACEHOLDER
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-	CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
-
-	// If enemy come into contact with player deal damage
-	damagePlayer(&quiz1, &player);
-	//if (isCircleEntered(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize, player.playerPos.x, player.playerPos.y) && player.alive) {
-	//	player.GPA -= quiz1.damage;
-	//}
-
-	// DEBUG USE: SHOW CURRENT WEAPON
-	CP_Settings_Fill(CP_Color_Create(255,255,255,255));
-	if (player.weapon == 1)
-	{
-		CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
-	}
-	else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
-
-
-
 	// SPAWNS
 	isPlayerAlive(&player);
-	//quiz1.alive = 0;
 	isEnemyAlive(&quiz1);
+	isEnemyAlive(&assignment1);
+	isEnemyAlive(&lab1);
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 
+	//testing GPA
 	//if (player.GPA >0) {
 	//	player.GPA -= deltaTime;
 	//}
@@ -208,27 +173,18 @@ void Level_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-
-
 	// ENEMY
 	// 
-	updateEnemyAnimation(&assignment1, deltaTime);
-	enemyAnimation(AssSS, &assignment1);
-	//updateEnemyAnimation(&lab1, deltaTime);
-	enemyAnimation(LabSS, &lab1);
-	// Enemy is rendered chase player
+	// QUIZ is rendered and chase player
 	if (quiz1.alive && player.alive) {
-
+		// If enemy come into contact with player deal damage
+		damagePlayer(&quiz1, &player);
 		updateEnemyAnimation(&quiz1, deltaTime);
 		enemyAnimation(QuizSS, &quiz1);
 		enemyChase(&quiz1, &player);
-		/*if (quiz1.HP == 1) {
-			CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255));
-		}
-		else
-		{
-			CP_Settings_Fill(red);
-		}*/
+		//testing for quiz without sprite
+		//if (quiz1.HP == 1) { CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); }
+		//else { CP_Settings_Fill(red); }
 		//CP_Settings_Fill(red);
 		//CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
 		//CP_Settings_TextSize(windowWidth / 60);
@@ -237,28 +193,77 @@ void Level_Update()
 	}
 	else {
 		// move dead enemy to out of screen
-		quiz1.EnemyPos.x = -100;
-		quiz1.EnemyPos.y = -100;
+		removeEnemy(&quiz1);
 	}
-
 	if (!quiz1.alive) {
 		// reset enemy values
-		quiz1.HP = 2;
-		quiz1.EnemyPos.x = 10;
-		quiz1.EnemyPos.y = 10;
-		quiz1.alive = 1;
+		respawnEnemy(&quiz1,10,10);
+	}
+
+	// Assignment1 Logic
+	if (assignment1.alive && player.alive) {
+		updateEnemyAnimation(&assignment1, deltaTime);
+		enemyAnimation(AssSS, &assignment1);
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&assignment1);
+	}
+	if (!assignment1.alive) {
+		// reset enemy values
+		respawnEnemy(&assignment1, 500, 50);
+	}
+
+	// Lab1 Logic
+	if (lab1.alive && player.alive) {
+		enemyAnimation(LabSS, &lab1);
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&lab1);
+	}
+	if (!lab1.alive) {
+		// reset enemy values
+		respawnEnemy(&lab1, 1000, 50);
 	}
 
 	if (player.alive) {
 		playerAnimation(playerSS,&player);
 		updatePlayerAnimation(&player,deltaTime);
-		/*
+		/* Testing player without sprite
 		CP_Settings_Fill(blue);
 		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, hitCircleSize);
 		*/
 	}
 
 
+	//UI HUD
+	if (player.alive) {
+		CP_Settings_RectMode(CP_POSITION_CORNER);
+		// RENDER HEALTHBAR
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
+		CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, player.GPA * 100, 30);
+
+		// RENDER TEXT (GPA)
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Settings_TextSize(windowWidth / 38);
+		CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
+		CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+		CP_Settings_TextAlignment(horizontal, vertical);
+		CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 30);
+
+		// RENDER HEALTHBAR PLACEHOLDER
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
+		CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
+
+		// DEBUG USE: SHOW CURRENT WEAPON
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		if (player.weapon == 1)
+		{
+			CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
+		}
+		else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
+	}
 	// END GAME
 	// 
 	//if (totalElapsedTime >= 20) {
