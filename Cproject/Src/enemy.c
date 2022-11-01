@@ -11,17 +11,17 @@
 #include "utils.h"
 
 // MAIN ENEMY STRUCT
-struct Enemy {
+extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
+	CP_Color lasercolour;
 	int speed, alive;
 	float HP, damage;
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
-
-}; struct Enemy quiz1, lab1, assignment1;
+}; extern struct Enemy quiz1, lab1, assignment1;
 
 float hitCircleSize, deltaTime;
 
@@ -41,7 +41,7 @@ extern struct Player {
 void quizInit(struct Enemy *enemy,float posX, float posY) {
 	// QUIZ
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
-	(*enemy).speed = 400;
+	(*enemy).speed = 1;
 	(*enemy).alive = 1;
 	(*enemy).HP = 3;
 	(*enemy).damage = 0.05f;

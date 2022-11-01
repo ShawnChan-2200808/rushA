@@ -15,6 +15,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "anim.h"
+#include "weapons.h"
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
@@ -31,9 +32,9 @@ extern struct Player {
 extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
+	CP_Color lasercolour;
 	int speed, alive;
 	float HP, damage;
-
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
@@ -73,6 +74,9 @@ void Level_Init()
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
+
+	// Set laser color for quiz
+	quiz1.lasercolour = red;
 }
 
 void Level_Update()
@@ -171,17 +175,18 @@ void Level_Update()
 	//	player.GPA = 5.00f;
 	//}
 
-	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	
 
 	// ENEMY
 	// 
 	// QUIZ is rendered and chase player
 	if (quiz1.alive && player.alive) {
 		// If enemy come into contact with player deal damage
-		damagePlayer(&quiz1, &player);
+		laser(&quiz1, &player);
 		updateEnemyAnimation(&quiz1, deltaTime);
 		enemyAnimation(QuizSS, &quiz1);
 		enemyChase(&quiz1, &player);
+
 		//testing for quiz without sprite
 		//if (quiz1.HP == 1) { CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); }
 		//else { CP_Settings_Fill(red); }
@@ -269,6 +274,8 @@ void Level_Update()
 	//if (totalElapsedTime >= 20) {
 	//	CP_Engine_Terminate();
 	//}
+
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 }
 
 void Level_Exit()
