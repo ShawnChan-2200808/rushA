@@ -15,6 +15,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "anim.h"
+#include "bullet.h"
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
@@ -42,6 +43,7 @@ extern struct Enemy {
 
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
+struct Bullet bullets[10];
 extern CP_Color gray, blue, green, red;
 extern int windowWidth, windowHeight;
 extern float fps;
@@ -73,6 +75,11 @@ void Level_Init()
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
+
+	for (int i = 0; i < 10; ++i)
+	{
+		bulletInit(&bullets[i]);
+	}
 }
 
 void Level_Update()
@@ -122,10 +129,14 @@ void Level_Update()
 				{
 					if (player.ammo > 0)
 					{
-						meleeVec(&player,300);
-						CP_Settings_Fill(red);
-						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
-
+						for (int i = 0; i < 10; ++i)
+						{
+							if (bullets[i].ready == 1)
+							{
+								bullets[i].active = 1;
+								bullets[i].velocity = 1;
+							}
+						}
 					}
 				}
 				else
@@ -146,7 +157,7 @@ void Level_Update()
 	else
 	{
 		CP_Settings_Fill(red);
-		CP_Font_DrawText("He failed this trimester :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
+		CP_Font_DrawText("You failed :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
 		CP_Font_DrawText("Press Esc to retest", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
@@ -162,6 +173,13 @@ void Level_Update()
 
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
+
+
+	for (int i = 0; i < 10; ++i)
+	{
+		updatePosition(&bullets[i]);
+		CP_Graphics_DrawCircle(bullets[i].Pos.x, bullets[i].Pos.y, 20);
+	}
 
 	//testing GPA
 	//if (player.GPA >0) {
