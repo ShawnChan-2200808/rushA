@@ -42,7 +42,7 @@ int isCircleEntered(float circle_center_x, float circle_center_y, float diameter
 
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
+	CP_Vector weaponPos, Pos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
 }; struct Player player;
@@ -53,6 +53,11 @@ struct Enemy {
 	int speed, alive;
 	float HP, damage;
 }; struct Enemy quiz1, lab1, assignment1;
+
+struct Bullet {
+	CP_Vector Pos, Vector;
+	int velocity, active, ready;
+}; struct Bullet playerBullets[10];
 
 float circleSize, deltaTime;
 CP_Vector Up, Left, Down, Right;
@@ -88,4 +93,11 @@ void meleeVec(struct Player* player) {
 int switchWeapon(int weapon)
 {
 	return !weapon;
+}
+
+void fireWeapon(struct Bullet bullet, CP_Vector direction)
+{
+	bullet.Vector = CP_Vector_Normalize(direction);
+	bullet.Vector = CP_Vector_Scale(bullet.Vector, bullet.velocity * deltaTime);
+	bullet.Pos = CP_Vector_Subtract(bullet.Pos, bullet.Vector);
 }

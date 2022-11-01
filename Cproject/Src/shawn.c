@@ -18,7 +18,7 @@
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
+	CP_Vector weaponPos, Pos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
 };
@@ -29,7 +29,14 @@ extern struct Enemy {
 	int speed, alive;
 	float HP, damage;
 };
+
+extern struct Bullet {
+	CP_Vector Pos, Vector;
+	int velocity, active, ready;
+};
+
 extern struct Player player;
+extern struct Bullet playerBullets[10];
 extern struct Enemy quiz1, lab, assignment;
 extern CP_Color gray,blue,green,red;
 extern int windowWidth, windowHeight;
@@ -56,8 +63,12 @@ void shawn_Level_Init()
 	player.timer = 0;
 	player.weaponPos = CP_Vector_Set(player.playerPos.x, player.playerPos.y);
 	player.weapon = 0;
-	player.ammo = 10;
 
+	for (int i = 0; i < 10; i++)
+	{
+		playerBullets[i].active = 0;
+		playerBullets[i].ready = 1;
+	}
 
 	quiz1.EnemyPos = CP_Vector_Set(300, 300);
 	quiz1.speed = 400;
@@ -122,12 +133,15 @@ void shawn_Level_Update()
 			{
 				if (player.weapon == 1)
 				{
-					if (player.ammo > 0)
+					for (int i = 0; i < 10; i++)
 					{
-						meleeVec(&player);
-						CP_Settings_Fill(red);
-						CP_Graphics_DrawCircle(player.weaponPos.x, player.weaponPos.y, 10);
-
+						if (playerBullets[i].ready == 1)
+						{
+							playerBullets[i].active = 1;
+							playerBullets[i].velocity = 10;
+							playerBullets[i].Pos = player.playerPos;
+						}
+						continue;
 					}
 
 					
@@ -145,6 +159,22 @@ void shawn_Level_Update()
 			}
 		}
 
+		//BULLET SIMULATION
+		for (int i = 0; i < 10; i++)
+		{
+			if (playerBullets[i].active == 1)
+			{
+				if (playerBullets[i].Pos.x <= 0 || playerBullets[i].Pos.x >= CP_System_GetWindowWidth() || playerBullets[i].Pos.y <= 0 || playerBullets[i].Pos.y >= CP_System_GetWindowHeight())
+				{
+					playerBullets[i].active = 0;
+				}
+				playerBullets[i].Vector = CP_Vector_Normalize(player.direction);
+				playerBullets[i].Vector = CP_Vector_Scale(playerBullets[i].Vector, playerBullets[i].velocity * deltaTime);
+				playerBullets[i].Pos = CP_Vector_Add(playerBullets[i].Pos, playerBullets[i].Vector);
+				CP_Settings_Fill(red);
+				CP_Graphics_DrawCircle(playerBullets[i].Pos.x, playerBullets[i].Pos.y, 20);
+			}
+		}
 
 		// UI AND HUD
 		//CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 10, 10);
@@ -159,7 +189,7 @@ void shawn_Level_Update()
 	{
 		CP_Settings_Fill(red);
 		CP_Font_DrawText("GAME OVER", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 20);
+		CP_Font_DrawText("Press Esc to retry", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 30);
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			CP_Engine_SetNextGameStateForced(shawn_Level_Init, shawn_Level_Update, NULL);

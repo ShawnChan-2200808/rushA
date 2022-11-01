@@ -14,3 +14,5 @@ void enemyChase(struct Enemy* enemy, struct Player* player);
 void meleeVec(struct Player* player);
 
 int switchWeapon(int weapon);
+
+void fireWeapon(struct Bullet bullet, CP_Vector direction);
