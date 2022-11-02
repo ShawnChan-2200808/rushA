@@ -67,36 +67,67 @@ int laser(struct Enemy* enemy, struct Player* player)
 		playerangle = enemyPlayerAngle(enemy, player);
 		printf("angle:%f\n", playerangle);
 
-		//simple no rotation
-		if (playerangle > 135 && playerangle < 225) {
+		//checking for 8 predetermined angles
+		if (playerangle > 337.5 || playerangle < 22.5) {
+			laserw = 400;
+			laserh = -900;
+			rotation = 0;
+			printf("up\n");
+			angleflag = 1;
+		}
+		else if (playerangle <= 67.5) {
+			rotation = 45;
+			printf("upright\n");
+		}
+		else if (playerangle <= 112.5) {
+			laserw = 900;
+			laserh = 400;
+			rotation = 0;
+			printf("right\n");
+			angleflag = 2;
+			rotation = 0;
+		}
+		else if (playerangle <= 157.5) {
+			rotation = 135;
+			printf("bottom right\n");
+		}
+		else if (playerangle <= 202.5) {
 			laserw = 400;
 			laserh = 900;
 			angleflag = 1;
 			rotation = 0;
-			printf("down");
-		}
-		if (playerangle > 45 && playerangle < 135) {
-			laserw = 900;
-			laserh = 400;
+			printf("down\n");
 			rotation = 0;
-			printf("right");
-			angleflag = 2;
 		}
-		if (playerangle > 225 && playerangle < 315)
-		{
+		else if (playerangle <= 247.5) {
+			rotation = 225;
+			printf("bottomleft\n");
+		}
+		else if (playerangle <= 292.5) {
 			laserw = -900;
 			laserh = 400;
 			rotation = 0;
-			printf("left");
+			printf("left\n");
 			angleflag = 2;
-		}
-		if (playerangle < 45 || playerangle > 315) {
-			laserw = 400;
-			laserh = -900;
 			rotation = 0;
-			printf("up");
-			angleflag = 1;
 		}
+		else if (playerangle <=337.5) {
+			rotation = 315;
+			printf("upleft\n");
+		}
+		
+
+		/*if (playerangle > 135 && playerangle < 225) {
+
+		}
+		if (playerangle > 45 && playerangle < 135) {
+
+		}
+		if (playerangle > 225 && playerangle < 315)
+		{
+
+		}*/
+		
 
 		//advacned shit with rotation
 	}

@@ -144,3 +144,35 @@ int IsRectEntered(float area_corner_x, float area_corner_y, float area_width, fl
 	}
 	return 0;
 }
+
+int isRectEnteredadvanced(float rectX, float rectY, float rectwidth, float rectheight, float vectorX, float vectorY, struct Player* player)
+{
+	CP_Vector length = CP_Vector_Set(vectorX, vectorY);
+	length = CP_Vector_Normalize(length);
+	length = CP_Vector_Scale(length, rectheight);
+	CP_Vector orthogonal = CP_Vector_Set(-(vectorX), vectorY);
+	orthogonal = CP_Vector_Normalize(orthogonal);
+	orthogonal = CP_Vector_Scale(orthogonal, rectwidth);
+
+	// find Bottom left, Bottom Right, Upper right corners of rect;
+	//float BLcornerX = rectX + orthogonal.x;
+	//float BLcornerY = rectY + orthogonal.y;
+
+	//float BRcornerX = BLcornerX + length.x;
+	//float BRcornerY = BRcornerY + length.y;
+
+	//float URcornerX = rectX + length.x;	
+	//float URcornerY = rectY + length.y;
+
+	//printf("length vector %f , %f \n orthogonal vector %f, %f \n", length.x, length.y, orthogonal.x, orthogonal.y);
+
+	CP_Vector playerUL = CP_Vector_Set((*player).playerPos.x - rectX, (*player).playerPos.y - rectY);
+
+	if (0 < CP_Vector_DotProduct(playerUL, length) && CP_Vector_DotProduct(playerUL, length) < CP_Vector_DotProduct(length, length) && 0 < CP_Vector_DotProduct(playerUL, orthogonal) && CP_Vector_DotProduct(playerUL, orthogonal) < CP_Vector_DotProduct(orthogonal, orthogonal))
+	{
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}

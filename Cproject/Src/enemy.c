@@ -40,6 +40,36 @@ extern struct Player {
 
 extern CP_Color red;
 
+void rotatenemy(struct Enemy* enemy, struct Player* player) {
+	float playerangle = enemyPlayerAngle(enemy, player);
+
+	//checking for 8 predetermined angles
+	if (playerangle > 337.5 || playerangle < 22.5) {
+		(*enemy).currentFrame = 4;
+	}
+	else if (playerangle <= 67.5) {
+		(*enemy).currentFrame = 5;
+	}
+	else if (playerangle <= 112.5) {
+		(*enemy).currentFrame = 6;
+	}
+	else if (playerangle <= 157.5) {
+		(*enemy).currentFrame = 7;
+	}
+	else if (playerangle <= 202.5) {
+		(*enemy).currentFrame = 0;
+	}
+	else if (playerangle <= 247.5) {
+		(*enemy).currentFrame = 1;
+	}
+	else if (playerangle <= 292.5) {
+		(*enemy).currentFrame = 2;
+	}
+	else if (playerangle <= 337.5) {
+		(*enemy).currentFrame = 3;
+	}
+}
+
 void quizInit(struct Enemy *enemy,float posX, float posY) {
 	// QUIZ
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);

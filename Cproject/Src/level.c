@@ -111,10 +111,8 @@ void Level_Update()
 			player.weapon = switchWeapon(player.weapon);
 			
 			//TESTING THE LAB TRANSITION
-			lab1.currentFrame+=1;
-			if (lab1.currentFrame >7) {
-				lab1.currentFrame = 0;
-			}
+
+
 		}
 
 
@@ -224,6 +222,7 @@ void Level_Update()
 	// Lab1 Logic
 	if (lab1.alive && player.alive) {
 		enemyAnimation(LabSS, &lab1);
+		rotatenemy(&lab1, &player);
 	}
 	else {
 		// move dead enemy to out of screen

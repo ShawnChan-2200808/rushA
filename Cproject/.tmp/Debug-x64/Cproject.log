@@ -1,9 +1,6 @@
-﻿  utils.c
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.c(44,2): warning C4013: 'printf' undefined; assuming extern returning int
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.c(81,26): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.c(81,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.c(81,119): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.c(81,142): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+﻿  enemy.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\enemy.c(24,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\enemy.c(39,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
   Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
