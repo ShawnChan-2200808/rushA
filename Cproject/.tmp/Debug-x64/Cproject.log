@@ -1,23 +1,26 @@
 ﻿  level.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(29,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(41,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(125,24): warning C4020: 'meleeVec': too many actual parameters
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(133,23): warning C4020: 'meleeVec': too many actual parameters
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(149,83): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(149,116): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(150,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(150,114): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(153,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(153,61): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(245,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(245,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(249,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(253,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(253,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(257,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(257,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(263,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(265,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(30,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(42,2): warning C4091: 'extern ': ignored on left of 'Enemy' when no variable is declared
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(56,2): warning C4091: 'extern ': ignored on left of 'Item' when no variable is declared
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(166,83): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(166,116): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(167,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(167,114): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(170,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(170,61): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(279,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(279,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(283,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(287,43): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(287,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(291,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(291,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(297,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(299,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  powerups.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(38,2): warning C4091: 'extern ': ignored on left of 'Player' when no variable is declared
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(47,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
