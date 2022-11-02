@@ -36,7 +36,7 @@ extern struct Player {
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
 }; extern struct Player player;
-
+extern int randomX, randomY;
 
 void itemInit(struct Item *item,float posX, float posY, float width, float height, float mod) {
 	(*item).position = CP_Vector_Set(posX,posY);
@@ -56,7 +56,7 @@ void playerHeal(struct Item* item, struct Player* player) {
 			(*player).GPA = 5;
 		}
 		(*item).isActive = 0;
-		(*item).timer = 5.0f;
+		(*item).timer = 10.0f;
 	}
 }
 
@@ -75,8 +75,9 @@ void coolDown(struct Item* item, float deltatime) {
 	(*item).timer -= deltatime;
 }
 
-void respawnItem(struct Item* item, float posX, float posY) {
-	(*item).position = CP_Vector_Set(posX, posY);
+void respawnItem(struct Item* item/*, float posX, float posY*/) {
+	randomX = CP_Random_RangeFloat(200, 1700);
+	randomY = CP_Random_RangeFloat(200, 800);
+	(*item).position = CP_Vector_Set(randomX, randomY);
 	(*item).isActive = 1;
-	(*item).timer = 10.0f;
 }

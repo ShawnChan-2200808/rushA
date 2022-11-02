@@ -64,7 +64,7 @@ extern float fps;
 extern float hitCircleSize, totalElapsedTime;
 extern CP_Vector Up, Left, Down, Right;
 int chSize = 10;
-
+extern int randomX, randomY;
 extern float deltaTime;
 
 CP_Image playerSS;
@@ -89,8 +89,10 @@ void Level_Init()
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
-	itemInit(&bbt,600,600,30,30,1);
-}
+	itemInit(&bbt,600,600,40,40,1);
+	randomX = 0;
+	randomY = 0;
+}	
 
 void Level_Update()
 {
@@ -190,20 +192,17 @@ void Level_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	// PowerUP
+	// PowerUP 
 	//
 	if (bbt.isActive && player.alive) {
 		CP_Settings_Fill(green);
 		CP_Graphics_DrawRect(bbt.position.x,bbt.position.y,bbt.Width,bbt.Height);
 		playerHeal(&bbt, &player);
-	}
-	else
-	{
+	}if (!bbt.isActive) {
 		coolDown(&bbt, deltaTime);
 	}
-
-	if (bbt.timer >= 0) {
-		respawnItem(&bbt, CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
+	if (bbt.timer <= 0 && !bbt.isActive) {
+		respawnItem(&bbt, randomX, randomY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 	}
 
 	// ENEMY
