@@ -190,7 +190,18 @@ void Level_Update()
 			}
 			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 			CP_Graphics_DrawCircle(bullets[i].Pos.x, bullets[i].Pos.y, bullets[i].diameter);
-
+			if (bulletDamage(&quiz1, bullets[i], 130, 130) == 1)
+			{
+				bullets[i].active = 0;
+			}
+			if (bulletDamage(&assignment1, bullets[i], 130, 130) == 1)
+			{
+				bullets[i].active = 0;
+			}
+			if (bulletDamage(&lab1, bullets[i], 130, 130) == 1)
+			{
+				bullets[i].active = 0;
+			}
 		}
 
 	}
