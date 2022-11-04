@@ -6,7 +6,19 @@
 @date       25/10/2022 (last updated)
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
-struct Player;
+struct Item {
+	CP_Vector position;
+	float Width;
+	float Height;
+	int isActive;
+	float timer;
+	int Modifier;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+}; struct Item bbt, coffee, snacks;
 void itemInit(struct Item* item, float posX, float posY, float width, float height, float mod);
 void playerHeal(struct Item* item, struct Player* player);
 void playerSpeedUp(struct Item* item, struct Player* player);

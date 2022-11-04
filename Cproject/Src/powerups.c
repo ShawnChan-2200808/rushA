@@ -9,20 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-
-struct Item {
-	CP_Vector position;
-	float Width;
-	float Height;
-	int isActive;
-	float timer;
-	int Modifier;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Item bbt, coffee, snacks;
+#include "powerups.h"
 
 // reference to player
 extern struct Player {
@@ -78,6 +65,7 @@ void coolDown(struct Item* item, float deltatime) {
 void respawnItem(struct Item* item/*, float posX, float posY*/) {
 	randomX = CP_Random_RangeFloat(200, 1700);
 	randomY = CP_Random_RangeFloat(200, 800);
+	// FOR AFTER collision - If in wall set to another pos
 	(*item).position = CP_Vector_Set(randomX, randomY);
 	(*item).isActive = 1;
 }
