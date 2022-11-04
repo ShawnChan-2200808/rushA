@@ -42,20 +42,6 @@ extern struct Enemy {
 		animationElapsedTime, displayTime;
 };
 
-extern struct Item {
-	CP_Vector position;
-	float Width;
-	float Height;
-	int isActive;
-	float timer;
-	int Modifier;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; 
-
 extern struct Item bbt, coffee, snacks;
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
