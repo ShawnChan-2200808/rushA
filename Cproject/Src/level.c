@@ -16,6 +16,7 @@
 #include "enemy.h"
 #include "anim.h"
 #include "weapons.h"
+#include "powerups.h"
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
@@ -41,6 +42,21 @@ extern struct Enemy {
 		animationElapsedTime, displayTime;
 };
 
+extern struct Item {
+	CP_Vector position;
+	float Width;
+	float Height;
+	int isActive;
+	float timer;
+	int Modifier;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+}; 
+
+extern struct Item bbt, coffee, snacks;
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
 extern CP_Color gray, blue, green, red;
@@ -49,7 +65,7 @@ extern float fps;
 extern float hitCircleSize, totalElapsedTime;
 extern CP_Vector Up, Left, Down, Right;
 int chSize = 10;
-
+extern int randomX, randomY;
 extern float deltaTime;
 
 CP_Image playerSS;
@@ -77,7 +93,10 @@ void Level_Init()
 
 	// Set laser color for quiz
 	quiz1.lasercolour = red;
-}
+	itemInit(&bbt,600,600,40,40,1);
+	randomX = 0;
+	randomY = 0;
+}	
 
 void Level_Update()
 {
@@ -175,6 +194,19 @@ void Level_Update()
 
 	
 
+	// PowerUP 
+	//
+	if (bbt.isActive && player.alive) {
+		CP_Settings_Fill(green);
+		CP_Graphics_DrawRect(bbt.position.x,bbt.position.y,bbt.Width,bbt.Height);
+		playerHeal(&bbt, &player);
+	}if (!bbt.isActive) {
+		coolDown(&bbt, deltaTime);
+	}
+	if (bbt.timer <= 0 && !bbt.isActive) {
+		respawnItem(&bbt, randomX, randomY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
+	}
+
 	// ENEMY
 	// 
 	// QUIZ is rendered and chase player
@@ -241,6 +273,7 @@ void Level_Update()
 		CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, hitCircleSize);
 		*/
 	}
+
 
 
 	//UI HUD

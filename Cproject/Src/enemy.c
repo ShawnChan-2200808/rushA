@@ -168,5 +168,6 @@ void respawnEnemy(struct Enemy *enemy, float posX, float posY) {
 void removeEnemy(struct Enemy* enemy) {
 	(*enemy).EnemyPos.x = -100;
 	(*enemy).EnemyPos.y = -100;
+	(*enemy).alive = 0;
 }
 
