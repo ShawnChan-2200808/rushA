@@ -10,6 +10,8 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "weapons.h"
+#include "enemy.h"
+#include "player.h"
 #include <stdio.h>
 
 // Laser global variables
@@ -23,33 +25,6 @@ int angleflag;
 float elapsedtime = 0;
 
 extern CP_Color red;
-
-struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	CP_Color lasercolour;
-	int speed, alive;
-	float HP, damage;
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Enemy;
-
-struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Player;
-
-
-
 
 int laser(struct Enemy* enemy, struct Player* player)
 {

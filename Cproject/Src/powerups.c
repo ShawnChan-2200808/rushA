@@ -10,19 +10,8 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "powerups.h"
+#include "player.h"
 
-// reference to player
-extern struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Player player;
 extern int randomX, randomY;
 
 void itemInit(struct Item *item,float posX, float posY, float width, float height, float mod) {

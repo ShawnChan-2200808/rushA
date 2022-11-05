@@ -10,34 +10,10 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "bullet.h"
-
-// MAIN ENEMY STRUCT
-extern struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	CP_Color lasercolour;
-	int speed, alive;
-	float HP, damage;
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Enemy quiz1, lab1, assignment1;
+#include "player.h"
+#include "enemy.h"
 
 float hitCircleSize, deltaTime;
-
-// reference to player
-extern struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Player player;
 
 extern CP_Color red;
 

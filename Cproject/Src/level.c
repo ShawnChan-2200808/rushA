@@ -80,7 +80,7 @@ void Level_Init()
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
 
-	// Set laser color for quiz
+	// Set laser color for lab
 	quiz1.lasercolour = red;
 	itemInit(&bbt,600,600,40,40,1);
 	randomX = 0;
@@ -241,9 +241,7 @@ void Level_Update()
 	// QUIZ is rendered and chase player
 	if (quiz1.alive && player.alive) {
 		// If enemy come into contact with player deal damage
-		if (1 == laser(&quiz1, &player)) {
-			player.GPA -= quiz1.damage;
-		}
+		
 		updateEnemyAnimation(&quiz1, deltaTime);
 		enemyAnimation(QuizSS, &quiz1);
 		enemyChase(&quiz1, &player);
@@ -281,7 +279,10 @@ void Level_Update()
 	}
 
 	// Lab1 Logic
-	if (lab1.alive && player.alive) {
+	if (lab1.alive && player.alive) {\
+		if (1 == laser(&lab1, &player)) {
+			player.GPA -= lab1.damage;
+		}
 		enemyAnimation(LabSS, &lab1);
 		rotatenemy(&lab1, &player);
 	}
