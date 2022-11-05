@@ -42,6 +42,12 @@ void playerInit(struct Player* player) {
 	(*player).SpriteHeight = 64.0f;
 	(*player).displayTime = 2.0f;
 
+	//collision
+	(*player).hitboxX = ((*player).worldSizeW / 2);
+	(*player).hitboxY = ((*player).worldSizeH / 2);
+	(*player).playermin = CP_Vector_Set(((*player).playerPos.x - ((*player).hitboxX)), ((*player).playerPos.y - ((*player).hitboxY)));
+	(*player).playermax = CP_Vector_Set(((*player).playerPos.x + ((*player).hitboxX)), ((*player).playerPos.y + ((*player).hitboxY)));
+
 }
 
 void isPlayerAlive(struct Player* player) {
@@ -63,7 +69,8 @@ void moveBack(struct Player* player, CP_Vector direction) {
 }
 
 // Get position from player to direction of mouse
-void meleeVec(struct Player* player, int scale) {
+void meleeVec(struct Player* player, int scale) 
+{
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, scale));

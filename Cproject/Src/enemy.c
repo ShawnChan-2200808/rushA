@@ -12,6 +12,7 @@
 #include "bullet.h"
 #include "player.h"
 #include "enemy.h"
+#include "collsion.h"
 
 float hitCircleSize, deltaTime;
 

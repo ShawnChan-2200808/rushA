@@ -18,6 +18,8 @@
 #include "weapons.h"
 #include "powerups.h"
 #include "bullet.h"
+#include "collsion.h"
+
 
 struct Item bbt, coffee, snacks;
 struct Player player;
@@ -38,6 +40,13 @@ CP_Image AssSS;
 CP_Image LabSS;
 CP_Image Floor;
 
+extern struct wall
+{
+    float x, y, width, height;
+    CP_Vector wallmin, wallmax;
+};  extern struct wall wall1;
+
+
 void Level_Init()
 {
 	initGame();
@@ -52,6 +61,9 @@ void Level_Init()
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
+	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
+	
+
 
 	// Set laser color for lab
 	lab1.lasercolour = red;
@@ -306,6 +318,42 @@ void Level_Update()
 		}
 		else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
 	}
+	CP_Settings_Fill(green);
+	CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+	//CP_Settings_RectMode(CP_POSITION_CENTER);
+	//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
+
+	int push = 0;
+	int collided = collision(&player, &wall1);
+
+	//collide with right
+	if (collided == 1)
+	{
+		push += (wall1.x + wall1.width) - (player.playerPos.x - (player.worldSizeW/2));
+		player.playerPos.x += push;
+	}
+	//collide with left
+	if (collided == 2)
+	{
+		push += (player.playerPos.x + (player.worldSizeW/2)) - (wall1.x);
+		player.playerPos.x -= push;
+	}
+	//collide with bottom
+	if (collided == 3)
+	{
+		push += (wall1.y + wall1.height) - (player.playerPos.y - (player.worldSizeW/2));
+		player.playerPos.y += push;
+	}
+	//collide with top
+	if (collided == 4)
+	{
+		push += (player.playerPos.y + (player.worldSizeW/2)) - (wall1.y);
+		player.playerPos.y -= push;
+	}
+
+
+
+
 	// END GAME
 	// 
 	//if (totalElapsedTime >= 20) {
