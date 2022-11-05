@@ -16,3 +16,4 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 void respawnEnemy(struct Enemy* enemy, float posX, float posY);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
+int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY);

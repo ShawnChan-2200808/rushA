@@ -9,6 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
+#include "bullet.h"
 
 // MAIN ENEMY STRUCT
 extern struct Enemy {
@@ -171,3 +172,12 @@ void removeEnemy(struct Enemy* enemy) {
 	(*enemy).alive = 0;
 }
 
+int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY)
+{
+	if (((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
+	{
+		(*enemy).HP -= bullet.damage;
+		return 1;
+	}
+	else return 0;
+}
