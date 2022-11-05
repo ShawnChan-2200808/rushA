@@ -6,6 +6,19 @@
 @date       25/10/2022 (last updated)
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
+
+// MAIN PLAYER STRUCT
+struct Player {
+	CP_Vector playerPos, tempPos, direction;
+	CP_Vector weaponPos, bulletPos;
+	int speed, alive, damage, weapon, attacking, ammo;
+	float GPA, timer, projVelocity;
+
+	//animation
+	int animationSpeed, currentFrame, animTotalFrames;
+	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
+		animationElapsedTime, displayTime;
+}; struct Player player;
 void playerInit(struct Player* player);
 void isPlayerAlive(struct Player* player);
 void moveForward(struct Player* player, CP_Vector direction);

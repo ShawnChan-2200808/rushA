@@ -8,19 +8,7 @@
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
-
-// MAIN PLAYER STRUCT
-struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Player player;
+#include "player.h"
 
 CP_Vector Up, Left, Down, Right;
 extern CP_Color white, green;
