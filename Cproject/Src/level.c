@@ -19,51 +19,24 @@
 #include "powerups.h"
 #include "bullet.h"
 
-extern struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-};
-
-extern struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	CP_Color lasercolour;
-	int speed, alive;
-	float HP, damage;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-};
-
-extern struct Item bbt, coffee, snacks;
-extern struct Player player;
-extern struct Enemy quiz1, lab1, assignment1;
+struct Item bbt, coffee, snacks;
+struct Player player;
+struct Enemy quiz1, lab1, assignment1;
 struct Bullet bullets[10];
-extern CP_Color gray, blue, green, red;
-extern int windowWidth, windowHeight;
-extern float fps;
-extern float hitCircleSize, totalElapsedTime;
-extern CP_Vector Up, Left, Down, Right;
+CP_Color gray, blue, green, red;
+int windowWidth, windowHeight;
+float fps;
+float hitCircleSize, totalElapsedTime;
+CP_Vector Up, Left, Down, Right;
 int chSize = 10;
-extern int randomX, randomY;
-extern float deltaTime;
+int randomX, randomY;
+float deltaTime;
 
 CP_Image playerSS;
 CP_Image QuizSS;
 CP_Image AssSS;
 CP_Image LabSS;
 CP_Image Floor;
-
-
 
 void Level_Init()
 {
