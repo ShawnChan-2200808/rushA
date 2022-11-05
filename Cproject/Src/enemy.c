@@ -97,7 +97,7 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
 	(*enemy).HP = 3;
-	(*enemy).damage = 0.00f;
+	(*enemy).damage = 0.01f;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 5;

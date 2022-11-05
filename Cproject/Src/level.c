@@ -54,7 +54,7 @@ void Level_Init()
 	labInit(&lab1, 1000,300);
 
 	// Set laser color for lab
-	quiz1.lasercolour = red;
+	lab1.lasercolour = red;
 	itemInit(&bbt,600,600,40,40,1);
 	randomX = 0;
 	randomY = 0;
