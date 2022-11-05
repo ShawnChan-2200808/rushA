@@ -8,30 +8,8 @@
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
-
-struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	CP_Color lasercolour;
-	int speed, alive;
-	float HP, damage;
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Enemy;
-
-struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; struct Player;
+#include "player.h"
+#include "enemy.h"
 
 CP_Color black, white, gray, blue, green, red;
 int windowWidth, windowHeight;
