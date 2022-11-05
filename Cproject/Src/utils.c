@@ -9,7 +9,7 @@
 
 #include "cprocessing.h"
 
-struct Enemy {
+extern struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
 	CP_Color lasercolour;
@@ -21,11 +21,15 @@ struct Enemy {
 		animationElapsedTime, displayTime;
 }; struct Enemy;
 
-struct Player {
+extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
 	CP_Vector weaponPos, bulletPos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
+
+	//collision
+	CP_Vector playermin, playermax;
+	float hitboxX, hitboxY;
 
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;

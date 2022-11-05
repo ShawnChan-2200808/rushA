@@ -16,12 +16,17 @@
 #include "enemy.h"
 #include "anim.h"
 #include "weapons.h"
+#include "collsion.h"
 
 extern struct Player {
 	CP_Vector playerPos, tempPos, direction;
 	CP_Vector weaponPos, bulletPos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
+
+	//collision
+	CP_Vector playermin, playermax;
+	float hitboxX, hitboxY;
 
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
@@ -40,6 +45,11 @@ extern struct Enemy {
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
 };
+extern struct wall
+{
+	float x, y, width, height;
+	CP_Vector wallmin, wallmax;
+};  extern struct wall wall1;
 
 extern struct Player player;
 extern struct Enemy quiz1, lab1, assignment1;
@@ -74,6 +84,9 @@ void Level_Init()
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
+	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
+	
+
 
 	// Set laser color for quiz
 	quiz1.lasercolour = red;
@@ -270,6 +283,42 @@ void Level_Update()
 		}
 		else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
 	}
+	CP_Settings_Fill(green);
+	CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+	//CP_Settings_RectMode(CP_POSITION_CENTER);
+	//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
+
+	int push = 0;
+	int collided = collision(&player, &wall1);
+
+	//collide with right
+	if (collided == 1)
+	{
+		push += (wall1.x + wall1.width) - (player.playerPos.x - (player.worldSizeW/2));
+		player.playerPos.x += push;
+	}
+	//collide with left
+	if (collided == 2)
+	{
+		push += (player.playerPos.x + (player.worldSizeW/2)) - (wall1.x);
+		player.playerPos.x -= push;
+	}
+	//collide with bottom
+	if (collided == 3)
+	{
+		push += (wall1.y + wall1.height) - (player.playerPos.y - (player.worldSizeW/2));
+		player.playerPos.y += push;
+	}
+	//collide with top
+	if (collided == 4)
+	{
+		push += (player.playerPos.y + (player.worldSizeW/2)) - (wall1.y);
+		player.playerPos.y -= push;
+	}
+
+
+
+
 	// END GAME
 	// 
 	//if (totalElapsedTime >= 20) {

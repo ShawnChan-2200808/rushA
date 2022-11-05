@@ -42,6 +42,10 @@ struct Player {
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
 
+	//collision
+	CP_Vector playermin, playermax;
+	float hitboxX, hitboxY;
+
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,

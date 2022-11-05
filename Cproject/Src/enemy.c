@@ -9,6 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
+#include "collsion.h"
 
 // MAIN ENEMY STRUCT
 extern struct Enemy {
@@ -31,6 +32,10 @@ extern struct Player {
 	CP_Vector weaponPos, bulletPos;
 	int speed, alive, damage, weapon, attacking, ammo;
 	float GPA, timer, projVelocity;
+
+	//collision
+	CP_Vector playermin, playermax;
+	float hitboxX, hitboxY;
 
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
