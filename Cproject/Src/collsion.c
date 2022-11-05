@@ -9,46 +9,12 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-
-// MAIN ENEMY STRUCT
-extern struct Enemy {
-	CP_Vector EnemyPos, tempPos, direction;
-	CP_Vector weaponPos;
-	CP_Color lasercolour;
-	int speed, alive;
-	float HP, damage;
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Enemy quiz1, lab1, assignment1;
+#include "collsion.h"
+#include "player.h"
+#include "enemy.h"
 
 float hitCircleSize, deltaTime;
-
-// reference to player
-extern struct Player {
-	CP_Vector playerPos, tempPos, direction;
-	CP_Vector weaponPos, bulletPos;
-	int speed, alive, damage, weapon, attacking, ammo;
-	float GPA, timer, projVelocity;
-
-	//collision
-	CP_Vector playermin, playermax;
-	float hitboxX, hitboxY;
-
-	//animation
-	int animationSpeed, currentFrame, animTotalFrames;
-	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
-}; extern struct Player player;
-
 extern CP_Color red,green;
-
-struct wall
-{
-	float x, y, width, height;
-	CP_Vector wallmin, wallmax;
-}; struct wall wall1;
 
 void wall1init(struct wall * wall1, float width, float height, float posX, float posY) 
 {
