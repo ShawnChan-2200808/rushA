@@ -11,7 +11,6 @@
 #include "player.h"
 
 CP_Vector Up, Left, Down, Right;
-extern CP_Color white, green;
 extern float deltaTime,windowHeight,windowWidth;
 
 // Initiallize player settings
@@ -25,7 +24,7 @@ void playerInit(struct Player* player) {
 	(*player).speed = 500;
 	(*player).alive = 1;
 	(*player).GPA = 5.00f;
-	(*player).damage = 1;
+	(*player).damage = 4;
 	(*player).timer = 0;
 	(*player).weaponPos = CP_Vector_Set((*player).playerPos.x, (*player).playerPos.y);
 	(*player).weapon = 0;

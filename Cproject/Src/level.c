@@ -4,7 +4,7 @@
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      This file contains the main level that we integrate 
+@brief      This file contains the main level that we integrate
 		*** ONLY UPDATE THIS AFTER APPROVAL OF TEAM ***
 *//*_________________________________________________________________________*/
 
@@ -19,10 +19,6 @@
 #include "powerups.h"
 #include "bullet.h"
 
-struct Item bbt, coffee, snacks;
-struct Player player;
-struct Enemy quiz1, lab1, assignment1;
-struct Bullet bullets[10];
 CP_Color gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
@@ -52,29 +48,21 @@ void Level_Init()
 	playerInit(&player);
 	quizInit(&quiz1, 300, 300);
 	assInit(&assignment1, 500, 300);
-	labInit(&lab1, 1000,300);
+	labInit(&lab1, 1000, 300);
 
 	// Set laser color for lab
 	lab1.lasercolour = red;
-	itemInit(&bbt,600,600,40,40,1);
+	itemInit(&bbt, 600, 600, 40, 40, 1);
 	randomX = 0;
 	randomY = 0;
-	for (int i = 0; i < 10; ++i)
-	{
-		bullets[i].active = 0;
-		bullets[i].velocity = 0;
-	}
+	bulletReset(bulletIndex);
 }
 
 void Level_Update()
 {
 	if (paused == 0)
 	{
-		// PLAYER CROSSHAIR
-//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 0));
-//CP_Graphics_DrawCircle(CP_Input_GetMouseX(), CP_Input_GetMouseY(), chSize);
-
-// PLAYER MOVEMENT + BOUNDARIES
+		// PLAYER MOVEMENT + BOUNDARIES
 		if (player.alive) {
 			SpawnBG(Floor, 6, 9);
 			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
@@ -98,10 +86,6 @@ void Level_Update()
 			if (CP_Input_KeyReleased(KEY_Q))
 			{
 				player.weapon = switchWeapon(player.weapon);
-
-				//TESTING THE LAB TRANSITION
-
-
 			}
 
 
@@ -110,27 +94,13 @@ void Level_Update()
 				// get vector and spawn hit point
 				if (player.weapon == 1)
 				{
-					for (int i = 0; i < 10; ++i)
-					{
-						if (bullets[i].active == 0)
-						{
-							bullets[i].active = 1;
-							bullets[i].velocity = 1000;
-							bullets[i].diameter = 20;
-							bullets[i].damage = 5;
-							bullets[i].Pos = player.playerPos;
-							bullets[i].Vector = CP_Vector_Set((CP_Input_GetMouseX() - player.playerPos.x), (CP_Input_GetMouseY() - player.playerPos.y));
-							bullets[i].Vector = CP_Vector_Normalize(bullets[i].Vector);
-							bullets[i].Vector = CP_Vector_Scale(bullets[i].Vector, bullets[i].velocity);
-							break;
-						}
-					}
+					bulletInit(bulletIndex, &player);
 				}
 				else
 				{
 					meleeVec(&player, 100);
 					CP_Settings_Fill(blue);
-					CP_Settings_RectMode(CP_POSITION_CENTER);
+					//CP_Settings_RectMode(CP_POSITION_CENTER);
 					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
 					damageEnemy(&quiz1, &player, 150, 150);
 					damageEnemy(&assignment1, &player, 150, 150);
@@ -161,43 +131,25 @@ void Level_Update()
 		totalElapsedTime += deltaTime;
 
 		// BULLET SIMULATION (UPDATING POSITION)
-		for (int i = 0; i < 10; ++i)
-		{
-			if (bullets[i].active == 1)
-			{
-				bullets[i].Pos.x += bullets[i].Vector.x * deltaTime;
-				bullets[i].Pos.y += bullets[i].Vector.y * deltaTime;
-				if (bullets[i].Pos.x < 0 || bullets[i].Pos.x >= CP_System_GetWindowWidth() || bullets[i].Pos.y < 0 || bullets[i].Pos.y >= CP_System_GetWindowHeight())
-				{
-					bullets[i].active = 0;
-				}
-				CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-				CP_Graphics_DrawCircle(bullets[i].Pos.x, bullets[i].Pos.y, bullets[i].diameter);
-				if (bulletDamage(&quiz1, bullets[i], 130, 130) == 1)
-				{
-					bullets[i].active = 0;
-				}
-				if (bulletDamage(&assignment1, bullets[i], 130, 130) == 1)
-				{
-					bullets[i].active = 0;
-				}
-				if (bulletDamage(&lab1, bullets[i], 130, 130) == 1)
-				{
-					bullets[i].active = 0;
-				}
+		bulletUpdate(bulletIndex, deltaTime);
+
+
+		// Lab1 Logic
+		if (lab1.alive && player.alive) {
+			if (1 == laser(&lab1, &player)) {
+				player.GPA -= lab1.damage;
 			}
-
+			enemyAnimation(LabSS, &lab1);
+			rotatenemy(&lab1, &player);
 		}
-
-		//testing GPA
-		//if (player.GPA >0) {
-		//	player.GPA -= deltaTime;
-		//}
-		//else {
-		//	player.GPA = 5.00f;
-		//}
-
-
+		else {
+			// move dead enemy to out of screen
+			removeEnemy(&lab1);
+		}
+		if (!lab1.alive) {
+			// reset enemy values
+			respawnEnemy(&lab1, 1000, 50, 10);
+		}
 
 		// PowerUP 
 		//
@@ -237,7 +189,7 @@ void Level_Update()
 		}
 		if (!quiz1.alive) {
 			// reset enemy values
-			respawnEnemy(&quiz1, 10, 10);
+			respawnEnemy(&quiz1, 10, 10,15);
 		}
 
 		// Assignment1 Logic
@@ -251,25 +203,7 @@ void Level_Update()
 		}
 		if (!assignment1.alive) {
 			// reset enemy values
-			respawnEnemy(&assignment1, 500, 50);
-		}
-
-		// Lab1 Logic
-		if (lab1.alive && player.alive) {
-			\
-				if (1 == laser(&lab1, &player)) {
-					player.GPA -= lab1.damage;
-				}
-			enemyAnimation(LabSS, &lab1);
-			rotatenemy(&lab1, &player);
-		}
-		else {
-			// move dead enemy to out of screen
-			removeEnemy(&lab1);
-		}
-		if (!lab1.alive) {
-			// reset enemy values
-			respawnEnemy(&lab1, 1000, 50);
+			respawnEnemy(&assignment1, 500, 50,5);
 		}
 
 		if (player.alive) {
@@ -310,6 +244,7 @@ void Level_Update()
 			}
 			else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
 		}
+
 		// END GAME
 		// 
 		//if (totalElapsedTime >= 20) {
@@ -317,17 +252,15 @@ void Level_Update()
 		//}
 
 		// PAUSE KEY
+		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
-			if (CP_Input_KeyReleased(KEY_ESCAPE))
-			{
-				paused = !paused;
-			}
+			paused = !paused;
 		}
 
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	}
-	else
-	{
+		}
+		else
+		{
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			paused = !paused;

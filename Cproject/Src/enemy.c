@@ -50,9 +50,9 @@ void rotatenemy(struct Enemy* enemy, struct Player* player) {
 void quizInit(struct Enemy *enemy,float posX, float posY) {
 	// QUIZ
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
-	(*enemy).speed = 50;
+	(*enemy).speed = 350;
 	(*enemy).alive = 1;
-	(*enemy).HP = 3;
+	(*enemy).HP = 20;
 	(*enemy).damage = 0.05f;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
@@ -75,7 +75,7 @@ void assInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
-	(*enemy).HP = 3;
+	(*enemy).HP = 10;
 	(*enemy).damage = 0.0f;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
@@ -96,7 +96,7 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
-	(*enemy).HP = 3;
+	(*enemy).HP = 15;
 	(*enemy).damage = 0.01f;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
@@ -135,8 +135,8 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 	}
 }
 
-void respawnEnemy(struct Enemy *enemy, float posX, float posY) {
-	(*enemy).HP = 2;
+void respawnEnemy(struct Enemy *enemy, float posX, float posY,int hp) {
+	(*enemy).HP = hp;
 	(*enemy).EnemyPos.x = posX;
 	(*enemy).EnemyPos.y = posY;
 	(*enemy).alive = 1;
