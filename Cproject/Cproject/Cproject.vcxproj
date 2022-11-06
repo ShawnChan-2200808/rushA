@@ -102,6 +102,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
   <ItemGroup>
     <ClCompile Include="..\Src\anim.c" />
     <ClCompile Include="..\Src\bullet.c" />
+    <ClCompile Include="..\Src\collsion.c" />
     <ClCompile Include="..\Src\enemy.c" />
     <ClCompile Include="..\Src\level.c">
       <DeploymentContent>true</DeploymentContent>
@@ -122,6 +123,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
   <ItemGroup>
     <ClInclude Include="..\Src\anim.h" />
     <ClInclude Include="..\Src\bullet.h" />
+    <ClInclude Include="..\Src\collsion.h" />
     <ClInclude Include="..\Src\enemy.h" />
     <ClInclude Include="..\Src\player.h" />
     <ClInclude Include="..\Src\powerups.h" />

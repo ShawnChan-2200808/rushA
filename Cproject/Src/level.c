@@ -144,33 +144,6 @@ void Level_Update()
 		CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
 		//CP_Settings_RectMode(CP_POSITION_CENTER);
 		//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
-
-		int push = 0;
-		int collided = collision(&player, &wall1);
-		//collide with right
-		if (collided == 1)
-		{
-			push += (wall1.x + wall1.width) - (player.playerPos.x - (player.worldSizeW / 2));
-			player.playerPos.x += push;
-		}
-		//collide with left
-		if (collided == 2)
-		{
-			push += (player.playerPos.x + (player.worldSizeW / 2)) - (wall1.x);
-			player.playerPos.x -= push;
-		}
-		//collide with bottom
-		if (collided == 3)
-		{
-			push += (wall1.y + wall1.height) - (player.playerPos.y - (player.worldSizeW / 2));
-			player.playerPos.y += push;
-		}
-		//collide with top
-		if (collided == 4)
-		{
-			push += (player.playerPos.y + (player.worldSizeW / 2)) - (wall1.y);
-			player.playerPos.y -= push;
-		}
 	}
 
 		deltaTime = CP_System_GetDt();
@@ -316,6 +289,33 @@ void Level_Update()
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText("GAME PAUSED", (CP_System_GetWindowWidth() / 3), (CP_System_GetWindowHeight() / 2));
 		CP_Font_DrawText("Press Esc to resume", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
+	}
+
+	int push = 0;
+	int collided = collision(&player, &wall1);
+	//collide with right
+	if (collided == 1)
+	{
+		push += (wall1.x + wall1.width) - (player.playerPos.x - (player.worldSizeW / 2));
+		player.playerPos.x += push;
+	}
+	//collide with left
+	if (collided == 2)
+	{
+		push += (player.playerPos.x + (player.worldSizeW / 2)) - (wall1.x);
+		player.playerPos.x -= push;
+	}
+	//collide with bottom
+	if (collided == 3)
+	{
+		push += (wall1.y + wall1.height) - (player.playerPos.y - (player.worldSizeW / 2));
+		player.playerPos.y += push;
+	}
+	//collide with top
+	if (collided == 4)
+	{
+		push += (player.playerPos.y + (player.worldSizeW / 2)) - (wall1.y);
+		player.playerPos.y -= push;
 	}
 
 	// END GAME
