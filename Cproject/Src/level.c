@@ -34,16 +34,18 @@ CP_Image QuizSS;
 CP_Image AssSS;
 CP_Image LabSS;
 CP_Image Floor;
+CP_Image bbtSS;
 
 void Level_Init()
 {
 	initGame();
 
-	playerSS = CP_Image_Load("Assets/player_idle_64h.png");
+	playerSS = CP_Image_Load("Assets/player_SS.png");
 	QuizSS = CP_Image_Load("Assets/QUIZ.png");
-	AssSS = CP_Image_Load("Assets/ASS_SS_64.png");
-	LabSS = CP_Image_Load("Assets/LAB_SS_64.png");
+	AssSS = CP_Image_Load("Assets/ASS_SS.png");
+	LabSS = CP_Image_Load("Assets/LAB_SS.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
+	bbtSS = CP_Image_Load("Assets/BBT.png");
 
 	playerInit(&player);
 	quizInit(&quiz1, 300, 300);
@@ -52,7 +54,7 @@ void Level_Init()
 
 	// Set laser color for lab
 	lab1.lasercolour = red;
-	itemInit(&bbt, 600, 600, 40, 40, 1);
+	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
 	bulletReset(bulletIndex);
@@ -94,10 +96,12 @@ void Level_Update()
 				// get vector and spawn hit point
 				if (player.weapon == 1)
 				{
+					player.currentFrame = 2;
 					bulletInit(bulletIndex, &player);
 				}
 				else
 				{
+					player.currentFrame = 2;
 					meleeVec(&player, 100);
 					CP_Settings_Fill(blue);
 					//CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -114,8 +118,8 @@ void Level_Update()
 		{
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You failed :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-			CP_Font_DrawText("Press Esc to retest", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
-			if (CP_Input_KeyReleased(KEY_ESCAPE))
+			CP_Font_DrawText("Press SPACE to retest", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
 			}
@@ -155,7 +159,8 @@ void Level_Update()
 		//
 		if (bbt.isActive && player.alive) {
 			CP_Settings_Fill(green);
-			CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
+			//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
+			CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height,255);
 			playerHeal(&bbt, &player);
 		}if (!bbt.isActive) {
 			coolDown(&bbt, deltaTime);
@@ -173,7 +178,7 @@ void Level_Update()
 			updateEnemyAnimation(&quiz1, deltaTime);
 			enemyAnimation(QuizSS, &quiz1);
 			enemyChase(&quiz1, &player);
-
+			damagePlayer(&quiz1, &player);
 			//testing for quiz without sprite
 			//if (quiz1.HP == 1) { CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); }
 			//else { CP_Settings_Fill(red); }
@@ -280,4 +285,5 @@ void Level_Exit()
 	CP_Image_Free(&LabSS);
 	CP_Image_Free(&AssSS);
 	CP_Image_Free(&Floor);
+	CP_Image_Free(&bbtSS);
 }
