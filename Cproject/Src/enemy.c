@@ -13,9 +13,11 @@
 #include "player.h"
 #include "enemy.h"
 #include "collsion.h"
+#include "anim.h"
+#include "level.h"
 
-float hitCircleSize, deltaTime;
-
+extern float hitCircleSize, deltaTime;
+extern int randomX, randomY;
 extern CP_Color red;
 
 void rotatenemy(struct Enemy* enemy, struct Player* player) {
@@ -136,10 +138,12 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 	}
 }
 
-void respawnEnemy(struct Enemy *enemy, float posX, float posY,int hp) {
+void respawnEnemy(struct Enemy *enemy,int hp) {
 	(*enemy).HP = hp;
-	(*enemy).EnemyPos.x = posX;
-	(*enemy).EnemyPos.y = posY;
+	randomX = CP_Random_RangeFloat(200, 1700);
+	randomY = CP_Random_RangeFloat(200, 800);
+	(*enemy).EnemyPos.x = randomX;
+	(*enemy).EnemyPos.y = randomY;
 	(*enemy).alive = 1;
 }
 
@@ -157,4 +161,52 @@ int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float
 		return 1;
 	}
 	else return 0;
+}
+
+void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
+	// Lab1 Logic
+	if ((*lab).alive && (*player).alive) {
+		if (1 == laser(&(*lab), &(*player))) {
+			(*player).GPA -= (*lab).damage;
+		}
+		enemyAnimation(LabSS, &(*lab));
+		rotatenemy(&(*lab), &(*player));
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&(*lab));
+	}
+}
+void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player) {
+	if ((*quiz).alive && (*player).alive) {
+		// If enemy come into contact with player deal damage
+
+		updateEnemyAnimation(&(*quiz), deltaTime);
+		enemyAnimation(QuizSS, &quiz1);
+		enemyChase(&(*quiz), &(*player));
+		damagePlayer(&(*quiz), &(*player));
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&(*quiz));
+	}
+
+}
+void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
+	// Assignment1 Logic
+	if ((*ass).alive && (*player).alive) {
+		updateEnemyAnimation(&(*ass), deltaTime);
+		enemyAnimation(AssSS, &(*ass));
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&(*ass));
+	}
+}
+
+void spawnWeek1(struct Enemy* quiz,struct Enemy* ass,struct Enemy* lab,int bool) {
+	respawnEnemy(&(*quiz), 15);
+	respawnEnemy(&(*ass), 5);
+	respawnEnemy(&(*lab), 10);
+	bool = 0;
 }
