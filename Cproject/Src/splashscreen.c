@@ -63,6 +63,11 @@ void Splash_Screen_Update(void)
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 
+	if (CP_Input_KeyReleased(KEY_ESCAPE))
+	{
+		totalElapsedTime = 2;
+	}
+
 	// Rendering Digipen Splashscreen 
 	if (totalElapsedTime < 2) {
 		// Clamp the image to the Center 

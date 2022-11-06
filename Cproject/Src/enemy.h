@@ -27,7 +27,7 @@ void isEnemyAlive(struct Enemy* enemy);
 void enemyChase(struct Enemy* enemy, struct Player* player);
 void damagePlayer(struct Enemy* enemy, struct Player* player);
 void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY);
-void respawnEnemy(struct Enemy* enemy, float posX, float posY);
+void respawnEnemy(struct Enemy* enemy, float posX, float posY, int hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
 int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY);
