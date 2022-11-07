@@ -52,13 +52,12 @@ void Level_Init()
 	bbtSS = CP_Image_Load("Assets/BBT.png");
 
 	playerInit(&player);
-	quizInit(&quiz1, 300, 300);
-	assInit(&assignment1, 500, 300);
-	labInit(&lab1, 1000, 300);
+	initAllEnemies(10, 8);
+	//quizInit(&quiz, 300, 300);
+	//assInit(&assignment, 500, 300);
+	//labInit(&lab, 1000, 300);
 	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
 	
-	// Set laser color for lab
-	lab1.lasercolour = red;
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
@@ -112,9 +111,16 @@ void Level_Update()
 					CP_Settings_Fill(blue);
 					//CP_Settings_RectMode(CP_POSITION_CENTER);
 					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
-					damageEnemy(&quiz1, &player, 150, 150);
-					damageEnemy(&assignment1, &player, 150, 150);
-					damageEnemy(&lab1, &player, 150, 150);
+					for (int i = 0; i < 10; i++)
+					{
+						damageEnemy(&quiz[i], &player, 150, 150);
+					}
+					for (int i = 0; i < 8; i++)
+					{
+						damageEnemy(&assignment[i], &player, 150, 150);
+						damageEnemy(&lab[i], &player, 150, 150);
+					}
+
 				}
 			}
 		}
@@ -151,14 +157,17 @@ void Level_Update()
 		totalElapsedTime += deltaTime;
 
 		isPlayerAlive(&player);
-		isEnemyAlive(&quiz1);
-		isEnemyAlive(&assignment1);
-		isEnemyAlive(&lab1);
 
+		checkEnemyAlive(10,8);
+		//isEnemyAlive(&quiz);
+		//sEnemyAlive(&assignment);
+		//isEnemyAlive(&lab);
+
+
+		allEnemyLogic(10,8, QuizSS, AssSS, LabSS);
+		/*
 		if(totalElapsedTime >5.0){
-			// BULLET SIMULATION (UPDATING POSITION)
-			//
-			labLogic(LabSS, &lab1, &player);
+			labLogic(LabSS, &lab, &player);
 			//// Lab1 Logic
 			//if (lab1.alive && player.alive) {
 			//	if (1 == laser(&lab1, &player)) {
@@ -178,7 +187,7 @@ void Level_Update()
 
 			// ENEMY
 			// 
-			quizLogic(QuizSS, &quiz1, &player);
+			quizLogic(QuizSS, &quiz, &player);
 			//// QUIZ is rendered and chase player
 			//if (quiz1.alive && player.alive) {
 			//	// If enemy come into contact with player deal damage
@@ -196,7 +205,7 @@ void Level_Update()
 			//	respawnEnemy(&quiz1, 10, 10,15);
 			//}
 
-			assLogic(AssSS, &assignment1, &player);
+			assLogic(AssSS, &assignment, &player);
 			//// Assignment1 Logic
 			//if (assignment1.alive && player.alive) {
 			//	updateEnemyAnimation(&assignment1, deltaTime);
@@ -212,11 +221,14 @@ void Level_Update()
 			//}
 		}
 		if (totalElapsedTime > 20.0f ) {
-			spawnWeek1(&quiz1,&assignment1,&lab1,week1);
+			spawnWeek1(&quiz,&assignment,&lab,week1);
 		}
+
+		*/
+
 		// BULLET SIMULATION (UPDATING POSITION)
 		//
-		bulletUpdate(bulletIndex, deltaTime);
+		bulletUpdate(bulletIndex, deltaTime,10,8);
 
 		// PowerUP 
 		//

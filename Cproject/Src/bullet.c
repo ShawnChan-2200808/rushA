@@ -20,7 +20,7 @@ void bulletInit(int index, struct Player *player) {
 			bullets[index].active = 1;
 			bullets[index].velocity = 1000;
 			bullets[index].diameter = 20;
-			bullets[index].damage = 1;
+			bullets[index].damage = 100;
 			bullets[index].Pos = (*player).playerPos;
 			bullets[index].Vector = CP_Vector_Set((CP_Input_GetMouseX() - (*player).playerPos.x), (CP_Input_GetMouseY() - (*player).playerPos.y));
 			bullets[index].Vector = CP_Vector_Normalize(bullets[index].Vector);
@@ -30,7 +30,7 @@ void bulletInit(int index, struct Player *player) {
 	}
 }
 
-void bulletUpdate(int index,float deltaTime) {
+void bulletUpdate(int index,float deltaTime, int numOfQuiz,int numOfAssLab) {
 	for (index = 0; index < 10; ++index)
 	{
 		if (bullets[index].active == 1)
@@ -43,17 +43,24 @@ void bulletUpdate(int index,float deltaTime) {
 			}
 			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 			CP_Graphics_DrawCircle(bullets[index].Pos.x, bullets[index].Pos.y, bullets[index].diameter);
-			if (bulletDamage(&quiz1, bullets[index], 130, 130) == 1)
+			// need to update
+			for (int i = 0; i < numOfQuiz; i++)
 			{
-				bullets[index].active = 0;
+				if (bulletDamage(&quiz[i], bullets[index], 130, 130) == 1)
+				{
+					bullets[index].active = 0;
+				}
 			}
-			if (bulletDamage(&assignment1, bullets[index], 130, 130) == 1)
+			for (int i = 0; i < numOfAssLab; i++)
 			{
-				bullets[index].active = 0;
-			}
-			if (bulletDamage(&lab1, bullets[index], 130, 130) == 1)
-			{
-				bullets[index].active = 0;
+				if (bulletDamage(&assignment[i], bullets[index], 130, 130) == 1)
+				{
+					bullets[index].active = 0;
+				}
+				if (bulletDamage(&lab[i], bullets[index], 130, 130) == 1)
+				{
+					bullets[index].active = 0;
+				}
 			}
 		}
 

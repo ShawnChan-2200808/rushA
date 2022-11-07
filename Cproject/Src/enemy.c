@@ -70,7 +70,7 @@ void quizInit(struct Enemy *enemy,float posX, float posY) {
 	hitCircleSize = 50.0f;
 
 	// Set laser color for quiz
-	(*enemy).lasercolour = red;
+	//(*enemy).lasercolour = red;
 }
 
 void assInit(struct Enemy *enemy, float posX, float posY) {
@@ -111,13 +111,38 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+	(*enemy).lasercolour = red;
 	hitCircleSize = 50.0f;
+}
+
+void initAllEnemies(int numOfQuiz, int numOfAssLab) {
+	for (int i = 0; i < numOfQuiz; i++)
+	{
+		quizInit(&quiz[i], 100+i*20, 100+i*20);
+		quiz[i].speed -= i * 20;
+	}
+	for (int i = 0; i < numOfAssLab; i++)
+	{
+		assInit(&assignment[i], 100+i*100, 100+i*100);
+		labInit(&lab[i], 1920-i*100, 1000-i*2);
+	}
 }
 
 void isEnemyAlive(struct Enemy* enemy) {
 	(*enemy).alive = (*enemy).HP <= 0 ? 0 : 1;
 }
 
+void checkEnemyAlive(int numOfQuiz, int numOfAssLab) {
+	for (int i = 0; i < numOfQuiz; i++)
+	{
+		isEnemyAlive(&quiz[i]);
+	}
+	for (int i = 0; i < numOfAssLab; i++)
+	{
+		isEnemyAlive(&assignment[i]);
+		isEnemyAlive(&lab[i]);
+	}
+}
 // Move forward
 void enemyChase(struct Enemy* enemy, struct Player* player) {
 	CP_Vector update = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
@@ -128,7 +153,7 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 
 void damagePlayer(struct Enemy* enemy, struct Player* player) {
 	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, hitCircleSize, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
-		(*player).GPA -= quiz1.damage;
+		(*player).GPA -= (*enemy).damage;
 	}
 }
 
@@ -182,7 +207,7 @@ void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player) {
 		// If enemy come into contact with player deal damage
 
 		updateEnemyAnimation(&(*quiz), deltaTime);
-		enemyAnimation(QuizSS, &quiz1);
+		enemyAnimation(QuizSS, &(*quiz));
 		enemyChase(&(*quiz), &(*player));
 		damagePlayer(&(*quiz), &(*player));
 	}
@@ -204,9 +229,22 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	}
 }
 
+void allEnemyLogic(int numOfQuiz, int numOfAssLab, CP_Image a, CP_Image b, CP_Image c) {
+	for (int i = 0; i < numOfQuiz; i++)
+	{
+		quizLogic(a, &quiz[i], &player);
+	}
+	for (int i = 0; i < numOfAssLab; i++)
+	{
+		assLogic(b,&assignment[i],&player);
+		labLogic(c,&lab[i],&player);
+	}
+}
+
 void spawnWeek1(struct Enemy* quiz,struct Enemy* ass,struct Enemy* lab,int bool) {
 	respawnEnemy(&(*quiz), 15);
 	respawnEnemy(&(*ass), 5);
 	respawnEnemy(&(*lab), 10);
 	bool = 0;
 }
+

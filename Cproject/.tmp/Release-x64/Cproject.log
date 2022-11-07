@@ -1,1 +1,77 @@
-﻿LINK : fatal error LNK1181: cannot open input file 'kernel32.lib'
+﻿  anim.c
+  bullet.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(45,85): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(47,26): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[10]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(47,21): warning C4024: 'bulletDamage': different types for formal and actual parameter 1
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(51,32): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[8]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(51,21): warning C4024: 'bulletDamage': different types for formal and actual parameter 1
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(55,25): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[8]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\bullet.c(55,21): warning C4024: 'bulletDamage': different types for formal and actual parameter 1
+  collsion.c
+  enemy.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(121,25): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(121,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(126,30): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(126,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(127,24): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(127,36): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(167,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(168,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(169,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(170,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(171,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(194,12): warning C4013: 'laser' undefined; assuming extern returning int
+  level.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(59,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(59,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(114,23): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[10]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(114,18): warning C4024: 'damageEnemy': different types for formal and actual parameter 1
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(115,29): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[8]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(115,18): warning C4024: 'damageEnemy': different types for formal and actual parameter 1
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(116,22): warning C4047: 'function': 'Enemy *' differs in levels of indirection from 'Enemy (*)[8]'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(116,18): warning C4024: 'damageEnemy': different types for formal and actual parameter 1
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(125,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(125,100): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(126,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(126,112): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(129,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(129,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(237,22): warning C4020: 'respawnItem': too many actual parameters
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(257,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(257,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(261,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(265,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(265,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(269,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(269,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(275,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(277,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(302,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(302,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(303,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(303,106): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(311,35): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(317,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(323,36): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(329,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  main.c
+  player.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\player.c(75,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  powerups.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(23,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(55,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(56,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(58,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\powerups.c(58,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  splashscreen.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\splashscreen.c(76,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\splashscreen.c(76,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  utils.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(23,2): warning C4013: 'printf' undefined; assuming extern returning int
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(60,26): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(60,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(60,119): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(60,142): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  weapons.c
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1094,5): error MSB6006: "link.exe" exited with code 1181.
+LINK : fatal error LNK1181: cannot open input file 'kernel32.lib'
