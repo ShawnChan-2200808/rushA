@@ -126,24 +126,6 @@ int IsRectEntered(float area_corner_x, float area_corner_y, float area_width, fl
 
 int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH, int rotation, struct Player* player)
 {
-
-	/*length = CP_Vector_Normalize(length);
-
-	CP_Vector orthogonal = CP_Vector_Set(-(vectorX), vectorY);
-	orthogonal = CP_Vector_Normalize(orthogonal);
-	*/
-
-	// find Bottom left, Bottom Right, Upper right corners of rect;
-	//float BLcornerX = rectX + orthogonal.x;
-	//float BLcornerY = rectY + orthogonal.y;
-
-	//float BRcornerX = BLcornerX + length.x;
-	//float BRcornerY = BRcornerY + length.y;
-
-	//float URcornerX = rectX + length.x;	
-	//float URcornerY = rectY + length.y;
-
-	//printf("length vector %f , %f \n orthogonal vector %f, %f \n", length.x, length.y, orthogonal.x, orthogonal.y);
 	
 	//Find opposite and adjecent length of laser given hypotenuse (length or height)
 	float oppadW = ((laserW) / (sqrt(2)));

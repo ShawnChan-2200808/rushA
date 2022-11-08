@@ -17,7 +17,7 @@ struct Enemy {
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime;
+		animationElapsedTime, displayTime,laserL, laserB;
 };struct Enemy quiz1, lab1, assignment1;
 
 void quizInit(struct Enemy* quiz,float posX,float posY);

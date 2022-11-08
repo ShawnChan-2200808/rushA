@@ -95,7 +95,7 @@ void assInit(struct Enemy *enemy, float posX, float posY) {
 void labInit(struct Enemy *enemy, float posX, float posY) {
 	// LAB
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
-	(*enemy).speed = 0;
+	(*enemy).speed = 500;
 	(*enemy).alive = 1;
 	(*enemy).HP = 15;
 	(*enemy).damage = 0.01f;
@@ -109,6 +109,9 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+	//laserL is the larger value (length)
+	(*enemy).laserL = 750;
+	(*enemy).laserB = 269;
 	hitCircleSize = 50.0f;
 }
 

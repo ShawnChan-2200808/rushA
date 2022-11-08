@@ -156,10 +156,17 @@ void Level_Update()
 		// Lab1 Logic
 		if (lab1.alive && player.alive) {
 			if (1 == laser(&lab1, &player)) {
+				enemyChase(&lab1, &player);
+				enemyAnimation(LabSS, &lab1);
+					rotatenemy(&lab1, &player);
+			}
+			else if (4== laser(&lab1, &player)) {
+				enemyAnimation(LabSS, &lab1);
 				player.GPA -= lab1.damage;
 			}
-			enemyAnimation(LabSS, &lab1);
-			rotatenemy(&lab1, &player);
+			else {
+				enemyAnimation(LabSS, &lab1);
+			}
 		}
 		else {
 			// move dead enemy to out of screen
