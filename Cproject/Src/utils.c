@@ -10,7 +10,7 @@
 #include "cprocessing.h"
 #include "player.h"
 #include "enemy.h"
-
+#include <math.h>
 CP_Color black, white, gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
