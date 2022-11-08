@@ -55,8 +55,9 @@ void quizInit(struct Enemy *enemy,float posX, float posY) {
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
 	(*enemy).speed = 350;
 	(*enemy).alive = 1;
-	(*enemy).HP = 20;
+	(*enemy).HP = 25;
 	(*enemy).damage = 0.05f;
+	(*enemy).inGame = 0;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 15;
@@ -78,8 +79,9 @@ void assInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
-	(*enemy).HP = 10;
+	(*enemy).HP = 20;
 	(*enemy).damage = 0.0f;
+	(*enemy).inGame = 0;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 15;
@@ -99,8 +101,9 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
-	(*enemy).HP = 15;
+	(*enemy).HP = 20;
 	(*enemy).damage = 0.01f;
+	(*enemy).inGame = 0;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 5;
@@ -115,16 +118,25 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 	hitCircleSize = 50.0f;
 }
 
-void initAllEnemies(int numOfQuiz, int numOfAssLab) {
+void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab) {
 	for (int i = 0; i < numOfQuiz; i++)
 	{
-		quizInit(&quiz[i], 100+i*20, 100+i*20);
-		quiz[i].speed -= i * 20;
+		randomX = CP_Random_RangeFloat(200, 1700);
+		randomY = CP_Random_RangeFloat(200, 800);
+		quizInit(&quiz[i], randomX, randomY);
+		//quiz[i].speed -= i * 20;
 	}
-	for (int i = 0; i < numOfAssLab; i++)
+	for (int i = 0; i < numOfAss; i++)
 	{
-		assInit(&assignment[i], 100+i*100, 100+i*100);
-		labInit(&lab[i], 1920-i*100, 1000-i*2);
+		randomX = CP_Random_RangeFloat(200, 1700);
+		randomY = CP_Random_RangeFloat(200, 800);
+		assInit(&assignment[i], randomX, randomY);
+	}
+	for (int i = 0; i < numOfLab; i++)
+	{
+		randomX = CP_Random_RangeFloat(200, 1700);
+		randomY = CP_Random_RangeFloat(200, 800);
+		labInit(&lab[i], randomX, randomY);
 	}
 }
 
@@ -132,15 +144,18 @@ void isEnemyAlive(struct Enemy* enemy) {
 	(*enemy).alive = (*enemy).HP <= 0 ? 0 : 1;
 }
 
-void checkEnemyAlive(int numOfQuiz, int numOfAssLab) {
+void checkEnemyAlive(int numOfQuiz, int numOfAss, int numOfLab) {
+	for (int i = 0; i < numOfLab; i++)
+	{
+		isEnemyAlive(&lab[i]);
+	}
+	for (int i = 0; i < numOfAss; i++)
+	{
+		isEnemyAlive(&assignment[i]);
+	}
 	for (int i = 0; i < numOfQuiz; i++)
 	{
 		isEnemyAlive(&quiz[i]);
-	}
-	for (int i = 0; i < numOfAssLab; i++)
-	{
-		isEnemyAlive(&assignment[i]);
-		isEnemyAlive(&lab[i]);
 	}
 }
 // Move forward
@@ -180,7 +195,7 @@ void removeEnemy(struct Enemy* enemy) {
 
 int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY)
 {
-	if (((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
+	if ((*enemy).inGame &&((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
 		(*enemy).HP -= bullet.damage;
 		return 1;
@@ -229,22 +244,48 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	}
 }
 
-void allEnemyLogic(int numOfQuiz, int numOfAssLab, CP_Image a, CP_Image b, CP_Image c) {
-	for (int i = 0; i < numOfQuiz; i++)
+void allEnemyLogic(int QuizLoopStart, int assLoopStart, int labLoopStart,
+	int numOfQuiz, int numOfAss, int numOfLab,
+	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {
+
+	for (int i = labLoopStart; i < numOfLab; i++)
 	{
-		quizLogic(a, &quiz[i], &player);
+		labLogic(labSS, &lab[i], &player);
 	}
-	for (int i = 0; i < numOfAssLab; i++)
+	for (int i = assLoopStart; i < numOfAss; i++)
 	{
-		assLogic(b,&assignment[i],&player);
-		labLogic(c,&lab[i],&player);
+		assLogic(assSS, &assignment[i], &player);
+	}
+	for (int i = QuizLoopStart; i < numOfQuiz; i++)
+	{
+		quizLogic(quizSS, &quiz[i], &player);
 	}
 }
 
-void spawnWeek1(struct Enemy* quiz,struct Enemy* ass,struct Enemy* lab,int bool) {
-	respawnEnemy(&(*quiz), 15);
-	respawnEnemy(&(*ass), 5);
-	respawnEnemy(&(*lab), 10);
-	bool = 0;
+void spawnWeekly(float totalElapsedTime, float timeToSpawn,
+	int QuizLoopStart, int assLoopStart, int labLoopStart,
+	int numOfQuiz, int numOfAss, int numOfLab,
+	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {	
+	if (totalElapsedTime > timeToSpawn){
+
+		for (int i = labLoopStart; i < numOfLab; ++i)
+		{
+			lab[i].inGame = 1;
+		}
+		for (int i = assLoopStart; i < numOfAss; ++i)
+		{
+			assignment[i].inGame = 1;
+		}
+		for (int i = QuizLoopStart; i < numOfQuiz; ++i)
+		{
+			quiz[i].inGame = 1;
+		}
+
+		allEnemyLogic(QuizLoopStart, assLoopStart, labLoopStart,
+			numOfQuiz, numOfAss, numOfLab,
+			 quizSS, assSS, labSS);
+
+		checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
+	}
 }
 

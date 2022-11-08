@@ -20,7 +20,7 @@ void bulletInit(int index, struct Player *player) {
 			bullets[index].active = 1;
 			bullets[index].velocity = 1000;
 			bullets[index].diameter = 20;
-			bullets[index].damage = 100;
+			bullets[index].damage = 1;
 			bullets[index].Pos = (*player).playerPos;
 			bullets[index].Vector = CP_Vector_Set((CP_Input_GetMouseX() - (*player).playerPos.x), (CP_Input_GetMouseY() - (*player).playerPos.y));
 			bullets[index].Vector = CP_Vector_Normalize(bullets[index].Vector);

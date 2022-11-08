@@ -8,6 +8,7 @@
 *//*_________________________________________________________________________________*/
 struct Item {
 	CP_Vector position;
+	float randX, randY;
 	float Width;
 	float Height;
 	int isActive;
