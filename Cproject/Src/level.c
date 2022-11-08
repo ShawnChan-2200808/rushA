@@ -52,7 +52,7 @@ void Level_Init()
 	bbtSS = CP_Image_Load("Assets/BBT.png");
 
 	playerInit(&player);
-	quizInit(&quiz1, 300, 300);
+	quizInit(&quiz1, windowWidth/2, windowHeight/2);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
 	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
