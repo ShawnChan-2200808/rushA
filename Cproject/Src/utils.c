@@ -8,7 +8,8 @@
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
-
+#include <math.h>
+#include <stdio.h>
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
 	CP_Vector weaponPos;
@@ -41,7 +42,7 @@ float fps;
 float enemyPlayerAngle(struct Enemy* enemy, struct Player* player) {
 	CP_Vector update = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
 	CP_Vector normalised = CP_Vector_Normalize(update);
-	printf("X vector %f, Y Vector %f \n", normalised.x, normalised.y);
+	//printf("X vector %f, Y Vector %f \n", normalised.x, normalised.y);
 	CP_Vector unitVector = CP_Vector_Set(0.0f, 1.0f);
 	if (normalised.x > 0) {
 		normalised.y = -normalised.y;
@@ -123,7 +124,7 @@ int IsRectEntered(float area_corner_x, float area_corner_y, float area_width, fl
 	}
 	//up 
 	else if (area_height < 0 && object_x >= area_corner_x && object_x <= area_corner_x + area_width &&
-		object_y >= area_corner_y + area_height  && object_y <= area_corner_y)
+		object_y >= area_corner_y + area_height && object_y <= area_corner_y)
 	{
 		/*&&  &&&&
 		Returns 1 if the point given by object_xand object_y is within the rectangle given by
@@ -145,14 +146,14 @@ int IsRectEntered(float area_corner_x, float area_corner_y, float area_width, fl
 	return 0;
 }
 
-int isRectEnteredadvanced(float rectX, float rectY, float rectwidth, float rectheight, float vectorX, float vectorY, struct Player* player)
+int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH, int rotation, struct Player* player)
 {
-	CP_Vector length = CP_Vector_Set(vectorX, vectorY);
-	length = CP_Vector_Normalize(length);
-	length = CP_Vector_Scale(length, rectheight);
+
+	/*length = CP_Vector_Normalize(length);
+
 	CP_Vector orthogonal = CP_Vector_Set(-(vectorX), vectorY);
 	orthogonal = CP_Vector_Normalize(orthogonal);
-	orthogonal = CP_Vector_Scale(orthogonal, rectwidth);
+	*/
 
 	// find Bottom left, Bottom Right, Upper right corners of rect;
 	//float BLcornerX = rectX + orthogonal.x;
@@ -165,10 +166,39 @@ int isRectEnteredadvanced(float rectX, float rectY, float rectwidth, float recth
 	//float URcornerY = rectY + length.y;
 
 	//printf("length vector %f , %f \n orthogonal vector %f, %f \n", length.x, length.y, orthogonal.x, orthogonal.y);
-
-	CP_Vector playerUL = CP_Vector_Set((*player).playerPos.x - rectX, (*player).playerPos.y - rectY);
-
-	if (0 < CP_Vector_DotProduct(playerUL, length) && CP_Vector_DotProduct(playerUL, length) < CP_Vector_DotProduct(length, length) && 0 < CP_Vector_DotProduct(playerUL, orthogonal) && CP_Vector_DotProduct(playerUL, orthogonal) < CP_Vector_DotProduct(orthogonal, orthogonal))
+	
+	//Find opposite and adjecent length of laser given hypotenuse (length or height)
+	float oppadW = ((laserW) / (sqrt(2)));
+	float oppadH = ((laserH) / (sqrt(2)));
+	CP_Vector playerUL = CP_Vector_Set((*player).playerPos.x - laserX, (*player).playerPos.y - laserY);
+	CP_Vector length;
+	CP_Vector orthogonal;
+	switch (rotation) {
+	case 45:
+		// set rotation vectors with opp and adj
+		length = CP_Vector_Set(oppadW, oppadW);
+		orthogonal = CP_Vector_Set(-oppadH, oppadH);
+		break;
+	case 135:
+		//set rotation vectors with opp and adj
+		length = CP_Vector_Set(-oppadW, oppadW);
+		orthogonal = CP_Vector_Set(-oppadH, -oppadH);
+		break;
+	case 225:
+		// set rotation vectors with opp and adj
+		length = CP_Vector_Set(-oppadW, -oppadW);
+		orthogonal = CP_Vector_Set(oppadH, -oppadH);
+		break;
+	case 315:
+		length = CP_Vector_Set(oppadW, -oppadW);
+		orthogonal = CP_Vector_Set(oppadH, oppadH);
+		break;
+	}
+	float playerlen = CP_Vector_DotProduct(playerUL, length);
+	float lenlen = CP_Vector_DotProduct(length, length);
+	float playerortho = CP_Vector_DotProduct(playerUL, orthogonal);
+	float orthoortho = CP_Vector_DotProduct(orthogonal, orthogonal);
+	if ((0 < playerlen && playerlen < lenlen) && (0 < playerortho && playerortho < orthoortho))
 	{
 		return 1;
 	}

@@ -73,7 +73,7 @@ void rotatenemy(struct Enemy* enemy, struct Player* player) {
 void quizInit(struct Enemy *enemy,float posX, float posY) {
 	// QUIZ
 	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
-	(*enemy).speed = 50;
+	(*enemy).speed = 0;
 	(*enemy).alive = 1;
 	(*enemy).HP = 3;
 	(*enemy).damage = 0.05f;

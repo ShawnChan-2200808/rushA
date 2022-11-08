@@ -71,7 +71,7 @@ void Level_Init()
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 
 	playerInit(&player);
-	quizInit(&quiz1, 300, 300);
+	quizInit(&quiz1, windowWidth/2, windowHeight/2);
 	assInit(&assignment1, 500, 300);
 	labInit(&lab1, 1000,300);
 
@@ -87,6 +87,7 @@ void Level_Update()
 
 	// PLAYER MOVEMENT + BOUNDARIES
 	if (player.alive) {
+
 		SpawnBG(Floor, 6, 9);
 		if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 		{
@@ -114,8 +115,11 @@ void Level_Update()
 
 
 		}
-
-
+		CP_Settings_RectMode(CP_POSITION_CENTER);
+		CP_Settings_Fill(red);
+		CP_Graphics_DrawRect(windowWidth / 2, windowHeight / 2, 5, 5);
+		CP_Settings_RectMode(CP_POSITION_CORNER);
+		CP_Graphics_DrawRectAdvanced(windowWidth/2, windowHeight/2 , 50, 200, 135 ,2);
 		// ATTACK
 		if (CP_Input_MouseClicked()) {
 			// get vector and spawn hit point
