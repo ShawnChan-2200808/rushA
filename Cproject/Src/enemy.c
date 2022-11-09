@@ -14,7 +14,7 @@
 #include "enemy.h"
 #include "collsion.h"
 #include "anim.h"
-#include "level.h"
+
 
 extern float hitCircleSize, deltaTime;
 extern int randomX, randomY,randomiser;
@@ -147,8 +147,8 @@ void labInit(struct Enemy *enemy) {
 
 	(*enemy).speed = 100;
 	(*enemy).alive = 1;
-	(*enemy).HP = 20;
-	(*enemy).damage = 0.01f;
+	(*enemy).HP = 300;
+	(*enemy).damage = 0.05f;
 	(*enemy).inGame = 0;
 
 	//animation
@@ -160,6 +160,37 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).worldSizeH = 128.0f;
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
+	(*enemy).displayTime = 2.0f;
+	//laserL is the larger value (length)
+	(*enemy).laserL = 750;
+	(*enemy).laserB = 269;
+	(*enemy).lasercolour = red;
+	hitCircleSize = 500.0f;
+}
+void bossInit(struct Enemy* enemy) {
+	// LAB
+	(*enemy).EnemyPos = CP_Vector_Set(CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight()/4);
+
+	(*enemy).speed = 150;
+	(*enemy).alive = 1;
+	(*enemy).HP = 60;
+	(*enemy).damage = 0.01f;
+	(*enemy).inGame = 0;
+
+	// can reuse these vectors
+	//(*enemy).spawnPos1 = CP_Vector_Set();
+	//(*enemy).spawnPos2 = CP_Vector_Set();
+	//(*enemy).spawnPos3 = CP_Vector_Set();
+
+	//animation
+	(*enemy).animationElapsedTime = 0.0f;
+	(*enemy).animationSpeed = 15;
+	(*enemy).currentFrame = 0;
+	(*enemy).animTotalFrames = 4; //8;
+	(*enemy).worldSizeW = 320.0f;
+	(*enemy).worldSizeH = 320.0f;
+	(*enemy).spriteWidth = 96.0f;
+	(*enemy).SpriteHeight = 96.0f;
 	(*enemy).displayTime = 2.0f;
 	//laserL is the larger value (length)
 	(*enemy).laserL = 750;
@@ -296,6 +327,18 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	}
 }
 
+void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
+	if ((*boss).alive && (*player).alive) {
+		enemyChase(&(*boss), &(*player));
+		updateEnemyAnimation(&(*boss), deltaTime);
+		enemyAnimation(BossSS, &(*boss));
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&(*boss));
+	}
+}
+
 void allEnemyLogic(int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
 	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {
@@ -340,4 +383,13 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 		checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
 	}
 }
+
+void SpawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS) {
+	if (totalElapsedTime > timeToSpawn) {
+		boss.inGame = 1;
+		bossLogic(BossSS,&boss,&player);
+		isEnemyAlive(&boss);
+	}
+}
+
 

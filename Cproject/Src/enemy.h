@@ -19,11 +19,12 @@ struct Enemy {
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
-};struct Enemy quiz[10], lab[8], assignment[8];
+};struct Enemy quiz[10], lab[8], assignment[8],boss;
 
 void quizInit(struct Enemy* enemy);
 void assInit(struct Enemy* enemy);
 void labInit(struct Enemy* enemy);
+void bossInit(struct Enemy* enemy);
 void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab);
 void isEnemyAlive(struct Enemy* enemy);
 void checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
@@ -37,6 +38,7 @@ int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float
 void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player);
 void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player);
 void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player);
+void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player);
 void allEnemyLogic(int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
 	CP_Image quizSS, CP_Image assSS, CP_Image labSS);
@@ -44,3 +46,4 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 	int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
 	CP_Image quizSS, CP_Image assSS, CP_Image labSS);
+void SpawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS);

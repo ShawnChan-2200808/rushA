@@ -29,7 +29,7 @@ CP_Vector Up, Left, Down, Right;
 int chSize = 10;
 int randomX, randomY;
 float deltaTime;
-int paused,week1=0;
+int paused, week1 = 0;
 
 CP_Image playerSS;
 CP_Image QuizSS;
@@ -37,8 +37,10 @@ CP_Image AssSS;
 CP_Image LabSS;
 CP_Image Floor;
 CP_Image bbtSS;
+CP_Image BossSS;
 
-
+static int allDead = 0;
+static int Win = 0;
 
 void Level_Init()
 {
@@ -50,11 +52,13 @@ void Level_Init()
 	LabSS = CP_Image_Load("Assets/LAB_SS.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
 	bbtSS = CP_Image_Load("Assets/BBT.png");
+	BossSS = CP_Image_Load("Assets/BOSS_SS.png");
 
 	playerInit(&player);
 	initAllEnemies(10, 8, 8);
+	bossInit(&boss);
 	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
-	
+
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
@@ -137,11 +141,11 @@ void Level_Update()
 		//COLLISION
 		CP_Settings_Fill(green);
 		if (player.alive) {
-		CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
-		// TEST FOR PLAYER HITBOX
-		//CP_Settings_RectMode(CP_POSITION_CENTER);
-		//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
-	}
+			CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+			// TEST FOR PLAYER HITBOX
+			//CP_Settings_RectMode(CP_POSITION_CENTER);
+			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
+		}
 
 		// TIME
 		//
@@ -150,38 +154,12 @@ void Level_Update()
 
 		isPlayerAlive(&player);
 
-		/* TO BE ADDED TO ENEMY.C
-		// Lab1 Logic
-		if (lab1.alive && player.alive) {
-			if (1 == laser(&lab1, &player)) {
-				enemyChase(&lab1, &player);
-				enemyAnimation(LabSS, &lab1);
-					rotatenemy(&lab1, &player);
-			}
-			else if (4== laser(&lab1, &player)) {
-				enemyAnimation(LabSS, &lab1);
-				player.GPA -= lab1.damage;
-			}
-			else {
-				enemyAnimation(LabSS, &lab1);
-			}
-		}
-		else {
-			// move dead enemy to out of screen
-			removeEnemy(&lab1);
-		}
-		if (!lab1.alive) {
-			// reset enemy values
-			respawnEnemy(&lab1, 1000, 50, 10);
-		}
-		*/
-
-		// PowerUP 
+		// GAME SPAWN LOGIC 
 		//
 		spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L
 			0, 0, 0,
 			1, 1, 1,
-			QuizSS,AssSS,LabSS);
+			QuizSS, AssSS, LabSS);
 		spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L
 			1, 1, 1,
 			3, 2, 2,
@@ -198,17 +176,26 @@ void Level_Update()
 			7, 6, 5,
 			10, 8, 7,
 			QuizSS, AssSS, LabSS);
+		SpawnBoss(totalElapsedTime, 0.0f, BossSS);
+
+		// END GAME
+		// 
+		if (totalElapsedTime >= 300 || &boss.alive == 0) {
+			//CP_Engine_Terminate();
+			//printf("ENDGAME");
+		}
+		 
 		//boss
 		//spawnWeekly(totalElapsedTime, 85.0f,
-			//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
+		//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
 
 		// BULLET SIMULATION (UPDATING POSITION)
 		//
-		bulletUpdate(bulletIndex, deltaTime,10,8);
+		bulletUpdate(bulletIndex, deltaTime, 10, 8);
 
 		// POWER UP
 		//
-		if (bbt.isActive && player.alive && totalElapsedTime >10.0f) {
+		if (bbt.isActive && player.alive && totalElapsedTime > 10.0f) {
 			CP_Settings_Fill(green);
 			//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
 			CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
@@ -258,12 +245,6 @@ void Level_Update()
 			else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
 		}
 
-		// END GAME
-		// 
-		//if (totalElapsedTime >= 20) {
-		//	CP_Engine_Terminate();
-		//}
-
 		// PAUSE KEY
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
@@ -271,9 +252,9 @@ void Level_Update()
 		}
 
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		}
-		else
-		{
+	}
+	else
+	{
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			paused = !paused;
@@ -327,4 +308,5 @@ void Level_Exit()
 	CP_Image_Free(&AssSS);
 	CP_Image_Free(&Floor);
 	CP_Image_Free(&bbtSS);
+	CP_Image_Free(&BossSS);
 }
