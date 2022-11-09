@@ -8,6 +8,7 @@
 *//*_________________________________________________________________________________*/
 struct Item {
 	CP_Vector position;
+	float randX, randY;
 	float Width;
 	float Height;
 	int isActive;
@@ -23,4 +24,4 @@ void itemInit(struct Item* item, float posX, float posY, float width, float heig
 void playerHeal(struct Item* item, struct Player* player);
 void playerSpeedUp(struct Item* item, struct Player* player);
 void coolDown(struct Item* item, float deltatime);
-void respawnItem(struct Item* item/*, float posX, float posY*/);
+void respawnItem(struct Item* item);

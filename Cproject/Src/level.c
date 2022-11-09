@@ -29,7 +29,7 @@ CP_Vector Up, Left, Down, Right;
 int chSize = 10;
 int randomX, randomY;
 float deltaTime;
-int paused;
+int paused,week1=0;
 
 CP_Image playerSS;
 CP_Image QuizSS;
@@ -52,19 +52,14 @@ void Level_Init()
 	bbtSS = CP_Image_Load("Assets/BBT.png");
 
 	playerInit(&player);
-	quizInit(&quiz1, windowWidth/2, windowHeight/2);
-	assInit(&assignment1, 500, 300);
-	labInit(&lab1, 1000,300);
+	initAllEnemies(10, 8, 8);
 	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
 	
-
-
-	// Set laser color for lab
-	lab1.lasercolour = red;
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
 	bulletReset(bulletIndex);
+	totalElapsedTime = 0;
 }
 
 void Level_Update()
@@ -113,9 +108,16 @@ void Level_Update()
 					CP_Settings_Fill(blue);
 					//CP_Settings_RectMode(CP_POSITION_CENTER);
 					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
-					damageEnemy(&quiz1, &player, 150, 150);
-					damageEnemy(&assignment1, &player, 150, 150);
-					damageEnemy(&lab1, &player, 150, 150);
+					for (int i = 0; i < 10; i++)
+					{
+						damageEnemy(&quiz[i], &player, 150, 150);
+					}
+					for (int i = 0; i < 8; i++)
+					{
+						damageEnemy(&assignment[i], &player, 150, 150);
+						damageEnemy(&lab[i], &player, 150, 150);
+					}
+
 				}
 			}
 		}
@@ -132,27 +134,23 @@ void Level_Update()
 			}
 		}
 
-		// SPAWNS
-		isPlayerAlive(&player);
-		isEnemyAlive(&quiz1);
-		isEnemyAlive(&assignment1);
-		isEnemyAlive(&lab1);
-
-		//collision
+		//COLLISION
 		CP_Settings_Fill(green);
 		if (player.alive) {
 		CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+		// TEST FOR PLAYER HITBOX
 		//CP_Settings_RectMode(CP_POSITION_CENTER);
 		//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
 	}
 
+		// TIME
+		//
 		deltaTime = CP_System_GetDt();
 		totalElapsedTime += deltaTime;
 
-		// BULLET SIMULATION (UPDATING POSITION)
-		bulletUpdate(bulletIndex, deltaTime);
+		isPlayerAlive(&player);
 
-
+		/* TO BE ADDED TO ENEMY.C
 		// Lab1 Logic
 		if (lab1.alive && player.alive) {
 			if (1 == laser(&lab1, &player)) {
@@ -176,13 +174,44 @@ void Level_Update()
 			// reset enemy values
 			respawnEnemy(&lab1, 1000, 50, 10);
 		}
+		*/
 
 		// PowerUP 
 		//
-		if (bbt.isActive && player.alive) {
+		spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L
+			0, 0, 0,
+			1, 1, 1,
+			QuizSS,AssSS,LabSS);
+		spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L
+			1, 1, 1,
+			3, 2, 2,
+			QuizSS, AssSS, LabSS);
+		spawnWeekly(totalElapsedTime, 25.0f,	// 2Q 2A 1L
+			3, 2, 2,
+			5, 4, 3,
+			QuizSS, AssSS, LabSS);
+		spawnWeekly(totalElapsedTime, 45.0f,	// 2Q 2A 2L
+			5, 4, 3,
+			7, 6, 5,
+			QuizSS, AssSS, LabSS);
+		spawnWeekly(totalElapsedTime, 65.0f,	// 3Q 2A 2L
+			7, 6, 5,
+			10, 8, 7,
+			QuizSS, AssSS, LabSS);
+		//boss
+		//spawnWeekly(totalElapsedTime, 85.0f,
+			//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
+
+		// BULLET SIMULATION (UPDATING POSITION)
+		//
+		bulletUpdate(bulletIndex, deltaTime,10,8);
+
+		// POWER UP
+		//
+		if (bbt.isActive && player.alive && totalElapsedTime >10.0f) {
 			CP_Settings_Fill(green);
 			//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
-			CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height,255);
+			CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
 			playerHeal(&bbt, &player);
 		}if (!bbt.isActive) {
 			coolDown(&bbt, deltaTime);
@@ -191,55 +220,12 @@ void Level_Update()
 			respawnItem(&bbt, randomX, randomY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 		}
 
-		// ENEMY
-		// 
-		// QUIZ is rendered and chase player
-		if (quiz1.alive && player.alive) {
-			// If enemy come into contact with player deal damage
 
-			updateEnemyAnimation(&quiz1, deltaTime);
-			enemyAnimation(QuizSS, &quiz1);
-			enemyChase(&quiz1, &player);
-			damagePlayer(&quiz1, &player);
-			//testing for quiz without sprite
-			//if (quiz1.HP == 1) { CP_Settings_Fill(CP_Color_Create(200, 0, 0, 255)); }
-			//else { CP_Settings_Fill(red); }
-			//CP_Settings_Fill(red);
-			//CP_Graphics_DrawCircle(quiz1.EnemyPos.x, quiz1.EnemyPos.y, circleSize+20.0f);
-			//CP_Settings_TextSize(windowWidth / 60);
-			//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			//CP_Font_DrawText("quiz", quiz1.EnemyPos.x, quiz1.EnemyPos.y);
-		}
-		else {
-			// move dead enemy to out of screen
-			removeEnemy(&quiz1);
-		}
-		if (!quiz1.alive) {
-			// reset enemy values
-			respawnEnemy(&quiz1, 10, 10,15);
-		}
-
-		// Assignment1 Logic
-		if (assignment1.alive && player.alive) {
-			updateEnemyAnimation(&assignment1, deltaTime);
-			enemyAnimation(AssSS, &assignment1);
-		}
-		else {
-			// move dead enemy to out of screen
-			removeEnemy(&assignment1);
-		}
-		if (!assignment1.alive) {
-			// reset enemy values
-			respawnEnemy(&assignment1, 500, 50,5);
-		}
-
+		// RENDER PLAYER
+		//
 		if (player.alive) {
 			playerAnimation(playerSS, &player);
 			updatePlayerAnimation(&player, deltaTime);
-			/* Testing player without sprite
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawCircle(player.playerPos.x, player.playerPos.y, hitCircleSize);
-			*/
 		}
 
 

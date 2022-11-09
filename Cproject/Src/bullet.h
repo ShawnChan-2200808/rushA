@@ -7,4 +7,4 @@ struct Bullet
 int bulletIndex;
 void bulletReset( int index);
 void bulletInit(int index, struct Player* player);
-void bulletUpdate(int index, float deltaTime);
+void bulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssLab);

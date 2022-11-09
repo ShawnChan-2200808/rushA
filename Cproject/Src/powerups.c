@@ -52,9 +52,9 @@ void coolDown(struct Item* item, float deltatime) {
 }
 
 void respawnItem(struct Item* item/*, float posX, float posY*/) {
-	randomX = CP_Random_RangeFloat(200, 1700);
-	randomY = CP_Random_RangeFloat(200, 800);
+	(*item).randX = CP_Random_RangeFloat(200, 1700);
+	(*item).randY = CP_Random_RangeFloat(200, 800);
 	// FOR AFTER collision - If in wall set to another pos
-	(*item).position = CP_Vector_Set(randomX, randomY);
+	(*item).position = CP_Vector_Set((*item).randX, (*item).randY);
 	(*item).isActive = 1;
 }
