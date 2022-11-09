@@ -14,15 +14,16 @@ struct Enemy {
 	CP_Color lasercolour;
 	int speed, alive, inGame;
 	float HP, damage;
+	CP_Vector spawnPos1, spawnPos2, spawnPos3, spawnPos4;
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
 };struct Enemy quiz[10], lab[8], assignment[8];
 
-void quizInit(struct Enemy* quiz,float posX,float posY);
-void assInit(struct Enemy* quiz, float posX, float posY);
-void labInit(struct Enemy* quiz, float posX, float posY);
+void quizInit(struct Enemy* enemy);
+void assInit(struct Enemy* enemy);
+void labInit(struct Enemy* enemy);
 void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab);
 void isEnemyAlive(struct Enemy* enemy);
 void checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);

@@ -17,7 +17,7 @@
 #include "level.h"
 
 extern float hitCircleSize, deltaTime;
-extern int randomX, randomY;
+extern int randomX, randomY,randomiser;
 extern CP_Color red;
 
 void rotatenemy(struct Enemy* enemy, struct Player* player) {
@@ -50,9 +50,25 @@ void rotatenemy(struct Enemy* enemy, struct Player* player) {
 	}
 }
 
-void quizInit(struct Enemy *enemy,float posX, float posY) {
+void quizInit(struct Enemy *enemy) {
 	// QUIZ
-	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
+	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
+	(*enemy).spawnPos3 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(400, 800));
+	(*enemy).spawnPos4 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(400, 800));
+	randomiser = CP_Random_RangeInt(0, 3);
+	switch (randomiser)
+	{
+	case 0: (*enemy).EnemyPos = (*enemy).spawnPos1;
+		break;
+	case 1: (*enemy).EnemyPos = (*enemy).spawnPos2;
+		break;
+	case 2:(*enemy).EnemyPos = (*enemy).spawnPos3;
+		break;
+	case 3:(*enemy).EnemyPos = (*enemy).spawnPos4;
+		break;
+	}
+
 	(*enemy).speed = 350;
 	(*enemy).alive = 1;
 	(*enemy).HP = 25;
@@ -69,14 +85,29 @@ void quizInit(struct Enemy *enemy,float posX, float posY) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	hitCircleSize = 50.0f;
-
 	// Set laser color for quiz
 	//(*enemy).lasercolour = red;
 }
 
-void assInit(struct Enemy *enemy, float posX, float posY) {
+void assInit(struct Enemy *enemy) {
 	// ASSIGNMENT
-	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
+	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
+	(*enemy).spawnPos3 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(400, 800));
+	(*enemy).spawnPos4 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(400, 800));
+	randomiser = CP_Random_RangeInt(0, 3);
+	switch (randomiser)
+	{
+	case 0: (*enemy).EnemyPos = (*enemy).spawnPos1;
+		break;
+	case 1: (*enemy).EnemyPos = (*enemy).spawnPos2;
+		break;
+	case 2:(*enemy).EnemyPos = (*enemy).spawnPos3;
+		break;
+	case 3:(*enemy).EnemyPos = (*enemy).spawnPos4;
+		break;
+	}
+
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
 	(*enemy).HP = 20;
@@ -92,18 +123,34 @@ void assInit(struct Enemy *enemy, float posX, float posY) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-
 	hitCircleSize = 50.0f;
 }
 
-void labInit(struct Enemy *enemy, float posX, float posY) {
+void labInit(struct Enemy *enemy) {
 	// LAB
-	(*enemy).EnemyPos = CP_Vector_Set(posX, posY);
+	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(100, 200), CP_Random_RangeFloat(100, 300));
+	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
+	(*enemy).spawnPos3 = CP_Vector_Set(CP_Random_RangeFloat(100, 200), CP_Random_RangeFloat(600, 800));
+	(*enemy).spawnPos4 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(400, 800));
+	randomiser = CP_Random_RangeInt(0, 3);
+	switch (randomiser)
+	{
+	case 0: (*enemy).EnemyPos = (*enemy).spawnPos1;
+		break;
+	case 1: (*enemy).EnemyPos = (*enemy).spawnPos2;
+		break;
+	case 2:(*enemy).EnemyPos = (*enemy).spawnPos3;
+		break;
+	case 3:(*enemy).EnemyPos = (*enemy).spawnPos4;
+		break;
+	}
+
 	(*enemy).speed = 0;
 	(*enemy).alive = 1;
 	(*enemy).HP = 20;
 	(*enemy).damage = 0.01f;
 	(*enemy).inGame = 0;
+
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
 	(*enemy).animationSpeed = 5;
@@ -121,22 +168,15 @@ void labInit(struct Enemy *enemy, float posX, float posY) {
 void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab) {
 	for (int i = 0; i < numOfQuiz; i++)
 	{
-		randomX = CP_Random_RangeFloat(200, 1700);
-		randomY = CP_Random_RangeFloat(200, 800);
-		quizInit(&quiz[i], randomX, randomY);
-		//quiz[i].speed -= i * 20;
+		quizInit(&quiz[i]);
 	}
 	for (int i = 0; i < numOfAss; i++)
 	{
-		randomX = CP_Random_RangeFloat(200, 1700);
-		randomY = CP_Random_RangeFloat(200, 800);
-		assInit(&assignment[i], randomX, randomY);
+		assInit(&assignment[i]);
 	}
 	for (int i = 0; i < numOfLab; i++)
 	{
-		randomX = CP_Random_RangeFloat(200, 1700);
-		randomY = CP_Random_RangeFloat(200, 800);
-		labInit(&lab[i], randomX, randomY);
+		labInit(&lab[i]);
 	}
 }
 

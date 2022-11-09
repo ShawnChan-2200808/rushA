@@ -14,7 +14,7 @@
 CP_Color black, white, gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
-int randomX, randomY;
+int randomX, randomY, randomiser;
 
 // Get angle from enemy to player
 float enemyPlayerAngle(struct Enemy* enemy, struct Player* player) {
@@ -34,7 +34,7 @@ void initGame() {
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
-
+	
 	// Set the colour for gray
 	black = CP_Color_Create(0, 0, 0, 255);
 	white = CP_Color_Create(255, 255, 255, 255);
@@ -49,6 +49,7 @@ void initGame() {
 
 	// Set the window when executed to the size of the splashscreen image
 	CP_System_SetWindowSize(windowWidth, windowHeight);
+	randomiser = 0;
 }
 
 void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
