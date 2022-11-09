@@ -250,10 +250,19 @@ void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
 	// Lab1 Logic
 	if ((*lab).alive && (*player).alive) {
 		if (1 == laser(&(*lab), &(*player))) {
+			//(*player).GPA -= (*lab).damage;
+			enemyChase(&(*lab), &(*player));
+			enemyAnimation(LabSS, &(*lab));
+			rotatenemy(&(*lab), &(*player));
+		}
+		else if ((4 == laser(&(*lab), &(*player)))){
+			enemyAnimation(LabSS, &(*lab));
 			(*player).GPA -= (*lab).damage;
 		}
-		enemyAnimation(LabSS, &(*lab));
-		rotatenemy(&(*lab), &(*player));
+		else
+		{
+			enemyAnimation(LabSS, &(*lab));
+		}
 	}
 	else {
 		// move dead enemy to out of screen

@@ -13,7 +13,7 @@ struct Enemy {
 	CP_Vector weaponPos;
 	CP_Color lasercolour;
 	int speed, alive, inGame;
-	float HP, damage;
+	float HP, damage, laserB, laserL;
 	CP_Vector spawnPos1, spawnPos2, spawnPos3, spawnPos4;
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
