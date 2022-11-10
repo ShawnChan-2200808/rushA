@@ -8,6 +8,7 @@
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
+#include "utils.h"
 #include "player.h"
 #include "enemy.h"
 #include <math.h>
@@ -34,7 +35,16 @@ void initGame() {
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
-	
+
+	playerSS = CP_Image_Load("Assets/player_SS.png");
+	QuizSS = CP_Image_Load("Assets/QUIZ.png");
+	AssSS = CP_Image_Load("Assets/ASS_SS.png");
+	LabSS = CP_Image_Load("Assets/LAB_SS.png");
+	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
+	bbtSS = CP_Image_Load("Assets/BBT.png");
+	BossSS = CP_Image_Load("Assets/BOSS_SS.png");
+	hitBox = CP_Image_Load("Assets/HitBox.png");
+
 	// Set the colour for gray
 	black = CP_Color_Create(0, 0, 0, 255);
 	white = CP_Color_Create(255, 255, 255, 255);

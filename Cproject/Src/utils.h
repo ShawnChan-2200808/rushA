@@ -1,3 +1,13 @@
+
+
+CP_Image playerSS;
+CP_Image QuizSS;
+CP_Image AssSS;
+CP_Image LabSS;
+CP_Image Floor;
+CP_Image bbtSS;
+CP_Image BossSS;
+CP_Image hitBox;
 void initGame();
 void SpawnBG(CP_Image BG, int numberRow, int numberCol);
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);

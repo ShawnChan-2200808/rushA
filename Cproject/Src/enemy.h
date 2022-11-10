@@ -46,4 +46,4 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 	int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
 	CP_Image quizSS, CP_Image assSS, CP_Image labSS);
-void SpawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS);
+void spawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS);

@@ -7,7 +7,37 @@ C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(258,12): warning C4244: 
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(259,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(260,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\enemy.c(283,12): warning C4013: 'laser' undefined; assuming extern returning int
+  level.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(44,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(44,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(115,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(115,100): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(116,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(116,112): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(119,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(119,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(189,22): warning C4020: 'respawnItem': too many actual parameters
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(207,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(207,56): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(211,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(215,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(215,59): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(219,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(219,56): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(225,60): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(225,80): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(227,63): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(227,83): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(246,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(246,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(247,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(247,106): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(255,35): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(261,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(267,36): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(273,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
-  8 File(s) copied
+  9 File(s) copied

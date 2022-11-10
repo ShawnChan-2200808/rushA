@@ -148,7 +148,7 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).speed = 100;
 	(*enemy).alive = 1;
 	(*enemy).HP = 300;
-	(*enemy).damage = 0.05f;
+	(*enemy).damage = 0.01f;
 	(*enemy).inGame = 0;
 
 	//animation
@@ -384,7 +384,7 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 	}
 }
 
-void SpawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS) {
+void spawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS) {
 	if (totalElapsedTime > timeToSpawn) {
 		boss.inGame = 1;
 		bossLogic(BossSS,&boss,&player);
