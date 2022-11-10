@@ -17,3 +17,4 @@ int IsRectEntered(float area_corner_x, float area_corner_y, float area_width, fl
 float enemyPlayerAngle(struct Enemy* enemy, struct Player* player);
 
 int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH, int rotation, struct Player* player);
+

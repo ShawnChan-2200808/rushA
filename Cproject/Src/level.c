@@ -96,14 +96,14 @@ void Level_Update()
 					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y -75, 150, 150 ,255, mouseToplayerAngle(&player)- 70);
 					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150);
+						damageEnemy(&quiz[i], &player, 150, 150, 6);
 					}
 					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150);
-						damageEnemy(&lab[i], &player, 150, 150);
+						damageEnemy(&assignment[i], &player, 150, 150, 8);
+						damageEnemy(&lab[i], &player, 150, 150,8);
 					}
-
+					damageEnemy(&boss, &player, 150, 150, 4);
 				}
 			}
 		}
@@ -273,7 +273,6 @@ void Level_Update()
 		push += (player.playerPos.y + (player.worldSizeW / 2)) - (wall1.y);
 		player.playerPos.y -= push;
 	}
-
 }
 
 void Level_Exit()

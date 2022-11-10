@@ -37,7 +37,7 @@ void initGame() {
 	windowHeight = 1080;
 
 	playerSS = CP_Image_Load("Assets/player_SS.png");
-	QuizSS = CP_Image_Load("Assets/QUIZ.png");
+	QuizSS = CP_Image_Load("Assets/QUIZ_SS.png");
 	AssSS = CP_Image_Load("Assets/ASS_SS.png");
 	LabSS = CP_Image_Load("Assets/LAB_SS.png");
 	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
