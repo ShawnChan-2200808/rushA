@@ -145,7 +145,7 @@ void labInit(struct Enemy *enemy) {
 		break;
 	}
 
-	(*enemy).speed = 1;
+	(*enemy).speed = 100;
 	(*enemy).alive = 1;
 	(*enemy).HP = 20;
 	(*enemy).damage = 0.01f;
