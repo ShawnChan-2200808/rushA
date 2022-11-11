@@ -161,10 +161,13 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+	//Laser Init
 	//laserL is the larger value (length)
 	(*enemy).laserL = 750;
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
+	(*enemy).intlaserTime = 0;
+	(*enemy).floatlaserTime = 0;
 	hitCircleSize = 50.0f;
 }
 
