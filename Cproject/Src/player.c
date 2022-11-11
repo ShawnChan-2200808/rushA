@@ -24,7 +24,7 @@ void playerInit(struct Player* player) {
 	(*player).speed = 500;
 	(*player).alive = 1;
 	(*player).GPA = 5.00f;
-	(*player).damage = 2;
+	(*player).damage = 3;
 	(*player).timer = 0;
 	(*player).weaponPos = CP_Vector_Set((*player).playerPos.x, (*player).playerPos.y);
 	(*player).weapon = 0;
@@ -78,4 +78,17 @@ void meleeVec(struct Player* player, int scale)
 int switchWeapon(int weapon)
 {
 	return !weapon;
+}
+
+float mouseToplayerAngle(struct Player *player){
+	CP_Vector update = CP_Vector_Set((*player).playerPos.x - CP_Input_GetMouseX(), (*player).playerPos.y - CP_Input_GetMouseY());
+	CP_Vector normalised = CP_Vector_Normalize(update);
+	//printf("X vector %f, Y Vector %f \n", normalised.x, normalised.y);
+	CP_Vector unitVector = CP_Vector_Set(0.0f, 1.0f);
+	if (normalised.x > 0) {
+		normalised.y = -normalised.y;
+	}
+	float angle = CP_Vector_Angle(normalised, unitVector);
+	//printf("angle utils %f \n", angle);
+	return normalised.x > 0 ? angle : angle + 180;
 }

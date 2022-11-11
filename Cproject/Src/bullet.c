@@ -46,21 +46,24 @@ void bulletUpdate(int index,float deltaTime, int numOfQuiz,int numOfAssLab) {
 			// need to update
 			for (int i = 0; i < numOfQuiz; i++)
 			{
-				if (bulletDamage(&quiz[i], bullets[index], 130, 130) == 1)
+				if (bulletDamage(&quiz[i], bullets[index], 130, 130, 6) == 1)
 				{
 					bullets[index].active = 0;
 				}
 			}
 			for (int i = 0; i < numOfAssLab; i++)
 			{
-				if (bulletDamage(&assignment[i], bullets[index], 130, 130) == 1)
+				if (bulletDamage(&assignment[i], bullets[index], 130, 130, 8) == 1)
 				{
 					bullets[index].active = 0;
 				}
-				if (bulletDamage(&lab[i], bullets[index], 130, 130) == 1)
+				if (bulletDamage(&lab[i], bullets[index], 130, 130, 8) == 1)
 				{
 					bullets[index].active = 0;
 				}
+			}
+			if (bulletDamage(&boss, bullets[index], 130, 130, 4) == 1) {
+				bullets[index].active = 0;
 			}
 		}
 

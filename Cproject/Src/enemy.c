@@ -14,9 +14,9 @@
 #include "enemy.h"
 #include "collsion.h"
 #include "anim.h"
-#include "level.h"
 
-extern float hitCircleSize, deltaTime;
+
+extern float deltaTime;
 extern int randomX, randomY,randomiser;
 extern CP_Color red;
 
@@ -72,7 +72,7 @@ void quizInit(struct Enemy *enemy) {
 	(*enemy).speed = 350;
 	(*enemy).alive = 1;
 	(*enemy).HP = 25;
-	(*enemy).damage = 0.05f;
+	(*enemy).damage = 0.02f;
 	(*enemy).inGame = 0;
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
@@ -84,7 +84,7 @@ void quizInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	hitCircleSize = 50.0f;
+	(*enemy).hitCircle = 50.0f;
 	// Set laser color for quiz
 	//(*enemy).lasercolour = red;
 }
@@ -123,7 +123,7 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	hitCircleSize = 50.0f;
+	(*enemy).hitCircle = 50.0f;
 }
 
 void labInit(struct Enemy *enemy) {
@@ -147,13 +147,13 @@ void labInit(struct Enemy *enemy) {
 
 	(*enemy).speed = 100;
 	(*enemy).alive = 1;
-	(*enemy).HP = 20;
+	(*enemy).HP = 10;
 	(*enemy).damage = 0.01f;
 	(*enemy).inGame = 0;
 
 	//animation
 	(*enemy).animationElapsedTime = 0.0f;
-	(*enemy).animationSpeed = 5;
+	(*enemy).animationSpeed = 20;
 	(*enemy).currentFrame = 0;
 	(*enemy).animTotalFrames = 1; //8;
 	(*enemy).worldSizeW = 128.0f;
@@ -168,7 +168,38 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).lasercolour = red;
 	(*enemy).intlaserTime = 0;
 	(*enemy).floatlaserTime = 0;
-	hitCircleSize = 50.0f;
+	(*enemy).hitCircle = 50.0f;
+}
+void bossInit(struct Enemy* enemy) {
+	// LAB
+	(*enemy).EnemyPos = CP_Vector_Set(CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight()/4);
+
+	(*enemy).speed = 150;
+	(*enemy).alive = 1;
+	(*enemy).HP = 100;
+	(*enemy).damage = 0.02f;
+	(*enemy).inGame = 0;
+
+	// can reuse these vectors
+	//(*enemy).spawnPos1 = CP_Vector_Set();
+	//(*enemy).spawnPos2 = CP_Vector_Set();
+	//(*enemy).spawnPos3 = CP_Vector_Set();
+
+	//animation
+	(*enemy).animationElapsedTime = 0.0f;
+	(*enemy).animationSpeed = 20;
+	(*enemy).currentFrame = 0;
+	(*enemy).animTotalFrames = 4; //8;
+	(*enemy).worldSizeW = 320.0f;
+	(*enemy).worldSizeH = 320.0f;
+	(*enemy).spriteWidth = 96.0f;
+	(*enemy).SpriteHeight = 96.0f;
+	(*enemy).displayTime = 2.0f;
+	//laserL is the larger value (length)
+	(*enemy).laserL = 750;
+	(*enemy).laserB = 269;
+	(*enemy).lasercolour = red;
+	(*enemy).hitCircle = 400.0f;
 }
 
 void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab) {
@@ -213,14 +244,16 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 }
 
 void damagePlayer(struct Enemy* enemy, struct Player* player) {
-	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, hitCircleSize, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
+	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, (*enemy).hitCircle, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
 		(*player).GPA -= (*enemy).damage;
+		(*player).currentFrame += (*player).animTotalFrames+1;
 	}
 }
 
-void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY) {
+void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY, int totalFrames) {
 	if (IsAreaClicked((*player).weaponPos.x, (*player).weaponPos.y, hitboxX, hitboxY, (*enemy).EnemyPos.x, (*enemy).EnemyPos.y) && (*enemy).alive) {
 		(*enemy).HP -= (*player).damage;
+		(*enemy).currentFrame += totalFrames;
 	}
 }
 
@@ -239,11 +272,12 @@ void removeEnemy(struct Enemy* enemy) {
 	(*enemy).alive = 0;
 }
 
-int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY)
+int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY, int totalFrames)
 {
 	if ((*enemy).inGame &&((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
 		(*enemy).HP -= bullet.damage;
+		(*enemy).currentFrame += totalFrames;
 		return 1;
 	}
 	else return 0;
@@ -261,6 +295,7 @@ void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
 		else if ((4 == laser(&(*lab), &(*player)))){
 			enemyAnimation(LabSS, &(*lab));
 			(*player).GPA -= (*lab).damage;
+			(*player).currentFrame += (*player).animTotalFrames + 1;
 		}
 		else
 		{
@@ -296,6 +331,38 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	else {
 		// move dead enemy to out of screen
 		removeEnemy(&(*ass));
+	}
+}
+
+void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
+	if ((*boss).alive && (*player).alive) {
+		{
+			//draw circle 
+			CP_Settings_Fill(CP_Color_Create(255, 170, 170, 120));
+			CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle); 
+			enemyChase(&(*boss), &(*player));
+			damagePlayer(&(*boss), &(*player));
+		}
+		/*
+		if (1 == laser(&(*lab), &(*player))) {
+			//(*player).GPA -= (*lab).damage;
+			enemyChase(&(*lab), &(*player));
+			enemyAnimation(LabSS, &(*lab));
+			rotatenemy(&(*lab), &(*player));
+		}
+		else if ((4 == laser(&(*lab), &(*player)))) {
+			enemyAnimation(LabSS, &(*lab));
+			(*player).GPA -= (*lab).damage;
+			(*player).currentFrame += (*player).animTotalFrames + 1;
+		}
+		*/
+		// Render the animation
+		updateEnemyAnimation(&(*boss), deltaTime);
+		enemyAnimation(BossSS, &(*boss));
+	}
+	else {
+		// move dead enemy to out of screen
+		removeEnemy(&(*boss));
 	}
 }
 
@@ -343,4 +410,13 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 		checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
 	}
 }
+
+void spawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS) {
+	if (totalElapsedTime > timeToSpawn) {
+		boss.inGame = 1;
+		bossLogic(BossSS,&boss,&player);
+		isEnemyAlive(&boss);
+	}
+}
+
 

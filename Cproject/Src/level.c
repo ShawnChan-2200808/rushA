@@ -24,37 +24,24 @@
 CP_Color gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
-float hitCircleSize, totalElapsedTime;
+static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
 int chSize = 10;
 int randomX, randomY;
 float deltaTime;
-int paused,week1=0;
+int paused, week1 = 0;
 
-CP_Image playerSS;
-CP_Image QuizSS;
-CP_Image AssSS;
-CP_Image LabSS;
-CP_Image Floor;
-CP_Image bbtSS;
-
-
+static int allDead = 0;
+static int Win = 0;
 
 void Level_Init()
 {
 	initGame();
-
-	playerSS = CP_Image_Load("Assets/player_SS.png");
-	QuizSS = CP_Image_Load("Assets/QUIZ.png");
-	AssSS = CP_Image_Load("Assets/ASS_SS.png");
-	LabSS = CP_Image_Load("Assets/LAB_SS.png");
-	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
-	bbtSS = CP_Image_Load("Assets/BBT.png");
-
 	playerInit(&player);
 	initAllEnemies(10, 8, 8);
+	bossInit(&boss);
 	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
-	
+
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
@@ -105,19 +92,17 @@ void Level_Update()
 				{
 					player.currentFrame = 2;
 					meleeVec(&player, 100);
-					CP_Settings_Fill(blue);
-					//CP_Settings_RectMode(CP_POSITION_CENTER);
-					CP_Graphics_DrawRect(player.weaponPos.x, player.weaponPos.y, 80, 80);
+					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y -75, 150, 150 ,255, mouseToplayerAngle(&player)- 70);
 					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150);
+						damageEnemy(&quiz[i], &player, 150, 150, 6);
 					}
 					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150);
-						damageEnemy(&lab[i], &player, 150, 150);
+						damageEnemy(&assignment[i], &player, 150, 150, 8);
+						damageEnemy(&lab[i], &player, 150, 150,8);
 					}
-
+					damageEnemy(&boss, &player, 150, 150, 4);
 				}
 			}
 		}
@@ -137,11 +122,11 @@ void Level_Update()
 		//COLLISION
 		CP_Settings_Fill(green);
 		if (player.alive) {
-		CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
-		// TEST FOR PLAYER HITBOX
-		//CP_Settings_RectMode(CP_POSITION_CENTER);
-		//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
-	}
+			CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+			// TEST FOR PLAYER HITBOX
+			//CP_Settings_RectMode(CP_POSITION_CENTER);
+			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
+		}
 
 		// TIME
 		//
@@ -150,38 +135,12 @@ void Level_Update()
 
 		isPlayerAlive(&player);
 
-		/* TO BE ADDED TO ENEMY.C
-		// Lab1 Logic
-		if (lab1.alive && player.alive) {
-			if (1 == laser(&lab1, &player)) {
-				enemyChase(&lab1, &player);
-				enemyAnimation(LabSS, &lab1);
-					rotatenemy(&lab1, &player);
-			}
-			else if (4== laser(&lab1, &player)) {
-				enemyAnimation(LabSS, &lab1);
-				player.GPA -= lab1.damage;
-			}
-			else {
-				enemyAnimation(LabSS, &lab1);
-			}
-		}
-		else {
-			// move dead enemy to out of screen
-			removeEnemy(&lab1);
-		}
-		if (!lab1.alive) {
-			// reset enemy values
-			respawnEnemy(&lab1, 1000, 50, 10);
-		}
-		*/
-
-		// PowerUP 
+		// GAME SPAWN LOGIC 
 		//
 		spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L
 			0, 0, 0,
 			1, 1, 1,
-			QuizSS,AssSS,LabSS);
+			QuizSS, AssSS, LabSS);
 		spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L
 			1, 1, 1,
 			3, 2, 2,
@@ -198,17 +157,26 @@ void Level_Update()
 			7, 6, 5,
 			10, 8, 7,
 			QuizSS, AssSS, LabSS);
+		spawnBoss(totalElapsedTime, /*85*/0.0f, BossSS);
+
+		// END GAME
+		// 
+		if (totalElapsedTime >= 300 || boss.alive == 0) {
+			CP_Engine_Terminate();
+			//printf("ENDGAME");
+		}
+		 
 		//boss
 		//spawnWeekly(totalElapsedTime, 85.0f,
-			//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
+		//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
 
 		// BULLET SIMULATION (UPDATING POSITION)
 		//
-		bulletUpdate(bulletIndex, deltaTime,10,8);
+		bulletUpdate(bulletIndex, deltaTime, 10, 8);
 
 		// POWER UP
 		//
-		if (bbt.isActive && player.alive && totalElapsedTime >10.0f) {
+		if (bbt.isActive && player.alive && totalElapsedTime > 10.0f) {
 			CP_Settings_Fill(green);
 			//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
 			CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
@@ -228,6 +196,25 @@ void Level_Update()
 			updatePlayerAnimation(&player, deltaTime);
 		}
 
+		// Boss Healthbar
+		//
+		if (boss.inGame && boss.alive) {
+			CP_Settings_RectMode(CP_POSITION_CORNER);
+			// RENDER HEALTHBAR
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));
+			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, boss.HP*5, 30);
+			// RENDER TEXT (GPA)
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_TextSize(windowWidth / 38);
+			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
+			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+			CP_Settings_TextAlignment(horizontal, vertical);
+			CP_Font_DrawText("BOSS", windowWidth / 3.2, windowHeight / 30);
+
+			// RENDER HEALTHBAR PLACEHOLDER
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
+			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, 500, 30);
+		}
 
 
 		//UI HUD
@@ -235,7 +222,7 @@ void Level_Update()
 			CP_Settings_RectMode(CP_POSITION_CORNER);
 			// RENDER HEALTHBAR
 			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
-			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, player.GPA * 100, 30);
+			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 1.08, player.GPA * 100, 30);
 
 			// RENDER TEXT (GPA)
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -243,26 +230,20 @@ void Level_Update()
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 30);
+			CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 1.07);
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 54, 500, 30);
+			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 1.08, 500, 30);
 
 			// DEBUG USE: SHOW CURRENT WEAPON
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 			if (player.weapon == 1)
 			{
-				CP_Font_DrawText("Current weapon: Ranged", windowWidth / 6, 90);
+				CP_Font_DrawText("Current weapon: Ranged", windowWidth / 1.2, windowHeight / 1.07);
 			}
-			else CP_Font_DrawText("Current weapon: Melee", windowWidth / 6, 90);
+			else CP_Font_DrawText("Current weapon: Melee", windowWidth / 1.2, windowHeight / 1.07);
 		}
-
-		// END GAME
-		// 
-		//if (totalElapsedTime >= 20) {
-		//	CP_Engine_Terminate();
-		//}
 
 		// PAUSE KEY
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
@@ -271,9 +252,9 @@ void Level_Update()
 		}
 
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		}
-		else
-		{
+	}
+	else
+	{
 		if (CP_Input_KeyReleased(KEY_ESCAPE))
 		{
 			paused = !paused;
@@ -310,13 +291,6 @@ void Level_Update()
 		push += (player.playerPos.y + (player.worldSizeW / 2)) - (wall1.y);
 		player.playerPos.y -= push;
 	}
-
-	// END GAME
-	// 
-	//if (totalElapsedTime >= 20) {
-	//	CP_Engine_Terminate();
-	//}
-
 }
 
 void Level_Exit()
@@ -327,4 +301,6 @@ void Level_Exit()
 	CP_Image_Free(&AssSS);
 	CP_Image_Free(&Floor);
 	CP_Image_Free(&bbtSS);
+	CP_Image_Free(&BossSS);
+	CP_Image_Free(&hitBox);
 }

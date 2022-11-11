@@ -29,3 +29,4 @@ void moveForward(struct Player* player, CP_Vector direction);
 void moveBack(struct Player* player, CP_Vector direction);
 void meleeVec(struct Player* player,int scale);
 int switchWeapon(int weapon);
+float mouseToplayerAngle(struct Player* player);

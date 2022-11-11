@@ -41,55 +41,55 @@ int laser(struct Enemy* enemy, struct Player* player) {
 		(*enemy).transparency = -255;
 		//gets which rect to print based on angle and centralise laser beam to enemy
 		playerangle = enemyPlayerAngle(enemy, player);
-		printf("angle:%f\n", playerangle);
+		//printf("angle:%f\n", playerangle);
 		//checking for 8 predetermined angles
 		if (playerangle > 337.5 || playerangle < 22.5) {
 			(*enemy).laserw = (*enemy).laserB;
 			(*enemy).laserh = -(*enemy).laserL;
 			(*enemy).rotation = 0;
-			printf("up\n");
+			//printf("up\n");
 		}
 		else if (playerangle <= 67.5) {
 			(*enemy).laserw = (*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 315;
-			printf("upright\n");
+			//printf("upright\n");
 		}
 		else if (playerangle <= 112.5) {
 			(*enemy).laserw = (*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 270;
-			printf("right\n");
+			//printf("right\n");
 		}
 		else if (playerangle <= 157.5) {
 			(*enemy).laserw = (*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 45;
-			printf("bottom right\n");
+			//printf("bottom right\n");
 		}
 		else if (playerangle <= 202.5) {
 			(*enemy).laserw = (*enemy).laserB;
 			(*enemy).laserh = (*enemy).laserL;
 			(*enemy).rotation = 180;
-			printf("down\n");
+			//printf("down\n");
 		}
 		else if (playerangle <= 247.5) {
 			(*enemy).laserw = (*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 135;
-			printf("bottomleft\n");
+			//printf("bottomleft\n");
 		}
 		else if (playerangle <= 292.5) {
 			(*enemy).laserw = -(*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 90;
-			printf("left\n");
+			//printf("left\n");
 		}
 		else if (playerangle <= 337.5) {
 			(*enemy).laserw = (*enemy).laserL;
 			(*enemy).laserh = (*enemy).laserB;
 			(*enemy).rotation = 225;
-			printf("upleft\n");
+			//printf("upleft\n");
 		}
 		return 1;
 
@@ -136,7 +136,7 @@ int laser(struct Enemy* enemy, struct Player* player) {
 			break;
 		}
 		return 2;
-		printf("recharging");
+		//printf("recharging");
 	}
 	else if ((*enemy).intlaserTime < 2000) {
 		//calculate opposite & adjacent
@@ -147,7 +147,7 @@ int laser(struct Enemy* enemy, struct Player* player) {
 		case 180:
 			CP_Graphics_DrawRect((*enemy).EnemyPos.x - (*enemy).laserw / 2, (*enemy).EnemyPos.y, (*enemy).laserw, (*enemy).laserh);
 			if (1 == IsRectEntered((*enemy).EnemyPos.x - (*enemy).laserw / 2, (*enemy).EnemyPos.y, (*enemy).laserw, (*enemy).laserh, (*player).playerPos.x, (*player).playerPos.y)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
@@ -155,35 +155,35 @@ int laser(struct Enemy* enemy, struct Player* player) {
 		case 270:
 			CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh);
 			if (1 == IsRectEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh, (*player).playerPos.x, (*player).playerPos.y)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 45:
 			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 135:
 			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 225:
 			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 315:
 			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
-				printf("DIE!\n");
+				//printf("DIE!\n");
 				return 4;
 			}
 			break;
