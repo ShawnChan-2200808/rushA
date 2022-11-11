@@ -157,7 +157,7 @@ void Level_Update()
 			7, 6, 5,
 			10, 8, 7,
 			QuizSS, AssSS, LabSS);
-		spawnBoss(totalElapsedTime, /*85*/0.0f, BossSS);
+		spawnBoss(totalElapsedTime, 85.0f, BossSS);
 
 		// END GAME
 		// 

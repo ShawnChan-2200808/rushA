@@ -13,17 +13,17 @@ struct Enemy {
 	CP_Vector weaponPos;
 	int speed, alive, inGame;
 	float hitCircle;
-	float HP, damage, laserB, laserL;
+	float HP, damage;
 	CP_Vector spawnPos1, spawnPos2, spawnPos3, spawnPos4;
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
-		animationElapsedTime, displayTime, floatlaserTime;
+		animationElapsedTime, displayTime;
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;
-	float laserB, laserL, laserh, laserw, transparency;
-};struct Enemy quiz[10], lab[8], assignment[8];
+	float laserB, laserL, laserh, laserw, transparency, floatlaserTime;
+};struct Enemy quiz[10], lab[8], assignment[8],boss;
 
 void quizInit(struct Enemy* enemy);
 void assInit(struct Enemy* enemy);
