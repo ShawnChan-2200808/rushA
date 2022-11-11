@@ -24,7 +24,6 @@
 CP_Color gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
-float hitCircleSize;
 static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
 int chSize = 10;
@@ -158,12 +157,12 @@ void Level_Update()
 			7, 6, 5,
 			10, 8, 7,
 			QuizSS, AssSS, LabSS);
-		spawnBoss(totalElapsedTime, 85.0f, BossSS);
+		spawnBoss(totalElapsedTime, /*85*/0.0f, BossSS);
 
 		// END GAME
 		// 
-		if (totalElapsedTime >= 300 || &boss.alive == 0) {
-			//CP_Engine_Terminate();
+		if (totalElapsedTime >= 300 || boss.alive == 0) {
+			CP_Engine_Terminate();
 			//printf("ENDGAME");
 		}
 		 
@@ -197,6 +196,25 @@ void Level_Update()
 			updatePlayerAnimation(&player, deltaTime);
 		}
 
+		// Boss Healthbar
+		//
+		if (boss.inGame && boss.alive) {
+			CP_Settings_RectMode(CP_POSITION_CORNER);
+			// RENDER HEALTHBAR
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));
+			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, boss.HP*5, 30);
+			// RENDER TEXT (GPA)
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_TextSize(windowWidth / 38);
+			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
+			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+			CP_Settings_TextAlignment(horizontal, vertical);
+			CP_Font_DrawText("BOSS", windowWidth / 3.2, windowHeight / 30);
+
+			// RENDER HEALTHBAR PLACEHOLDER
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
+			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, 500, 30);
+		}
 
 
 		//UI HUD

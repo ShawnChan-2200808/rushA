@@ -16,7 +16,7 @@
 #include "anim.h"
 
 
-extern float hitCircleSize, deltaTime;
+extern float deltaTime;
 extern int randomX, randomY,randomiser;
 extern CP_Color red;
 
@@ -84,7 +84,7 @@ void quizInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	hitCircleSize = 50.0f;
+	(*enemy).hitCircle = 50.0f;
 	// Set laser color for quiz
 	//(*enemy).lasercolour = red;
 }
@@ -123,7 +123,7 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	hitCircleSize = 50.0f;
+	(*enemy).hitCircle = 50.0f;
 }
 
 void labInit(struct Enemy *enemy) {
@@ -165,7 +165,7 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).laserL = 750;
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
-	hitCircleSize = 500.0f;
+	(*enemy).hitCircle = 50.0f;
 }
 void bossInit(struct Enemy* enemy) {
 	// LAB
@@ -173,7 +173,7 @@ void bossInit(struct Enemy* enemy) {
 
 	(*enemy).speed = 150;
 	(*enemy).alive = 1;
-	(*enemy).HP = 300;
+	(*enemy).HP = 100;
 	(*enemy).damage = 0.02f;
 	(*enemy).inGame = 0;
 
@@ -196,7 +196,7 @@ void bossInit(struct Enemy* enemy) {
 	(*enemy).laserL = 750;
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
-	hitCircleSize = 100.0f;
+	(*enemy).hitCircle = 400.0f;
 }
 
 void initAllEnemies(int numOfQuiz, int numOfAss, int numOfLab) {
@@ -241,7 +241,7 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 }
 
 void damagePlayer(struct Enemy* enemy, struct Player* player) {
-	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, hitCircleSize, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
+	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, (*enemy).hitCircle, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
 		(*player).GPA -= (*enemy).damage;
 		(*player).currentFrame += (*player).animTotalFrames+1;
 	}
@@ -333,10 +333,29 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 
 void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 	if ((*boss).alive && (*player).alive) {
-		enemyChase(&(*boss), &(*player));
+		{
+			//draw circle 
+			CP_Settings_Fill(CP_Color_Create(255, 170, 170, 120));
+			CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle); 
+			enemyChase(&(*boss), &(*player));
+			damagePlayer(&(*boss), &(*player));
+		}
+		/*
+		if (1 == laser(&(*lab), &(*player))) {
+			//(*player).GPA -= (*lab).damage;
+			enemyChase(&(*lab), &(*player));
+			enemyAnimation(LabSS, &(*lab));
+			rotatenemy(&(*lab), &(*player));
+		}
+		else if ((4 == laser(&(*lab), &(*player)))) {
+			enemyAnimation(LabSS, &(*lab));
+			(*player).GPA -= (*lab).damage;
+			(*player).currentFrame += (*player).animTotalFrames + 1;
+		}
+		*/
+		// Render the animation
 		updateEnemyAnimation(&(*boss), deltaTime);
 		enemyAnimation(BossSS, &(*boss));
-		damagePlayer(&(*boss), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
