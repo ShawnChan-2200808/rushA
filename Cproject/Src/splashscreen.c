@@ -11,6 +11,7 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level.h"
+#include "mainmenu.h"
 	
 extern CP_Color gray;
 extern int windowWidth, windowHeight;
@@ -106,7 +107,7 @@ void Splash_Screen_Update(void)
 
 		// Change to state
 		//CP_Engine_SetNextGameState(Main_Menu_init, Main_Menu_update, Main_Menu_exit);
-		CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
+		CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
 	}
 }
 
