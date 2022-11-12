@@ -15,6 +15,8 @@ struct Enemy {
 	float hitCircle;
 	float HP, damage;
 	CP_Vector spawnPos1, spawnPos2, spawnPos3, spawnPos4;
+	float timer;
+	int flag1;
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
@@ -23,7 +25,7 @@ struct Enemy {
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;
 	float laserB, laserL, laserh, laserw, transparency, floatlaserTime;
-};struct Enemy quiz[10], lab[8], assignment[8],boss;
+};struct Enemy quiz[10], lab[8], assignment[8], boss;
 
 void quizInit(struct Enemy* enemy);
 void assInit(struct Enemy* enemy);
