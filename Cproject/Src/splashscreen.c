@@ -26,8 +26,10 @@ int alpha, finalAlpha, rate, time, alphaMax;
 
 void Splash_Screen_Init(void)
 {
+	//initAssets();
+
 	// Load splash screen png from assets folder
-	splashscreenDP = CP_Image_Load("./Assets/DigiPen_Singapore_WEB_RED.png");
+	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_RED.png");
 	//splashscreenRA = CP_Image_Load("./Assets/DigiPen_Singapore_WEB_RED.png");
 	
 	// Setting the window width and height
@@ -53,6 +55,7 @@ void Splash_Screen_Init(void)
 
 	// Set the window when executed to the size of the splashscreen image
 	CP_System_SetWindowSize(windowWidth, windowHeight);
+	
 }
 
 void Splash_Screen_Update(void)

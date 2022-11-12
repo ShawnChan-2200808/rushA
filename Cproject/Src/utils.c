@@ -36,14 +36,7 @@ void initGame() {
 	windowWidth = 1920;
 	windowHeight = 1080;
 
-	playerSS = CP_Image_Load("Assets/player_SS.png");
-	QuizSS = CP_Image_Load("Assets/QUIZ_SS.png");
-	AssSS = CP_Image_Load("Assets/ASS_SS.png");
-	LabSS = CP_Image_Load("Assets/LAB_SS.png");
-	Floor = CP_Image_Load("Assets/School_Hall_Floor.png");
-	bbtSS = CP_Image_Load("Assets/BBT.png");
-	BossSS = CP_Image_Load("Assets/BOSS_SS.png");
-	hitBox = CP_Image_Load("Assets/HitBox.png");
+	//CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2,1);
 
 	// Set the colour for gray
 	black = CP_Color_Create(0, 0, 0, 255);
@@ -60,6 +53,40 @@ void initGame() {
 	// Set the window when executed to the size of the splashscreen image
 	CP_System_SetWindowSize(windowWidth, windowHeight);
 	randomiser = 0;
+}
+
+void initAssets() {
+
+	// Initialize images
+	playerSS = CP_Image_Load("Assets/SPRITES/player_SS.png");
+	QuizSS = CP_Image_Load("Assets/SPRITES/QUIZ_SS.png");
+	AssSS = CP_Image_Load("Assets/SPRITES/ASS_SS.png");
+	LabSS = CP_Image_Load("Assets/SPRITES/LAB_SS.png");
+	Floor = CP_Image_Load("Assets/SPRITES/School_Hall_Floor.png");
+	bbtSS = CP_Image_Load("Assets/SPRITES/BBT.png");
+	BossSS = CP_Image_Load("Assets/SPRITES/BOSS_SS.png");
+	hitBox = CP_Image_Load("Assets/SPRITES/HitBox.png");
+
+	// Initialize OST
+	mainMenuOST = CP_Sound_Load("Assets/OST/WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
+	levelOST = CP_Sound_Load("Assets/OST/EDITED AEROMATIC - DanceTechno MSCDNT1_49.wav");
+	bossOST = CP_Sound_Load("Assets/OST/KEEPING UP - DanceTechno MSCDNT1_33.wav");
+	gameOverOST = CP_Sound_Load("Assets/OST/REGRETS - WorldMusic MSCLAT1_37.wav");
+	winOST = CP_Sound_Load("Assets/OST/MEETING OF THE MINDS - Corporate MSCCRP1_21.wav");
+
+	//Initialize SFX
+	schoolBellSFX = CP_Sound_Load("Assets/SFX/EDITED BELL-SCHOOL_GEN-HDF-03494.wav");
+	//playerMoveSFX = CP_Sound_Load("Assets/player_SS.wav");
+	playerMeleeSFX = CP_Sound_Load("Assets/SFX/WRITING-HI-LITER_GEN-HDF-26203.wav");
+	playerSwapRangeSFX = CP_Sound_Load("Assets/SFX/GUN-HOLSTER_GEN-HDF-13335.wav");
+	playerSwapMeleeSFX = CP_Sound_Load("Assets/SFX/PEN-RETRACTABLE_GEN-HDF-18401.wav");
+	playerRangedSFX = CP_Sound_Load("Assets/SFX/TOY-GUN_GEN-HDF-23708.wav");
+	//playerDeadSFX = CP_Sound_Load("Assets/player_SS.wav");
+	//quizAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
+	//labAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
+	//assAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
+	bossSFX = CP_Sound_Load("Assets/SFX/HumanLaugh CTE03_37.10.wav");
+
 }
 
 void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
