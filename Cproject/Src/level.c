@@ -19,6 +19,7 @@
 #include "powerups.h"
 #include "bullet.h"
 #include "collsion.h"
+#include "mainmenu.h"
 
 
 extern CP_Color gray, blue, green, red;
@@ -142,13 +143,22 @@ void Level_Update()
 			}
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You failed :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-			CP_Font_DrawText("Press SPACE to retest", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+			CP_Font_DrawText("Press SPACE to retest, ESC to Quit", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				totalElapsedTime = 0;
 				GameOver = 0;
 				CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
 			}
+
+			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+				CP_Engine_Terminate();
+			}
+
+			//if (CP_Input_KeyDown(KEY_Q))
+			//{
+			//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			//}
 		}
 
 		//COLLISION
@@ -220,16 +230,26 @@ void Level_Update()
 		if (Win) {
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You WIN :)", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-			CP_Font_DrawText("Press SPACE to Replay", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+			CP_Font_DrawText("Press SPACE to Replay, ESC to Quit", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				Win = 0;
 				totalElapsedTime = 0;
 				CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
 			}
+
+			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+				CP_Engine_Terminate();
+			}
+
+			//if (CP_Input_KeyDown(KEY_Q))
+			//{
+			//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			//}
 		}
 		 
-		//boss
+		//boss extra spawns
 		//spawnWeekly(totalElapsedTime, 85.0f,
 		//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
 
@@ -316,7 +336,7 @@ void Level_Update()
 		//}
 
 		// PAUSE KEY
-		if (CP_Input_KeyReleased(KEY_ESCAPE))
+		if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
 		{
 			paused = !paused;
 		}
@@ -325,14 +345,21 @@ void Level_Update()
 	}
 	else
 	{
-		if (CP_Input_KeyReleased(KEY_ESCAPE))
+		if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
 		{
 			paused = !paused;
 		}
-		CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
+		//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText("GAME PAUSED", (CP_System_GetWindowWidth() / 3), (CP_System_GetWindowHeight() / 2));
-		CP_Font_DrawText("Press Esc to resume", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
+		CP_Font_DrawText("GAME PAUSED", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2)-40);
+		CP_Font_DrawText("Press Esc to resume, SPACE to quit", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
+		if (CP_Input_KeyReleased(KEY_SPACE)) {
+			CP_Engine_Terminate();
+		}
+		//if (CP_Input_KeyDown(KEY_Q))
+		//{
+		//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+		//}
 	}
 
 	int push = 0;

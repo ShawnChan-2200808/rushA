@@ -64,23 +64,18 @@ void initAssets() {
 	hitBox = CP_Image_Load("Assets/SPRITES/HitBox.png");
 
 	// Initialize OST
-	mainMenuOST = CP_Sound_Load("Assets/OST/WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
+	mainMenuOST = CP_Sound_Load("Assets/OST/2ND EDITED WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
 	levelOST = CP_Sound_Load("Assets/OST/EDITED AEROMATIC - DanceTechno MSCDNT1_49.wav");
 	bossOST = CP_Sound_Load("Assets/OST/KEEPING UP - DanceTechno MSCDNT1_33.wav");
-	gameOverOST = CP_Sound_Load("Assets/OST/REGRETS - WorldMusic MSCLAT1_37.wav");
-	winOST = CP_Sound_Load("Assets/OST/MEETING OF THE MINDS - Corporate MSCCRP1_21.wav");
+	gameOverOST = CP_Sound_Load("Assets/OST/EDITED REGRETS - WorldMusic MSCLAT1_37.wav");
+	winOST = CP_Sound_Load("Assets/OST/2ND EDITED MEETING OF THE MINDS - Corporate MSCCRP1_21.wav");
 
 	//Initialize SFX
 	schoolBellSFX = CP_Sound_Load("Assets/SFX/EDITED BELL-SCHOOL_GEN-HDF-03494.wav");
-	//playerMoveSFX = CP_Sound_Load("Assets/player_SS.wav");
 	playerMeleeSFX = CP_Sound_Load("Assets/SFX/WRITING-HI-LITER_GEN-HDF-26203.wav");
 	playerSwapRangeSFX = CP_Sound_Load("Assets/SFX/GUN-HOLSTER_GEN-HDF-13335.wav");
 	playerSwapMeleeSFX = CP_Sound_Load("Assets/SFX/PEN-RETRACTABLE_GEN-HDF-18401.wav");
 	playerRangedSFX = CP_Sound_Load("Assets/SFX/TOY-GUN_GEN-HDF-23708.wav");
-	//playerDeadSFX = CP_Sound_Load("Assets/player_SS.wav");
-	//quizAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
-	//labAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
-	//assAttackSFX = CP_Sound_Load("Assets/player_SS.wav");
 	bossSFX = CP_Sound_Load("Assets/SFX/HumanLaugh CTE03_37.10.wav");
 
 }

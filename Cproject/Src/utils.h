@@ -21,15 +21,10 @@ CP_Sound gameOverOST;
 CP_Sound winOST;
 CP_Sound bossOST;
 CP_Sound schoolBellSFX;
-CP_Sound playerMoveSFX;
 CP_Sound playerMeleeSFX;
 CP_Sound playerSwapRangeSFX;
 CP_Sound playerSwapMeleeSFX;
 CP_Sound playerRangedSFX;
-CP_Sound playerDeadSFX;
-CP_Sound quizAttackSFX;
-CP_Sound labAttackSFX;
-CP_Sound assAttackSFX;
 CP_Sound bossSFX;
 
 // Spawning of 
