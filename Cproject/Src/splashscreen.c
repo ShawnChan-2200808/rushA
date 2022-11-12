@@ -13,10 +13,6 @@
 #include "level.h"
 #include "mainmenu.h"
 	
-extern CP_Color gray;
-extern int windowWidth, windowHeight;
-extern float fps;
-
 CP_Image splashscreenDP;
 //CP_Image splashscreenRA;
 
@@ -26,7 +22,7 @@ int alpha, finalAlpha, rate, time, alphaMax;
 
 void Splash_Screen_Init(void)
 {
-	//initAssets();
+	initAssets();
 
 	// Load splash screen png from assets folder
 	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_RED.png");

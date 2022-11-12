@@ -421,7 +421,7 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 				damagePlayer(&(*boss), &(*player));
 				//if player get into the circle he slows down
 				if (isCircleEntered((*boss).EnemyPos.x, (*boss).EnemyPos.y, (*boss).hitCircle, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
-					(*player).speed = 250;
+					(*player).speed = 300;
 				}
 				CP_Settings_Fill(CP_Color_Create(255, 170, 170, 120));
 				CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle);

@@ -12,10 +12,6 @@
 #include "player.h"
 #include "enemy.h"
 #include <math.h>
-CP_Color black, white, gray, blue, green, red;
-int windowWidth, windowHeight;
-float fps;
-int randomX, randomY, randomiser;
 
 // Get angle from enemy to player
 float enemyPlayerAngle(struct Enemy* enemy, struct Player* player) {

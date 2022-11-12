@@ -1,4 +1,9 @@
 
+CP_Color black, white, gray, blue, green, red;
+int windowWidth, windowHeight;
+float fps;
+int randomX, randomY, randomiser;
+
 // References to Image
 CP_Image playerSS;
 CP_Image QuizSS;

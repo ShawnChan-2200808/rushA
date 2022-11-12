@@ -58,7 +58,7 @@ void Level_Init()
 	//
 	CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 	CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
-	CP_Sound_PlayAdvanced(levelOST, 0.5f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
+	CP_Sound_PlayAdvanced(levelOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
 	CP_Sound_PlayAdvanced(schoolBellSFX,0.1f,1.0f,FALSE, CP_SOUND_GROUP_SFX);
 }
 
@@ -197,7 +197,7 @@ void Level_Update()
 				CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 				CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
 				CP_Sound_PlayAdvanced(bossSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-				CP_Sound_PlayAdvanced(bossOST, 0.4f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
+				CP_Sound_PlayAdvanced(bossOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
 				bossOut = 1;
 			}
 		}

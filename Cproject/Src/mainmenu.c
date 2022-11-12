@@ -10,24 +10,17 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level.h"
-#include "player.h"
-//#include "enemy.h"
-//#include "anim.c"
-	
-CP_Color gray, black, red,blue;
-int windowWidth, windowHeight, currentFrame, spriteWidth, spriteHeight;
-float fps;
 
-
-CP_Image Background;
-CP_Image PlayerSS;
-CP_Image AssSS;
 CP_Image Gamename;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime;
 static float deltaTime;
 int time, lerpMax;
 float rate, lerp, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_xpos;
+
+int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
+float spriteWidth, SpriteHeight, displayTime;
+static float animationElapsedTimeE, animationElapsedTimeP;
 
 static float Lerp(float start, float end, float value)
 {
@@ -38,15 +31,16 @@ static float Lerp(float start, float end, float value)
 void Mainmenu_Init(void)
 {
 	// Load image png from assets folder
-	Background = CP_Image_Load("Assets/School_Hall_Floor.png");
-	PlayerSS = CP_Image_Load("Assets/player_idle_64h.png");
-	AssSS = CP_Image_Load("Assets/ASS_SS_64.png");
-	Gamename = CP_Image_Load("Assets/THE DELIVERABLES.png");
+	Gamename = CP_Image_Load("Assets/SPRITES/THE DELIVERABLES.png");
 
 	//animation 
-	currentFrame = 0;
-	spriteWidth = 64.0f;
-	spriteHeight = 64.0f;
+	displayTime = 2;
+	currentFrameP = 0, currentFrameE = 0;
+	animationSpeedP = 10, animationSpeedE = 15;
+	animTotalFramesP =2, animTotalFramesE = 8;
+	spriteWidth = 64.0f, SpriteHeight = 64.0f;
+	animationElapsedTimeP = 0.0f, animationElapsedTimeE = 0.0f;
+
 
 	// Initialize variables
 	deltaTime = 0.0f;
@@ -58,23 +52,22 @@ void Mainmenu_Init(void)
 
 	// Getting the rate we need to get to reach 1 lerpfector in 3 seconds
 	rate = finalLerp / time;
-	
+	//
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
 
 	// Set the colour for gray
-	gray = CP_Color_Create(120, 120, 120, 255);
 	black = CP_Color_Create(0, 0, 0, 255);
 	red = CP_Color_Create(255, 0, 0, 255);
 	blue = CP_Color_Create(0, 0, 255, 255);
 
-
-	// Set fps to 120fps
-	CP_System_SetFrameRate(fps);
-
 	// Set the window when executed to the size of the splashscreen image
 	CP_System_SetWindowSize(windowWidth, windowHeight);
+
+	CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
+	CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
+	CP_Sound_PlayAdvanced(mainMenuOST, 0.1f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
 }
 
 void Mainmenu_Update(void)
@@ -93,8 +86,8 @@ void Mainmenu_Update(void)
 	player_return_xpos = CP_Math_LerpFloat(windowWidth+2000, -250, lerp);
 	ass_return_xpos = (player_return_xpos + 180);
 
-	playerInit(&player);
-	SpawnBG(Background, 6, 9);
+
+	SpawnBG(Floor, 6, 9);
 	// Create background that is gray in colour
 	CP_Graphics_ClearBackground(gray);
 	CP_Settings_Fill(red);
@@ -146,20 +139,20 @@ void Mainmenu_Update(void)
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 
 		//CP_Image_Draw(Gamename, windowWidth / 2, (windowHeight / 2) - 100, (float)CP_Image_GetWidth(Gamename), (float)CP_Image_GetHeight(Gamename), 255);
-		CP_Image_Draw(Gamename, windowWidth / 2, gamename_xpos, (float)CP_Image_GetWidth(Gamename), (float)CP_Image_GetHeight(Gamename), 255);
+		CP_Image_Draw(Gamename, windowWidth / 2, gamename_xpos, (float)CP_Image_GetWidth(Gamename)*2, (float)CP_Image_GetHeight(Gamename)*2, 255);
 
-
-		CP_Image_DrawSubImage(PlayerSS,
+		CP_Image_DrawSubImage(playerSS,
 			 //RENDERED POS AND SIZE
 			player_xpos, windowHeight - 80, 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R	
+			currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
 			255);
-		if ((player).animationElapsedTime >= (player).displayTime) {
-			(player).currentFrame = ((player).currentFrame + 1) % (player).animTotalFrames;
-			(player).animationElapsedTime = 0.0f;
+		if (animationElapsedTimeP >= displayTime) {
+			currentFrameP = (currentFrameP + 1) % animTotalFramesP;
+			animationElapsedTimeP = 0.0f;
 		}
-		updatePlayerAnimation(&player, deltaTime);
+		animationElapsedTimeP += deltaTime * animationSpeedP;
+		
 		printf("%d ", lerp);
 		printf("player lerp: %d \n", currentElapseTime);
 		lerp = currentElapseTime*rate;
@@ -177,20 +170,29 @@ void Mainmenu_Update(void)
 			// RENDERED POS AND SIZE
 			ass_xpos, windowHeight - 80, 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R
+			currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
 			255);
+		if (animationElapsedTimeE >= displayTime) {
+			currentFrameE = (currentFrameE + 1) % animTotalFramesE;
+			animationElapsedTimeE = 0.0f;
+		}
+		animationElapsedTimeE += deltaTime * animationSpeedE;
 		printf("Ass lerp: %d \n", currentElapseTime);
 		lerp = currentElapseTime * rate;
 
 		
 		while (player_xpos >= windowWidth + 250)
 		{
-			CP_Image_DrawSubImage(PlayerSS,
+			CP_Image_DrawSubImage(playerSS,
 				//RENDERED POS AND SIZE
 				player_return_xpos, windowHeight - 80, 160, 160,
 				// POS AND SIZE FROM SPRITESHEET
-				currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R	
+				currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
 				255);
+			if (animationElapsedTimeP >= displayTime) {
+				currentFrameP = (currentFrameP + 1) % animTotalFramesP;
+				animationElapsedTimeP = 0.0f;
+			}
 			printf("%d ", lerp);
 			printf("player lerp: %d \n", currentElapseTime);
 			lerp = currentElapseTime * rate;
@@ -208,8 +210,13 @@ void Mainmenu_Update(void)
 				// RENDERED POS AND SIZE
 				ass_return_xpos, windowHeight - 80, 160, 160,
 				// POS AND SIZE FROM SPRITESHEET
-				currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R
+				currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
 				255);
+			if (animationElapsedTimeE >= displayTime) {
+				currentFrameE = (currentFrameE + 1) % animTotalFramesE;
+				animationElapsedTimeE = 0.0f;
+			}
+			animationElapsedTimeE += deltaTime * animationSpeedE;
 			printf("Ass lerp: %d \n", currentElapseTime);
 			lerp = currentElapseTime * rate;
 
@@ -338,7 +345,5 @@ void Mainmenu_Exit(void)
 {
 	// Clear the Splashscreen image upon exiting this state
 	//
-	CP_Image_Free(&PlayerSS);
-	CP_Image_Free(&Background);
-	//CP_Image_Free(&splashscreenRA);
+	CP_Image_Free(&Gamename);
 }
