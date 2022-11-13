@@ -262,12 +262,12 @@ void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssL
 
 //Reset Enemy Bullet
 void enemybulletReset(struct Enemy* enemy) {
-	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++(enemy->bulletIndex))
+	for (enemy->bulletIndex = 0; enemy->bulletIndex < 5; ++(enemy->bulletIndex))
 	{
 		enemy->enemyBullets[enemy->bulletIndex].active = 0;
 		enemy->enemyBullets[enemy->bulletIndex].velocity = 0;
 	}
-	(*enemy).floatbulletTime = 5000;
+	(*enemy).floatbulletTime = 700;
 }
 
 //Initialise enemy Bullet
@@ -283,18 +283,18 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 	//only set a few bullets to active
 	
 	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
-	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % 700;
+	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % 500;
 
 	printf("floatbullet time %f : intbulletime %d\n", (*enemy).floatbulletTime,(*enemy).intbulletTime);
 	if ((*enemy).intbulletTime < 20) {
 		++(enemy->bulletIndex);
-		enemy->bulletIndex = enemy->bulletIndex % 10;
+		enemy->bulletIndex = enemy->bulletIndex % 5;
 		if (enemy->enemyBullets[enemy->bulletIndex].active == 0) {
 			enemy->enemyBullets[enemy->bulletIndex].active = 1;
 			enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
 			enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
 			enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
-			enemy->enemyBullets[enemy->bulletIndex].damage = 1;
+			enemy->enemyBullets[enemy->bulletIndex].damage = 0.05;
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
@@ -316,7 +316,7 @@ void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* play
 	//Shotgun code
 	/*for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
 	{*/
-	for (enemy->indivBullet = 0; enemy->indivBullet < 10; ++enemy->indivBullet) {
+	for (enemy->indivBullet = 0; enemy->indivBullet < 5; ++enemy->indivBullet) {
 		if (enemy->enemyBullets[enemy->indivBullet].active == 1)
 		{
 			enemy->enemyBullets[enemy->indivBullet].Pos.x += enemy->enemyBullets[enemy->indivBullet].Vector.x * deltaTime;
