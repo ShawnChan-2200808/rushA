@@ -9,7 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-#include "bullet.h"
+#include "weapons.h"
 #include "player.h"
 #include "enemy.h"
 #include "collsion.h"
@@ -239,7 +239,7 @@ void removeEnemy(struct Enemy* enemy) {
 	(*enemy).alive = 0;
 }
 
-int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY)
+int bulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY)
 {
 	if ((*enemy).inGame &&((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{

@@ -193,3 +193,73 @@ int laser(struct Enemy* enemy, struct Player* player) {
 	}
 	return 1;
 }
+
+//Bullets
+
+
+
+void bulletReset(int index) {
+	for (index = 0; index < 10; ++index)
+	{
+		player.playerBullets[index].active = 0;
+		player.playerBullets[index].velocity = 0;
+	}
+}
+
+//Initialise Player Bullet
+void bulletInit(int index, struct Player* player) {
+	for (index = 0; index < 10; ++index)
+	{
+		if (player->playerBullets[index].active == 0)
+		{
+			player->playerBullets[index].active = 1;
+			player->playerBullets[index].velocity = 1000;
+			player->playerBullets[index].diameter = 20;
+			player->playerBullets[index].damage = 1;
+			player->playerBullets[index].Pos = (*player).playerPos;
+			player->playerBullets[index].Vector = CP_Vector_Set((CP_Input_GetMouseX() - (*player).playerPos.x), (CP_Input_GetMouseY() - (*player).playerPos.y));
+			player->playerBullets[index].Vector = CP_Vector_Normalize(player->playerBullets[index].Vector);
+			player->playerBullets[index].Vector = CP_Vector_Scale(player->playerBullets[index].Vector, player->playerBullets[index].velocity);
+			break;
+		}
+	}
+}
+
+//Definition for bulletupdates
+void bulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssLab) {
+	for (index = 0; index < 10; ++index)
+	{
+		if (player.playerBullets[index].active == 1)
+		{
+			player.playerBullets[index].Pos.x += player.playerBullets[index].Vector.x * deltaTime;
+			player.playerBullets[index].Pos.y += player.playerBullets[index].Vector.y * deltaTime;
+			if (player.playerBullets[index].Pos.x < 0 || player.playerBullets[index].Pos.x >= CP_System_GetWindowWidth() || player.playerBullets[index].Pos.y < 0 || player.playerBullets[index].Pos.y >= CP_System_GetWindowHeight())
+			{
+				player.playerBullets[index].active = 0;
+			}
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Graphics_DrawCircle(player.playerBullets[index].Pos.x, player.playerBullets[index].Pos.y, player.playerBullets[index].diameter);
+			// need to update
+			for (int i = 0; i < numOfQuiz; i++)
+			{
+				if (bulletDamage(&quiz[i], player.playerBullets[index], 130, 130) == 1)
+				{
+					player.playerBullets[index].active = 0;
+				}
+			}
+			for (int i = 0; i < numOfAssLab; i++)
+			{
+				if (bulletDamage(&assignment[i], player.playerBullets[index], 130, 130) == 1)
+				{
+					player.playerBullets[index].active = 0;
+				}
+				if (bulletDamage(&lab[i], player.playerBullets[index], 130, 130) == 1)
+				{
+					player.playerBullets[index].active = 0;
+				}
+			}
+		}
+
+	}
+}
+

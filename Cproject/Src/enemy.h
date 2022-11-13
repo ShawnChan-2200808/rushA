@@ -7,6 +7,7 @@
 @brief      contains declarations of Enemy functions
 *//*_________________________________________________________________________________*/
 
+
 // MAIN ENEMY STRUCT
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -22,6 +23,14 @@ struct Enemy {
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;
 	float laserB, laserL, laserh, laserw, transparency;
+	//Bullet Struct
+	struct enemyBullet
+	{
+		CP_Vector Pos, Vector;
+		int active, diameter, damage;
+		float velocity;
+	} enemyBullets[10];
+	int bulletIndex;
 };struct Enemy quiz[10], lab[8], assignment[8];
 
 void quizInit(struct Enemy* enemy);
@@ -36,7 +45,7 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 void respawnEnemy(struct Enemy* enemy, int hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
-int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY);
+int bulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY);
 void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player);
 void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player);
 void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player);
