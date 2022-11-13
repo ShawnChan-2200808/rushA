@@ -57,7 +57,7 @@ void Level_Init()
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
-	bulletReset(player.bulletIndex);
+	playerbulletReset(player.bulletIndex);
 	totalElapsedTime = 0;
 }
 
@@ -98,7 +98,7 @@ void Level_Update()
 				if (player.weapon == 1)
 				{
 					player.currentFrame = 2;
-					bulletInit(player.bulletIndex, &player);
+					playerbulletInit(player.bulletIndex, &player);
 				}
 				else
 				{
@@ -203,7 +203,7 @@ void Level_Update()
 
 		// BULLET SIMULATION (UPDATING POSITION)
 		//
-		bulletUpdate(player.bulletIndex, deltaTime,10,8);
+		playerbulletUpdate(player.bulletIndex, deltaTime,10,8);
 
 		// POWER UP
 		//

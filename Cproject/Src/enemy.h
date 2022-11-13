@@ -30,7 +30,13 @@ struct Enemy {
 		int active, diameter, damage;
 		float velocity;
 	} enemyBullets[10];
-	int bulletIndex;
+	//Bullet Variables
+	int bulletIndex,intbulletTime;
+	float floatbulletTime;
+
+	//collision
+	CP_Vector enemymin, enemymax;
+	float hitboxX, hitboxY;
 };struct Enemy quiz[10], lab[8], assignment[8];
 
 void quizInit(struct Enemy* enemy);
@@ -45,7 +51,8 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 void respawnEnemy(struct Enemy* enemy, int hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
-int bulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY);
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY);
+int enemybulletDamage(struct Enemy* enemy,struct Player* player, struct enemyBullet bullet);
 void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player);
 void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player);
 void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player);

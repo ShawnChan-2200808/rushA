@@ -17,7 +17,7 @@
 #include "level.h"
 
 extern float hitCircleSize, deltaTime;
-extern int randomX, randomY,randomiser;
+extern int randomX, randomY, randomiser;
 extern CP_Color red;
 
 void rotatenemy(struct Enemy* enemy, struct Player* player) {
@@ -50,7 +50,7 @@ void rotatenemy(struct Enemy* enemy, struct Player* player) {
 	}
 }
 
-void quizInit(struct Enemy *enemy) {
+void quizInit(struct Enemy* enemy) {
 	// QUIZ
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -89,7 +89,7 @@ void quizInit(struct Enemy *enemy) {
 	//(*enemy).lasercolour = red;
 }
 
-void assInit(struct Enemy *enemy) {
+void assInit(struct Enemy* enemy) {
 	// ASSIGNMENT
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -124,9 +124,16 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	hitCircleSize = 50.0f;
+	(*enemy).floatbulletTime = 0;
+	(*enemy).intbulletTime = 0;
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 }
 
-void labInit(struct Enemy *enemy) {
+void labInit(struct Enemy* enemy) {
 	// LAB
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(100, 200), CP_Random_RangeFloat(100, 300));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -224,7 +231,7 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 	}
 }
 
-void respawnEnemy(struct Enemy *enemy,int hp) {
+void respawnEnemy(struct Enemy* enemy, int hp) {
 	(*enemy).HP = hp;
 	randomX = CP_Random_RangeFloat(200, 1700);
 	randomY = CP_Random_RangeFloat(200, 800);
@@ -239,9 +246,9 @@ void removeEnemy(struct Enemy* enemy) {
 	(*enemy).alive = 0;
 }
 
-int bulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY)
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY)
 {
-	if ((*enemy).inGame &&((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
+	if ((*enemy).inGame && ((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
 		(*enemy).HP -= bullet.damage;
 		return 1;
@@ -249,7 +256,17 @@ int bulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX,
 	else return 0;
 }
 
-void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
+int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBullet bullet)
+{
+	if ((*player).alive && ((bullet.Pos.x - (bullet.diameter / 2)) >= ((*player).playerPos.x) - ((*enemy).hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*player).playerPos.x) + ((*enemy).hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*player).playerPos.y) - ((*enemy).hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
+	{
+		(*player).GPA -= bullet.damage;
+		return 1;
+	}
+	else return 0;
+}
+
+void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player) {
 	// Lab1 Logic
 	if ((*lab).alive && (*player).alive) {
 		if (1 == laser(&(*lab), &(*player))) {
@@ -258,7 +275,7 @@ void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
 			enemyAnimation(LabSS, &(*lab));
 			rotatenemy(&(*lab), &(*player));
 		}
-		else if ((4 == laser(&(*lab), &(*player)))){
+		else if ((4 == laser(&(*lab), &(*player)))) {
 			enemyAnimation(LabSS, &(*lab));
 			(*player).GPA -= (*lab).damage;
 		}
@@ -288,10 +305,14 @@ void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player) {
 
 }
 void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
-	// Assignment1 Logic
+	// Assignment1 Logic	
 	if ((*ass).alive && (*player).alive) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
+		enemybulletReset(&(*ass));
+		enemybulletInit(&(*ass), &(*player));
+		//enemybulletInit(ass->bulletIndex, &ass , &player);
+		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
@@ -320,8 +341,8 @@ void allEnemyLogic(int QuizLoopStart, int assLoopStart, int labLoopStart,
 void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 	int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
-	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {	
-	if (totalElapsedTime > timeToSpawn){
+	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {
+	if (totalElapsedTime > timeToSpawn) {
 
 		for (int i = labLoopStart; i < numOfLab; ++i)
 		{
@@ -338,7 +359,7 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 
 		allEnemyLogic(QuizLoopStart, assLoopStart, labLoopStart,
 			numOfQuiz, numOfAss, numOfLab,
-			 quizSS, assSS, labSS);
+			quizSS, assSS, labSS);
 
 		checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
 	}
