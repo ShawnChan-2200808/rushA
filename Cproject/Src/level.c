@@ -177,25 +177,25 @@ void Level_Update()
 
 		// PowerUP 
 		//
-		spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L
-			0, 0, 0,
-			1, 1, 1,
+		spawnWeekly(totalElapsedTime, 0.0f,		// 1Q 1A 1L
+			0,0,0,//0, 0, 0,
+			0,8,0,//1, 1, 1,
 			QuizSS,AssSS,LabSS);
 		spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L
-			1, 1, 1,
-			3, 2, 2,
+			0, 0, 0,//1, 1, 1,
+			0, 0, 0,//3, 2, 2,
 			QuizSS, AssSS, LabSS);
 		spawnWeekly(totalElapsedTime, 25.0f,	// 2Q 2A 1L
-			3, 2, 2,
-			5, 4, 3,
+			0, 0, 0,//3, 2, 2,
+			0, 0, 0,//5, 4, 3,
 			QuizSS, AssSS, LabSS);
 		spawnWeekly(totalElapsedTime, 45.0f,	// 2Q 2A 2L
-			5, 4, 3,
-			7, 6, 5,
+			0, 0, 0, //5, 4, 3,
+			0, 0, 0, //7, 6, 5,
 			QuizSS, AssSS, LabSS);
 		spawnWeekly(totalElapsedTime, 65.0f,	// 3Q 2A 2L
-			7, 6, 5,
-			10, 8, 7,
+			0, 0, 0, //7, 6, 5,
+			0, 0, 0, //10, 8, 7,
 			QuizSS, AssSS, LabSS);
 		//boss
 		//spawnWeekly(totalElapsedTime, 85.0f,

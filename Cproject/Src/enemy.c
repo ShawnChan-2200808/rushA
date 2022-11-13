@@ -260,7 +260,12 @@ int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hi
 
 int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBullet bullet)
 {
-	if ((*player).alive && ((bullet.Pos.x - (bullet.diameter / 2)) >= ((*player).playerPos.x) - ((*enemy).hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*player).playerPos.x) + ((*enemy).hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*player).playerPos.y) - ((*enemy).hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
+	if ((*player).alive &&
+		isCircleEntered(bullet.Pos.x, bullet.Pos.y, bullet.diameter, (*player).playerPos.x, (*player).playerPos.y))
+		//((bullet.Pos.x - (bullet.diameter / 2)) >= ((*player).playerPos.x) - ((*enemy).hitboxX / 2)) &&
+		//((bullet.Pos.x + (bullet.diameter / 2)) <= ((*player).playerPos.x) + ((*enemy).hitboxX / 2)) &&
+		//((bullet.Pos.y - (bullet.diameter / 2)) >= ((*player).playerPos.y) - ((*enemy).hitboxY / 2)) &&
+		//((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
 	{
 		(*player).GPA -= bullet.damage;
 		return 1;
@@ -312,7 +317,7 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
 
-		enemybulletInit(&(*ass), &(*player));
+		enemybulletInit(&(*ass), &(*player),deltaTime);
 		//enemybulletInit(ass->bulletIndex, &ass , &player);
 		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}

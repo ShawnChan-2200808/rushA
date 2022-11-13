@@ -27,8 +27,8 @@ struct Enemy {
 	struct enemyBullet
 	{
 		CP_Vector Pos, Vector;
-		int active, diameter, damage;
-		float velocity;
+		int active, diameter;
+		float velocity, bulletTimer,damage;
 	} enemyBullets[10];
 	//Bullet Variables
 	int bulletIndex,intbulletTime;

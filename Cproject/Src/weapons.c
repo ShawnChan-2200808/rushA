@@ -274,28 +274,33 @@ void enemybulletReset(struct Enemy* enemy) {
 	{
 		enemy->enemyBullets[enemy->bulletIndex].active = 0;
 		enemy->enemyBullets[enemy->bulletIndex].velocity = 0;
+		enemy->enemyBullets[enemy->bulletIndex].bulletTimer = 1.0f * enemy->bulletIndex;
 	}
 }
 
 //Initialise enemy Bullet
-void enemybulletInit(struct Enemy* enemy, struct Player* player) {
+void enemybulletInit(struct Enemy* enemy, struct Player* player,float dt) {
 
 	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
 	(*enemy).intbulletTime = (int)(*enemy).floatlaserTime % 3000;
 	if ((*enemy).intbulletTime < 1500) {
 		for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
 		{
-			if (enemy->enemyBullets[enemy->bulletIndex].active == 0)
+			if (enemy->enemyBullets[enemy->bulletIndex].active == 0 && enemy->enemyBullets[enemy->bulletIndex].bulletTimer <= 0.0f)
 			{
 				enemy->enemyBullets[enemy->bulletIndex].active = 1;
-				enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
-				enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
-				enemy->enemyBullets[enemy->bulletIndex].damage = 1;
+				enemy->enemyBullets[enemy->bulletIndex].velocity = 700;
+				enemy->enemyBullets[enemy->bulletIndex].diameter = 70;
+				enemy->enemyBullets[enemy->bulletIndex].damage = 0.5;
 				enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
 				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
 				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
 				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
 				break;
+			}
+			enemy->enemyBullets[enemy->bulletIndex].bulletTimer - dt;
+			if (enemy->enemyBullets[enemy->bulletIndex].bulletTimer <= 0.0f) {
+				enemy->enemyBullets[enemy->bulletIndex].bulletTimer = 0.1f * enemy->bulletIndex;
 			}
 		}
 	}
@@ -315,14 +320,17 @@ void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* play
 			{
 				enemy->enemyBullets[enemy->bulletIndex].active = 0;
 			}
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Settings_Fill(CP_Color_Create(255, 170, 170, 255));
 			CP_Graphics_DrawCircle(enemy->enemyBullets[enemy->bulletIndex].Pos.x, enemy->enemyBullets[enemy->bulletIndex].Pos.y, enemy->enemyBullets[enemy->bulletIndex].diameter);
 			// need to update
-			if (enemybulletDamage(enemy, player, enemy->enemyBullets[enemy->bulletIndex]) == 1) {
+			for ((*enemy).bulletIndex = 0; (*enemy).bulletIndex < 10; (*enemy).bulletIndex++)
+			{
+				if (enemybulletDamage(&(*enemy), player, (*enemy).enemyBullets[(*enemy).bulletIndex]) == 1) {
 				{
-					enemy->enemyBullets[enemy->bulletIndex].active = 0;
+						(*enemy).enemyBullets[(*enemy).bulletIndex].active = 0;
 				}
 			}
+		}
 		}
 
 	}
