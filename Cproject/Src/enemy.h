@@ -31,7 +31,7 @@ struct Enemy {
 		float velocity;
 	} enemyBullets[10];
 	//Bullet Variables
-	int bulletIndex,intbulletTime;
+	int bulletIndex,intbulletTime,indivBullet;
 	float floatbulletTime;
 
 	//collision
