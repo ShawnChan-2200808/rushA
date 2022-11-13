@@ -1,10 +1,11 @@
 /*!
 @file       powerups.c
+@author		Shawn Chan Weng Kwang (shawnwengkwang.chan@digipen.edu)
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
 @date       25/10/2022 (last updated)
-@brief      contains defininition of Player functions
+@brief      contains defininition of item powerups functions
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -12,8 +13,7 @@
 #include "powerups.h"
 #include "player.h"
 
-extern int randomX, randomY;
-
+// initialising of items - Shawn
 void itemInit(struct Item *item,float posX, float posY, float width, float height, float mod) {
 	(*item).position = CP_Vector_Set(posX,posY);
 	(*item).Width = width;
@@ -23,6 +23,7 @@ void itemInit(struct Item *item,float posX, float posY, float width, float heigh
 	(*item).Modifier = mod;
 }
 
+// Bubble Tea powerup function which heal player GPA - Shawn
 void playerHeal(struct Item* item, struct Player* player) {
 	if (IsAreaClicked((*item).position.x, (*item).position.y, (*item).Width, (*item).Height, (*player).playerPos.x, (*player).playerPos.y) && (*item).isActive){
 		if ((*player).GPA < 3) {
@@ -36,9 +37,10 @@ void playerHeal(struct Item* item, struct Player* player) {
 	}
 }
 
+// Unused Speed up function that was initially planned for a coffee powerup function -Shawn
 void playerSpeedUp(struct Item* item, struct Player* player) {
 	if (IsAreaClicked((*item).position.x, (*item).position.y, (*item).Width, (*item).Height, (*player).playerPos.x, (*player).playerPos.y) && (*item).isActive) {
-		(*player).speed += (*item).Modifier;
+		(float)(*player).speed += ((*item).Modifier);
 		(*item).isActive = 0;
 		(*item).timer = 5.0f;
 	}
@@ -47,14 +49,20 @@ void playerSpeedUp(struct Item* item, struct Player* player) {
 	}
 }
 
+// Start the countdown for the cooldown - Shawn
 void coolDown(struct Item* item, float deltatime) {
 	(*item).timer -= deltatime;
 }
 
-void respawnItem(struct Item* item/*, float posX, float posY*/) {
+// Randoming the spawn position of item - Shawn
+void randomItemPos(struct Item* item) {
 	(*item).randX = CP_Random_RangeFloat(200, 1700);
 	(*item).randY = CP_Random_RangeFloat(200, 800);
+}
+
+// Respawning the item to position - Shawn
+void respawnItem(struct Item* item, float posX, float posY) {
 	// FOR AFTER collision - If in wall set to another pos
-	(*item).position = CP_Vector_Set((*item).randX, (*item).randY);
+	(*item).position = CP_Vector_Set(posX, posY);
 	(*item).isActive = 1;
 }

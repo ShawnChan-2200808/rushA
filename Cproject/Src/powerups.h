@@ -1,11 +1,14 @@
 /*!
 @file       powerups.h
+@author		Shawn Chan Weng Kwang (shawnwengkwang.chan@digipen.edu)
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
 @date       25/10/2022 (last updated)
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
+
+
 struct Item {
 	CP_Vector position;
 	float randX, randY;
@@ -13,7 +16,7 @@ struct Item {
 	float Height;
 	int isActive;
 	float timer;
-	int Modifier;
+	float Modifier;
 
 	//animation
 	int animationSpeed, currentFrame, animTotalFrames;
@@ -24,4 +27,5 @@ void itemInit(struct Item* item, float posX, float posY, float width, float heig
 void playerHeal(struct Item* item, struct Player* player);
 void playerSpeedUp(struct Item* item, struct Player* player);
 void coolDown(struct Item* item, float deltatime);
-void respawnItem(struct Item* item);
+void randomItemPos(struct Item* item);
+void respawnItem(struct Item* item,float posX, float posY);

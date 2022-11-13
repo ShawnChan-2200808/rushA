@@ -22,6 +22,7 @@ int alpha, finalAlpha, rate, time, alphaMax;
 
 void Splash_Screen_Init(void)
 {
+	//initialise all assets
 	initAssets();
 
 	// Load splash screen png from assets folder
@@ -73,7 +74,7 @@ void Splash_Screen_Update(void)
 		// Clamp the image to the Center 
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-		CP_Image_Draw(splashscreenDP, windowWidth/2, windowHeight/2, (float)CP_Image_GetWidth(splashscreenDP), (float)CP_Image_GetHeight(splashscreenDP), alpha);
+		CP_Image_Draw(splashscreenDP, (float)(windowWidth / 2), (float)(windowHeight / 2), (float)CP_Image_GetWidth(splashscreenDP), (float)CP_Image_GetHeight(splashscreenDP), alpha);
 		alphaIncrease = totalElapsedTime * rate;
 		alpha = (int)alphaIncrease % alphaMax;
 	}
@@ -86,16 +87,6 @@ void Splash_Screen_Update(void)
 		alphaIncrease = totalElapsedTime * rate;
 		alpha = (int)alphaIncrease % 256;
 	}
-	*/
-
-	/*
-	elapsedtime is constantly increasing every second
-	one cycle of "fading in" is the alpha value increasing from 0 to 255 at a constant rate
-	we find the rate of increase from 0 to 255 in 2 seconds by dividing the final value by the time taken
-	then we find the increase of alpha each second by multiplying the rate by the constant elapsed time
-	after which we set the alpha value to the initial alpha value + the increase
-	since 0 % 255 = 0, 255 % 256 = 255 and 256 % 256 = 0
-	modulo will cap the alpha value and reset to 0 after it reached the amount its divided by
 	*/
 
 	// Change scene upon splashscreen end

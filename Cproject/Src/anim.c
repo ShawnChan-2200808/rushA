@@ -46,6 +46,7 @@ void playerAnimation(CP_Image Spritesheet, struct Player* player) {
 		(*player).currentFrame = ((*player).currentFrame + 1) % (*player).animTotalFrames;
 		(*player).animationElapsedTime = 0.0f;
 	}
+	(*player).animationElapsedTime;
 }
 
 

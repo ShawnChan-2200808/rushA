@@ -43,8 +43,8 @@ void Level_Init()
 	playerInit(&player);
 	initAllEnemies(10, 8, 8);
 	bossInit(&boss);
-	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
-	itemInit(&bbt, 600, 600, 55, 55, 1);
+	wall1init(&wall1, 100, 100, (float)(windowWidth / 4), (float)(windowHeight / 4));
+	itemInit(&bbt, 600, 600, 55, 55, 1.0f);
 	randomX = 0;
 	randomY = 0;
 	bulletReset(bulletIndex);
@@ -142,8 +142,8 @@ void Level_Update()
 				GameOver = 1;
 			}
 			CP_Settings_Fill(red);
-			CP_Font_DrawText("You failed :(", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-			CP_Font_DrawText("Press SPACE to retest, ESC to Quit", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+			CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+			CP_Font_DrawText("Press SPACE to Re-Test, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				totalElapsedTime = 0;
@@ -229,8 +229,8 @@ void Level_Update()
 		}
 		if (Win) {
 			CP_Settings_Fill(red);
-			CP_Font_DrawText("You WIN :)", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2);
-			CP_Font_DrawText("Press SPACE to Replay, ESC to Quit", (CP_System_GetWindowWidth() / 2), CP_System_GetWindowHeight() / 2 + 420);
+			CP_Font_DrawText("You got the Degree!!!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+			CP_Font_DrawText("Press SPACE for another Degree, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
 
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
@@ -268,7 +268,8 @@ void Level_Update()
 				coolDown(&bbt, deltaTime);
 			}
 			if (bbt.timer <= 0 && !bbt.isActive) {
-				respawnItem(&bbt, randomX, randomY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
+				randomItemPos(&bbt);
+				respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 			}
 
 			// BULLET SIMULATION (UPDATING POSITION)
@@ -284,27 +285,27 @@ void Level_Update()
 			CP_Settings_RectMode(CP_POSITION_CORNER);
 			// RENDER HEALTHBAR
 			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
-			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 1.08, player.GPA * 100, 30);
+			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), player.GPA * 100, 30);
 
 			// RENDER TEXT (GPA)
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			CP_Settings_TextSize(windowWidth / 38);
+			CP_Settings_TextSize((float)(windowWidth / 38));
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("GPA", windowWidth / 13, windowHeight / 1.07);
+			CP_Font_DrawText("GPA", (float)(windowWidth / 13), (float)(windowHeight / 1.07));
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect(windowWidth / 10, windowHeight / 1.08, 500, 30);
+			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), 500, 30);
 
 			// DEBUG USE: SHOW CURRENT WEAPON
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 			if (player.weapon == 1)
 			{
-				CP_Font_DrawText("Current weapon: Ranged", windowWidth / 1.2, windowHeight / 1.07);
+				CP_Font_DrawText("Current weapon: Ranged", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
 			}
-			else CP_Font_DrawText("Current weapon: Melee", windowWidth / 1.2, windowHeight / 1.07);
+			else CP_Font_DrawText("Current weapon: Melee", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
 
 		}
 
@@ -314,18 +315,18 @@ void Level_Update()
 			CP_Settings_RectMode(CP_POSITION_CORNER);
 			// RENDER HEALTHBAR
 			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));
-			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, boss.HP*5, 30);
+			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), boss.HP * 5, 30);
 			// RENDER TEXT (GPA)
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			CP_Settings_TextSize(windowWidth / 38);
+			CP_Settings_TextSize((float)(windowWidth / 38));
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("BOSS", windowWidth / 3.2, windowHeight / 30);
+			CP_Font_DrawText("BOSS", (float)(windowWidth / 3.2), (float)(windowHeight / 30));
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect(windowWidth / 2.8, windowHeight / 40, 500, 30);
+			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), 500, 30);
 		}
 
 
@@ -351,8 +352,8 @@ void Level_Update()
 		}
 		//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText("GAME PAUSED", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2)-40);
-		CP_Font_DrawText("Press Esc to resume, SPACE to quit", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
+		CP_Font_DrawText("GAME PAUSED", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 40));
+		CP_Font_DrawText("Press Esc to resume studying, SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
 		if (CP_Input_KeyReleased(KEY_SPACE)) {
 			CP_Engine_Terminate();
 		}

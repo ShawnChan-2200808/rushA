@@ -185,7 +185,7 @@ void labInit(struct Enemy *enemy) {
 // initialising boss  -Shawn
 void bossInit(struct Enemy* enemy) {
 	// BOSS
-	(*enemy).EnemyPos = CP_Vector_Set(CP_System_GetWindowWidth() / 2, CP_System_GetWindowHeight()/4);
+	(*enemy).EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
 
 	(*enemy).speed = 150;
 	(*enemy).alive = 1;
@@ -272,7 +272,7 @@ void damagePlayer(struct Enemy* enemy, struct Player* player) {
 
 // Damaging the enemy on collision -Shawn
 void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, float hitboxY, int totalFrames) {
-	if (IsAreaClicked((*player).weaponPos.x, (*player).weaponPos.y, hitboxX, hitboxY, (*enemy).EnemyPos.x, (*enemy).EnemyPos.y) && (*enemy).alive) {
+	if ((*enemy).inGame && IsAreaClicked((*player).weaponPos.x, (*player).weaponPos.y, hitboxX, hitboxY, (*enemy).EnemyPos.x, (*enemy).EnemyPos.y) && (*enemy).alive) {
 		(*enemy).HP -= (*player).damage;
 		(*enemy).currentFrame += totalFrames;
 	}
@@ -306,7 +306,11 @@ void removeEnemy(struct Enemy* enemy) {
 // Enemies taking damage from bullet -Justin
 int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY, int totalFrames)
 {
-	if ((*enemy).inGame &&((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
+	if ((*enemy).inGame && 
+		((bullet.Pos.x - (float)(bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) &&
+		((bullet.Pos.x + (float)(bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) &&
+		((bullet.Pos.y - (float)(bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) &&
+		((bullet.Pos.y + (float)(bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
 		(*enemy).HP -= bullet.damage;
 		(*enemy).currentFrame += totalFrames;
