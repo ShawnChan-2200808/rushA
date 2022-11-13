@@ -66,7 +66,7 @@ void initAssets() {
 	// Initialize OST
 	mainMenuOST = CP_Sound_Load("Assets/OST/2ND EDITED WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
 	levelOST = CP_Sound_Load("Assets/OST/EDITED AEROMATIC - DanceTechno MSCDNT1_49.wav");
-	bossOST = CP_Sound_Load("Assets/OST/KEEPING UP - DanceTechno MSCDNT1_33.wav");
+	bossOST = CP_Sound_Load("Assets/OST/EDITED KEEPING UP - DanceTechno MSCDNT1_33.wav");
 	gameOverOST = CP_Sound_Load("Assets/OST/EDITED REGRETS - WorldMusic MSCLAT1_37.wav");
 	winOST = CP_Sound_Load("Assets/OST/2ND EDITED MEETING OF THE MINDS - Corporate MSCCRP1_21.wav");
 

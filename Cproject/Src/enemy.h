@@ -25,7 +25,7 @@ struct Enemy {
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;
-	float laserB, laserL, laserh, laserw, transparency;
+	float laserB, laserL, laserh, laserw, transparency, floatlaserTime;
 	//Bullet Struct
 	struct enemyBullet
 	{
@@ -40,7 +40,7 @@ struct Enemy {
 	//collision
 	CP_Vector enemymin, enemymax;
 	float hitboxX, hitboxY;
-};struct Enemy quiz[10], lab[8], assignment[8];
+};struct Enemy quiz[10], lab[8], assignment[8],boss;
 
 void quizInit(struct Enemy* enemy);
 void assInit(struct Enemy* enemy);
@@ -55,7 +55,7 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 void respawnEnemy(struct Enemy* enemy, int hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
-int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY);
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY, int totalFrames);
 int enemybulletDamage(struct Enemy* enemy,struct Player* player, struct enemyBullet bullet);
 void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player);
 void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player);
