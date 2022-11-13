@@ -215,7 +215,7 @@ void playerbulletInit(int index, struct Player* player) {
 			player->playerBullets[index].active = 1;
 			player->playerBullets[index].velocity = 1000;
 			player->playerBullets[index].diameter = 20;
-			player->playerBullets[index].damage = 1;
+			player->playerBullets[index].damage = 7000;
 			player->playerBullets[index].Pos = (*player).playerPos;
 			player->playerBullets[index].Vector = CP_Vector_Set((CP_Input_GetMouseX() - (*player).playerPos.x), (CP_Input_GetMouseY() - (*player).playerPos.y));
 			player->playerBullets[index].Vector = CP_Vector_Normalize(player->playerBullets[index].Vector);
@@ -227,11 +227,13 @@ void playerbulletInit(int index, struct Player* player) {
 
 //Definition for bulletupdates
 void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssLab) {
+	//printf("playerbulletdeltatime %f", deltaTime);
 	for (index = 0; index < 10; ++index)
 	{
 		if (player.playerBullets[index].active == 1)
 		{
 			player.playerBullets[index].Pos.x += player.playerBullets[index].Vector.x * deltaTime;
+			printf("playerbullets x: %f\n", player.playerBullets[index].Vector.x);
 			player.playerBullets[index].Pos.y += player.playerBullets[index].Vector.y * deltaTime;
 			if (player.playerBullets[index].Pos.x < 0 || player.playerBullets[index].Pos.x >= CP_System_GetWindowWidth() || player.playerBullets[index].Pos.y < 0 || player.playerBullets[index].Pos.y >= CP_System_GetWindowHeight())
 			{
@@ -301,11 +303,13 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 
 //Definition for bulletupdates
 void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* player) {
+	//printf("enemybulletdeltatime %f", deltaTime);
 	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
 	{
 		if (enemy->enemyBullets[enemy->bulletIndex].active == 1)
 		{
 			enemy->enemyBullets[enemy->bulletIndex].Pos.x += enemy->enemyBullets[enemy->bulletIndex].Vector.x * deltaTime;
+			printf("enemybullets x: %f\n", enemy->enemyBullets[enemy->bulletIndex].Vector.x);
 			enemy->enemyBullets[enemy->bulletIndex].Pos.y += enemy->enemyBullets[enemy->bulletIndex].Vector.y * deltaTime;
 			if (enemy->enemyBullets[enemy->bulletIndex].Pos.x < 0 || enemy->enemyBullets[enemy->bulletIndex].Pos.x >= CP_System_GetWindowWidth() || enemy->enemyBullets[enemy->bulletIndex].Pos.y < 0 || enemy->enemyBullets[enemy->bulletIndex].Pos.y >= CP_System_GetWindowHeight())
 			{

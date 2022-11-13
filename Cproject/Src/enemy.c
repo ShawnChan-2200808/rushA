@@ -131,6 +131,8 @@ void assInit(struct Enemy* enemy) {
 	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
 	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
 	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+	//bullet
+	enemybulletReset(&(*enemy));
 }
 
 void labInit(struct Enemy* enemy) {
@@ -309,7 +311,7 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	if ((*ass).alive && (*player).alive) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
-		enemybulletReset(&(*ass));
+
 		enemybulletInit(&(*ass), &(*player));
 		//enemybulletInit(ass->bulletIndex, &ass , &player);
 		enemybulletUpdate(deltaTime, &(*ass), &(*player));
