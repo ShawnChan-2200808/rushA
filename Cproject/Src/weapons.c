@@ -282,23 +282,23 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 
 	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
 	(*enemy).intbulletTime = (int)(*enemy).floatlaserTime % 3000;
-	if ((*enemy).intbulletTime < 1500) {
-		for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
+
+	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10 && enemy->intbulletTime < 1000; ++enemy->bulletIndex)
+	{
+		if (enemy->enemyBullets[enemy->bulletIndex].active == 0)
 		{
-			if (enemy->enemyBullets[enemy->bulletIndex].active == 0)
-			{
-				enemy->enemyBullets[enemy->bulletIndex].active = 1;
-				enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
-				enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
-				enemy->enemyBullets[enemy->bulletIndex].damage = 1;
-				enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
-				break;
-			}
+			enemy->enemyBullets[enemy->bulletIndex].active = 1;
+			enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
+			enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
+			enemy->enemyBullets[enemy->bulletIndex].damage = 1;
+			enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
+			break;
 		}
 	}
+
 }
 
 //Definition for bulletupdates

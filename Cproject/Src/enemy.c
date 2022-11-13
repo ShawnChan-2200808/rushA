@@ -311,7 +311,8 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	if ((*ass).alive && (*player).alive) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
-
+		//(*ass).floatbulletTime += (CP_System_GetDt() * 1000);
+	//	(*ass).intbulletTime = (int)(*ass).floatlaserTime % 30;
 		enemybulletInit(&(*ass), &(*player));
 		//enemybulletInit(ass->bulletIndex, &ass , &player);
 		enemybulletUpdate(deltaTime, &(*ass), &(*player));
