@@ -5,13 +5,13 @@ C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(
 C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(129,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(132,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(135,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(143,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(163,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(170,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(177,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(184,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(243,124): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(334,160): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(142,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(160,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(166,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(172,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(178,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(235,124): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(330,160): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
