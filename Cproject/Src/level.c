@@ -124,8 +124,10 @@ void Level_Update()
 						damageEnemy(&assignment[i], &player, 150, 150, 8);
 						damageEnemy(&lab[i], &player, 150, 150,8);
 					}
-					damageEnemy(&boss, &player, 150, 150, 4);
-					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+					//if (randomiser==0 || randomiser == 4) {
+						damageEnemy(&boss, &player, 150, 150, 4);
+						CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+					//}
 				}
 			}
 		}
@@ -199,7 +201,7 @@ void Level_Update()
 				7, 6, 5,
 				10, 8, 7,
 				QuizSS, AssSS, LabSS);
-			spawnBoss(totalElapsedTime, /*0.*/85.0f, BossSS); // Boss spawn at 1min 25s
+			spawnBoss(totalElapsedTime, 85.0f, BossSS); // Boss spawn at 1min 25s
 
 			// BOSS OST
 			//

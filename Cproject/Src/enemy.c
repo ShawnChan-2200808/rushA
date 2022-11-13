@@ -131,7 +131,6 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	hitCircleSize = 50.0f;
 	(*enemy).floatbulletTime = 0;
 	(*enemy).intbulletTime = 0;
 	//collision
@@ -312,7 +311,7 @@ void removeEnemy(struct Enemy* enemy) {
 }
 
 // Bullet Damage to the enemy by the player -Justin and Eeloong
-int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY)
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY, int totalFrames)
 {
 	if ((*enemy).inGame && ((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
@@ -400,13 +399,15 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 
 	//}
 	 if ((*ass).alive && (*player).alive &&(*ass).timer <= 0.0f) {
-		updateEnemyAnimation(&(*ass), deltaTime);
-		enemyAnimation(AssSS, &(*ass));
-
-		enemybulletInit(&(*ass), &(*player),deltaTime);
+		enemybulletInit(&(*ass), &(*player),deltaTime,700,70,0.5f);
 		//enemybulletInit(ass->bulletIndex, &ass , &player);
-		enemybulletUpdate(deltaTime, &(*ass), &(*player));
+		enemybulletUpdate(deltaTime, &(*ass), &(*player), CP_Color_Create(255, 170, 170, 255));
 	}
+
+	 if ((*ass).alive && (*player).alive) {
+		 updateEnemyAnimation(&(*ass), deltaTime);
+		 enemyAnimation(AssSS, &(*ass));
+	 }
 	else {
 		// move dead enemy to out of screen
 		removeEnemy(&(*ass));
@@ -471,6 +472,9 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 
 			case 2: // Projectile
 
+				enemybulletInit(&(*boss), &(*player), deltaTime, 1000, 100, 0.7f);
+				//enemybulletInit(ass->bulletIndex, &ass , &player);
+				enemybulletUpdate(deltaTime, &(*boss), &(*player), black);
 				boss->hitCircle = 200;
 				CP_Settings_Fill(CP_Color_Create(0, 0, 255, 120));
 				CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle);
