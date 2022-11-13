@@ -7,6 +7,8 @@
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
 
+
+
 // MAIN PLAYER STRUCT
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
@@ -22,6 +24,14 @@ struct Player {
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
+	//Bullet Variables
+	struct playerBullet
+	{
+		CP_Vector Pos, Vector;
+		int active, diameter, damage;
+		float velocity;
+	} playerBullets[10];
+	int bulletIndex;
 }; struct Player player;
 void playerInit(struct Player* player);
 void isPlayerAlive(struct Player* player);

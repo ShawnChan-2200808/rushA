@@ -7,6 +7,7 @@
 @brief      contains declarations of Enemy functions
 *//*_________________________________________________________________________________*/
 
+
 // MAIN ENEMY STRUCT
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -24,8 +25,22 @@ struct Enemy {
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;
-	float laserB, laserL, laserh, laserw, transparency, floatlaserTime;
-};struct Enemy quiz[10], lab[8], assignment[8], boss;
+	float laserB, laserL, laserh, laserw, transparency;
+	//Bullet Struct
+	struct enemyBullet
+	{
+		CP_Vector Pos, Vector;
+		int active, diameter;
+		float velocity, bulletTimer,damage;
+	} enemyBullets[10];
+	//Bullet Variables
+	int bulletIndex,intbulletTime;
+	float floatbulletTime;
+
+	//collision
+	CP_Vector enemymin, enemymax;
+	float hitboxX, hitboxY;
+};struct Enemy quiz[10], lab[8], assignment[8];
 
 void quizInit(struct Enemy* enemy);
 void assInit(struct Enemy* enemy);
@@ -40,7 +55,8 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 void respawnEnemy(struct Enemy* enemy, int hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
-int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY,int totalFrames);
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY);
+int enemybulletDamage(struct Enemy* enemy,struct Player* player, struct enemyBullet bullet);
 void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player);
 void quizLogic(CP_Image QuizSS, struct Enemy* quiz, struct Player* player);
 void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player);

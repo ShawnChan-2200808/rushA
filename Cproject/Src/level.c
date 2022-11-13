@@ -17,7 +17,6 @@
 #include "anim.h"
 #include "weapons.h"
 #include "powerups.h"
-#include "bullet.h"
 #include "collsion.h"
 #include "mainmenu.h"
 
@@ -47,12 +46,12 @@ void Level_Init()
 	itemInit(&bbt, 600, 600, 55, 55, 1.0f);
 	randomX = 0;
 	randomY = 0;
-	bulletReset(bulletIndex);
 
 	allDead = 0;
 	Win = 0;
 	GameOver = 0;
 	bossOut = 0;
+	playerbulletReset(player.bulletIndex);
 	totalElapsedTime = 0;
 
 	//MUSIC
@@ -107,8 +106,9 @@ void Level_Update()
 				if (player.weapon == 1)
 				{
 					player.currentFrame = 2;
-					bulletInit(bulletIndex, &player);
+					
 					CP_Sound_PlayAdvanced(playerRangedSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+					playerbulletInit(player.bulletIndex, &player);
 				}
 				else if(player.weapon == 0)
 				{
@@ -272,9 +272,10 @@ void Level_Update()
 				respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 			}
 
+
 			// BULLET SIMULATION (UPDATING POSITION)
 			//
-			bulletUpdate(bulletIndex, deltaTime, 10, 8);
+			playerbulletUpdate(player.bulletIndex, deltaTime,10,8);
 			// RENDER PLAYER
 			//
 			playerAnimation(playerSS, &player);

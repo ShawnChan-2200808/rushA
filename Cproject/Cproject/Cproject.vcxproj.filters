@@ -42,9 +42,6 @@
     <ClCompile Include="..\Src\weapons.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\bullet.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Src\collsion.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\anim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Src\collsion.h">

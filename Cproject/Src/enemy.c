@@ -9,7 +9,7 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-#include "bullet.h"
+#include "weapons.h"
 #include "player.h"
 #include "enemy.h"
 #include "collsion.h"
@@ -131,11 +131,19 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
-	(*enemy).hitCircle = 50.0f;
+	hitCircleSize = 50.0f;
+	(*enemy).floatbulletTime = 0;
+	(*enemy).intbulletTime = 0;
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+	//bullet
+	enemybulletReset(&(*enemy));
 }
 
-// initialising lab  -Shawn
-void labInit(struct Enemy *enemy) {
+void labInit(struct Enemy* enemy) {
 	// LAB
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(100, 200), CP_Random_RangeFloat(100, 300));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -303,14 +311,10 @@ void removeEnemy(struct Enemy* enemy) {
 	(*enemy).alive = 0;
 }
 
-// Enemies taking damage from bullet -Justin
-int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float hitboxY, int totalFrames)
+// Bullet Damage to the enemy by the player -Justin and Eeloong
+int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hitboxX, float hitboxY)
 {
-	if ((*enemy).inGame && 
-		((bullet.Pos.x - (float)(bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) &&
-		((bullet.Pos.x + (float)(bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) &&
-		((bullet.Pos.y - (float)(bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) &&
-		((bullet.Pos.y + (float)(bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
+	if ((*enemy).inGame && ((bullet.Pos.x - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.x) - (hitboxX / 2)) && ((bullet.Pos.x + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.x) + (hitboxX / 2)) && ((bullet.Pos.y - (bullet.diameter / 2)) >= ((*enemy).EnemyPos.y) - (hitboxY / 2)) && ((bullet.Pos.y + (bullet.diameter / 2)) <= ((*enemy).EnemyPos.y) + (hitboxY / 2)))
 	{
 		(*enemy).HP -= bullet.damage;
 		(*enemy).currentFrame += totalFrames;
@@ -319,9 +323,24 @@ int bulletDamage(struct Enemy* enemy, struct Bullet bullet, float hitboxX, float
 	else return 0;
 }
 
-// Lab logic that runs in the game when quiz is in game -Eeloong
-void labLogic(CP_Image LabSS, struct Enemy *lab, struct Player *player) {
-	// Lab Logic
+// Bullet Damage to the player by the enemy -Justin and Eeloong
+int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBullet bullet)
+{
+	if ((*player).alive &&
+		isCircleEntered(bullet.Pos.x, bullet.Pos.y, bullet.diameter, (*player).playerPos.x, (*player).playerPos.y))
+		//((bullet.Pos.x - (bullet.diameter / 2)) >= ((*player).playerPos.x) - ((*enemy).hitboxX / 2)) &&
+		//((bullet.Pos.x + (bullet.diameter / 2)) <= ((*player).playerPos.x) + ((*enemy).hitboxX / 2)) &&
+		//((bullet.Pos.y - (bullet.diameter / 2)) >= ((*player).playerPos.y) - ((*enemy).hitboxY / 2)) &&
+		//((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
+	{
+		(*player).GPA -= bullet.damage;
+		return 1;
+	}
+	else return 0;
+}
+// Lab logic that runs in the game when quiz is active -Shawn and Eeloong
+void labLogic(CP_Image LabSS, struct Enemy* lab, struct Player* player) {
+	// Lab1 Logic
 	if ((*lab).alive && (*player).alive) {
 		if (1 == laser(&(*lab), &(*player))) {
 			//(*player).GPA -= (*lab).damage;
@@ -380,9 +399,13 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	//if ((*ass).alive && (*player).alive && (*ass).timer <= 0.0f) {
 
 	//}
-	 if ((*ass).alive && (*player).alive) {
+	 if ((*ass).alive && (*player).alive &&(*ass).timer <= 0.0f) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
+
+		enemybulletInit(&(*ass), &(*player),deltaTime);
+		//enemybulletInit(ass->bulletIndex, &ass , &player);
+		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
@@ -499,8 +522,8 @@ void allEnemyLogic(int QuizLoopStart, int assLoopStart, int labLoopStart,
 void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 	int QuizLoopStart, int assLoopStart, int labLoopStart,
 	int numOfQuiz, int numOfAss, int numOfLab,
-	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {	
-	if (totalElapsedTime > timeToSpawn){
+	CP_Image quizSS, CP_Image assSS, CP_Image labSS) {
+	if (totalElapsedTime > timeToSpawn) {
 
 		for (int i = labLoopStart; i < numOfLab; ++i)
 		{
@@ -517,7 +540,7 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 
 		allEnemyLogic(QuizLoopStart, assLoopStart, labLoopStart,
 			numOfQuiz, numOfAss, numOfLab,
-			 quizSS, assSS, labSS);
+			quizSS, assSS, labSS);
 
 		checkEnemyAlive(numOfQuiz, numOfAss, numOfLab);
 	}
