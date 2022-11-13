@@ -7,6 +7,6 @@
 @brief      contains declarations of main menu functions
 *//*_________________________________________________________________________________*/
 #pragma once
-void Mainmenu_Init(void);
-void Mainmenu_Update(void);
-void Mainmenu_Exit(void);
+void Credits_Init(void);
+void Credits_Update(void);
+void Credits_Exit(void);

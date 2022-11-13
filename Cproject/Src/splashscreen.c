@@ -64,7 +64,7 @@ void Splash_Screen_Update(void)
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 
-	if (CP_Input_KeyReleased(KEY_ESCAPE))
+	if (CP_Input_KeyReleased(KEY_ENTER))
 	{
 		totalElapsedTime = 2;
 	}
@@ -108,3 +108,4 @@ void Splash_Screen_Exit(void)
 	CP_Image_Free(&splashscreenDP);
 	//CP_Image_Free(&splashscreenRA);
 }
+

@@ -10,6 +10,18 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level.h"
+<<<<<<< Updated upstream
+=======
+#include "player.h"
+#include "credits.h"
+//#include "enemy.h"
+//#include "anim.c"
+	
+CP_Color gray, black, red,blue;
+int windowWidth, windowHeight, currentFrame, spriteWidth, spriteHeight;
+float fps;
+
+>>>>>>> Stashed changes
 
 CP_Image Gamename;
 
@@ -326,7 +338,7 @@ void Mainmenu_Update(void)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
-				CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
+				CP_Engine_SetNextGameState(Credits_Init, Credits_Update, Credits_Exit);
 
 			}
 		}
