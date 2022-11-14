@@ -2,21 +2,21 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe</FullPath>
+      <FullPath>C:\Users\Justin\source\repos\ShawnChan-2200808\rushA\Cproject\bin\Debug-x64\Cproject.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c</FullPath>
+      <FullPath>C:\Users\Justin\source\repos\ShawnChan-2200808\rushA\Cproject\Src\level.c</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\main.c</FullPath>
+      <FullPath>C:\Users\Justin\source\repos\ShawnChan-2200808\rushA\Cproject\Src\main.c</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\splashscreen.c</FullPath>
+      <FullPath>C:\Users\Justin\source\repos\ShawnChan-2200808\rushA\Cproject\Src\splashscreen.c</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c</FullPath>
+      <FullPath>C:\Users\Justin\source\repos\ShawnChan-2200808\rushA\Cproject\Src\utils.c</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
