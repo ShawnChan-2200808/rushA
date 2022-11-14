@@ -18,7 +18,7 @@
 
 
 extern float deltaTime;
-extern int randomX, randomY,randomiser;
+extern int randomX, randomY, randomiser;
 extern CP_Color red;
 
 // rotating script for lab enemy -Eeloong
@@ -53,7 +53,7 @@ void rotatenemy(struct Enemy* enemy, struct Player* player) {
 }
 
 // initialising quiz -Shawn
-void quizInit(struct Enemy *enemy) {
+void quizInit(struct Enemy* enemy) {
 	// QUIZ
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -95,7 +95,7 @@ void quizInit(struct Enemy *enemy) {
 }
 
 // initialising assignment -Shawn
-void assInit(struct Enemy *enemy) {
+void assInit(struct Enemy* enemy) {
 	// ASSIGNMENT
 	(*enemy).spawnPos1 = CP_Vector_Set(CP_Random_RangeFloat(200, 400), CP_Random_RangeFloat(200, 400));
 	(*enemy).spawnPos2 = CP_Vector_Set(CP_Random_RangeFloat(1400, 1700), CP_Random_RangeFloat(200, 400));
@@ -273,7 +273,7 @@ void enemyChase(struct Enemy* enemy, struct Player* player) {
 void damagePlayer(struct Enemy* enemy, struct Player* player) {
 	if (isCircleEntered((*enemy).EnemyPos.x, (*enemy).EnemyPos.y, (*enemy).hitCircle, (*player).playerPos.x, (*player).playerPos.y) && (*player).alive) {
 		(*player).GPA -= (*enemy).damage;
-		(*player).currentFrame += (*player).animTotalFrames+1;
+		(*player).currentFrame += (*player).animTotalFrames + 1;
 	}
 }
 
@@ -286,7 +286,7 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 }
 
 // Respawning the enemies if need to -Shawn
-void respawnEnemy(struct Enemy *enemy,int hp) {
+void respawnEnemy(struct Enemy* enemy, int hp) {
 	(*enemy).HP = hp;
 	randomiser = CP_Random_RangeInt(0, 3);
 	switch (randomiser)
@@ -396,18 +396,12 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	}
 	// for eeloong to add in when to start the attack
 	//if ((*ass).alive && (*player).alive && (*ass).timer <= 0.0f) {
-
-	//}
-	 if ((*ass).alive && (*player).alive &&(*ass).timer <= 0.0f) {
-		enemybulletInit(&(*ass), &(*player),deltaTime,700,70,0.5f);
-		//enemybulletInit(ass->bulletIndex, &ass , &player);
-		enemybulletUpdate(deltaTime, &(*ass), &(*player), CP_Color_Create(255, 170, 170, 255));
+	if ((*ass).alive && (*player).alive) {
+		updateEnemyAnimation(&(*ass), deltaTime);
+		enemyAnimation(AssSS, &(*ass));
+		enemybulletInit(&(*ass), &(*player));
+		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
-
-	 if ((*ass).alive && (*player).alive) {
-		 updateEnemyAnimation(&(*ass), deltaTime);
-		 enemyAnimation(AssSS, &(*ass));
-	 }
 	else {
 		// move dead enemy to out of screen
 		removeEnemy(&(*ass));
@@ -441,7 +435,7 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 			switch (randomiser)
 			{
 			case 0: // Death zone chase 
-				
+
 				boss->speed = 150;
 				boss->hitCircle = 500;
 				// chase the player
@@ -456,13 +450,13 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 				break;
 
 			case 1: // Laser
-			
-						
-						if (1 == laser(&(*boss), &(*player))) {
-						}
-						else if ((4 == laser(&(*boss), &(*player)))) {
-						(*player).GPA -= (*boss).damage;
-						}
+
+
+				if (1 == laser(&(*boss), &(*player))) {
+				}
+				else if ((4 == laser(&(*boss), &(*player)))) {
+					(*player).GPA -= (*boss).damage;
+				}
 				boss->hitCircle = 200;
 				damagePlayer(&(*boss), &(*player));
 				CP_Settings_Fill(CP_Color_Create(0, 255, 0, 120));
@@ -472,9 +466,9 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 
 			case 2: // Projectile
 
-				enemybulletInit(&(*boss), &(*player), deltaTime, 1000, 100, 0.7f);
+				//enemybulletInit(&(*boss), &(*player));
 				//enemybulletInit(ass->bulletIndex, &ass , &player);
-				enemybulletUpdate(deltaTime, &(*boss), &(*player), black);
+				//enemybulletUpdate(deltaTime, &(*boss), &(*player), black);
 				boss->hitCircle = 200;
 				CP_Settings_Fill(CP_Color_Create(0, 0, 255, 120));
 				CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle);
@@ -495,12 +489,6 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 		// Render the animation
 		updateEnemyAnimation(&(*boss), deltaTime);
 		enemyAnimation(BossSS, &(*boss));
-	// Assignment1 Logic	
-	if ((*ass).alive && (*player).alive) {
-		updateEnemyAnimation(&(*ass), deltaTime);
-		enemyAnimation(AssSS, &(*ass));
-		enemybulletInit(&(*ass), &(*player));
-		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
@@ -560,7 +548,7 @@ void spawnWeekly(float totalElapsedTime, float timeToSpawn,
 void spawnBoss(float totalElapsedTime, float timeToSpawn, CP_Image BossSS) {
 	if (totalElapsedTime > timeToSpawn) {
 		boss.inGame = 1;
-		bossLogic(BossSS,&boss,&player);
+		bossLogic(BossSS, &boss, &player);
 		isEnemyAlive(&boss);
 	}
 }

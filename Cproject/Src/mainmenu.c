@@ -10,8 +10,6 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level.h"
-<<<<<<< Updated upstream
-=======
 #include "player.h"
 #include "credits.h"
 //#include "enemy.h"
@@ -20,9 +18,6 @@
 CP_Color gray, black, red,blue;
 int windowWidth, windowHeight, currentFrame, spriteWidth, spriteHeight;
 float fps;
-
->>>>>>> Stashed changes
-
 CP_Image Gamename;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime;

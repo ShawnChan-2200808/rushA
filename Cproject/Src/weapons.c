@@ -282,7 +282,7 @@ void enemybulletReset(struct Enemy* enemy) {
 }
 
 //Initialise enemy Bullet
-void enemybulletInit(struct Enemy* enemy, struct Player* player,float dt,int bulletSpeed,int bulletSize, float bulletDamage) {
+void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 
 	//Shotgun code
 	/*(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
@@ -322,7 +322,7 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player,float dt,int bul
 }
 
 //Definition for bulletupdates
-void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* player,CP_Color color) {
+void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* player) {
 	//printf("enemybulletdeltatime %f", deltaTime);
 	//Shotgun code
 	/*for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
