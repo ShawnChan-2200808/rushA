@@ -24,10 +24,6 @@ struct Enemy {
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
 
-	//collision
-	CP_Vector enemymin, enemymax;
-	float hitboxX, hitboxY;
-
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;

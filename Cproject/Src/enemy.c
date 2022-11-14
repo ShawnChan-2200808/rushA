@@ -244,6 +244,7 @@ void bossInit(struct Enemy* enemy) {
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
 	(*enemy).hitCircle = 400.0f;
+	(*enemy).rateoffire = 100;
 }
 
 // initialising all enemies excluding boss -Shawn
