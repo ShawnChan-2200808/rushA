@@ -6,6 +6,7 @@
 @date       25/10/2022 (last updated)
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
+#pragma once
 struct Item {
 	CP_Vector position;
 	float randX, randY;

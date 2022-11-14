@@ -90,6 +90,13 @@ void quizInit(struct Enemy *enemy) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	(*enemy).hitCircle = 50.0f;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+
 	// Set laser color for quiz
 	//(*enemy).lasercolour = red;
 }
@@ -132,6 +139,12 @@ void assInit(struct Enemy *enemy) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	(*enemy).hitCircle = 50.0f;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 }
 
 // initialising lab  -Shawn
@@ -172,6 +185,13 @@ void labInit(struct Enemy *enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+
 	//Laser Init
 	//laserL is the larger value (length)
 	(*enemy).laserL = 750;
@@ -215,6 +235,11 @@ void bossInit(struct Enemy* enemy) {
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
 	(*enemy).hitCircle = 400.0f;
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 }
 
 // initialising all enemies excluding boss -Shawn

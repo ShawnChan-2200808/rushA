@@ -11,7 +11,7 @@
 #include "utils.h"
 #include "level.h"
 
-CP_Image Gamename;
+CP_Image Gamename, Background;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime;
 static float deltaTime;
@@ -32,6 +32,7 @@ void Mainmenu_Init(void)
 {
 	// Load image png from assets folder
 	Gamename = CP_Image_Load("Assets/SPRITES/THE DELIVERABLES.png");
+	Background = CP_Image_Load("Assets/SPRITES/School Background.png");
 
 	//animation 
 	displayTime = 2;
@@ -87,7 +88,10 @@ void Mainmenu_Update(void)
 	ass_return_xpos = (player_return_xpos + 180);
 
 
-	SpawnBG(Floor, 6, 9);
+	//SpawnBG(Floor, 6, 9);
+	CP_Settings_ImageMode(CP_POSITION_CORNER);
+	CP_Image_Draw(Background,0,0, CP_Image_GetWidth(Background)*2, CP_Image_GetHeight(Background)*2, 255);
+
 	// Create background that is gray in colour
 	CP_Graphics_ClearBackground(gray);
 	CP_Settings_Fill(red);
@@ -121,25 +125,11 @@ void Mainmenu_Update(void)
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 
 
-	//// Get the mouse position/canvas size ratio
-	//float mx = (float)CP_Input_GetMouseWorldX() / (float)CP_System_GetWindowWidth();
-	//float my = (float)CP_Input_GetMouseWorldY() / (float)CP_System_GetWindowHeight();
-
-	//// Convert to 0-255 values for color
-	//int r_color = CP_Math_LerpInt(0, 255, mx);
-	//int b_color = CP_Math_LerpInt(0, 255, my);
-
-	//// Clamp the values
-	//r_color = CP_Math_ClampInt(r_color, 0, 255);
-	//b_color = CP_Math_ClampInt(b_color, 0, 255);
-
-	//// Set the background as the color
-	//CP_Graphics_ClearBackground(CP_Color_Create(r_color, 0, b_color, 255));
-
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 
 		//CP_Image_Draw(Gamename, windowWidth / 2, (windowHeight / 2) - 100, (float)CP_Image_GetWidth(Gamename), (float)CP_Image_GetHeight(Gamename), 255);
 		CP_Image_Draw(Gamename, windowWidth / 2, gamename_xpos, (float)CP_Image_GetWidth(Gamename)*2, (float)CP_Image_GetHeight(Gamename)*2, 255);
+
 
 		CP_Image_DrawSubImage(playerSS,
 			 //RENDERED POS AND SIZE
@@ -178,50 +168,50 @@ void Mainmenu_Update(void)
 		}
 		animationElapsedTimeE += deltaTime * animationSpeedE;
 		printf("Ass lerp: %d \n", currentElapseTime);
-		lerp = currentElapseTime * rate;
+		//lerp = currentElapseTime * rate;
 
-		
-		while (player_xpos >= windowWidth + 250)
-		{
-			CP_Image_DrawSubImage(playerSS,
-				//RENDERED POS AND SIZE
-				player_return_xpos, windowHeight - 80, 160, 160,
-				// POS AND SIZE FROM SPRITESHEET
-				currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
-				255);
-			if (animationElapsedTimeP >= displayTime) {
-				currentFrameP = (currentFrameP + 1) % animTotalFramesP;
-				animationElapsedTimeP = 0.0f;
-			}
-			printf("%d ", lerp);
-			printf("player lerp: %d \n", currentElapseTime);
-			lerp = currentElapseTime * rate;
+		//run back animation but not working
+		//if (lerp>=1)
+		//{
+		//	CP_Image_DrawSubImage(playerSS,
+		//		//RENDERED POS AND SIZE
+		//		player_return_xpos, windowHeight - 80, 160, 160,
+		//		// POS AND SIZE FROM SPRITESHEET
+		//		currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+		//		255);
+		//	if (animationElapsedTimeP >= displayTime) {
+		//		currentFrameP = (currentFrameP + 1) % animTotalFramesP;
+		//		animationElapsedTimeP = 0.0f;
+		//	}
+		//	printf("%d ", lerp);
+		//	printf("player lerp: %d \n", currentElapseTime);
+		//	lerp = currentElapseTime * rate;
 
-			//CP_Image_DrawSubImage(PlayerSS,
-			//CP_Math_LerpInt(-80, windowWidth, Lerp(0, windowWidth, 10)), windowHeight - 80, 160, 160,
-			//// POS AND SIZE FROM SPRITESHEET
-			//currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R
-			//255);
+		//	//CP_Image_DrawSubImage(PlayerSS,
+		//	//CP_Math_LerpInt(-80, windowWidth, Lerp(0, windowWidth, 10)), windowHeight - 80, 160, 160,
+		//	//// POS AND SIZE FROM SPRITESHEET
+		//	//currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R
+		//	//255);
 
 
-			//CP_Image_DrawAdvanced(PlayerSS, 160 , windowHeight-80, 160, 160, 255, -180);
+		//	//CP_Image_DrawAdvanced(PlayerSS, 160 , windowHeight-80, 160, 160, 255, -180);
 
-			CP_Image_DrawSubImage(AssSS,
-				// RENDERED POS AND SIZE
-				ass_return_xpos, windowHeight - 80, 160, 160,
-				// POS AND SIZE FROM SPRITESHEET
-				currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
-				255);
-			if (animationElapsedTimeE >= displayTime) {
-				currentFrameE = (currentFrameE + 1) % animTotalFramesE;
-				animationElapsedTimeE = 0.0f;
-			}
-			animationElapsedTimeE += deltaTime * animationSpeedE;
-			printf("Ass lerp: %d \n", currentElapseTime);
-			lerp = currentElapseTime * rate;
+		//	CP_Image_DrawSubImage(AssSS,
+		//		// RENDERED POS AND SIZE
+		//		ass_return_xpos, windowHeight - 80, 160, 160,
+		//		// POS AND SIZE FROM SPRITESHEET
+		//		currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+		//		255);
+		//	if (animationElapsedTimeE >= displayTime) {
+		//		currentFrameE = (currentFrameE + 1) % animTotalFramesE;
+		//		animationElapsedTimeE = 0.0f;
+		//	}
+		//	animationElapsedTimeE += deltaTime * animationSpeedE;
+		//	printf("Ass lerp: %d \n", currentElapseTime);
 
-			player_xpos = 0;
-		}
+
+		//	
+		//}
 
 
 	// Rendering RUSHA Splashscreen
@@ -346,4 +336,6 @@ void Mainmenu_Exit(void)
 	// Clear the Splashscreen image upon exiting this state
 	//
 	CP_Image_Free(&Gamename);
+	CP_Image_Free(&Background);
+
 }

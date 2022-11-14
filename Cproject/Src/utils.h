@@ -1,4 +1,4 @@
-
+#pragma once
 CP_Color black, white, gray, blue, green, red;
 int windowWidth, windowHeight;
 float fps;
@@ -13,6 +13,8 @@ CP_Image Floor;
 CP_Image bbtSS;
 CP_Image BossSS;
 CP_Image hitBox;
+CP_Image Chair;
+CP_Image Table;
 
 // Reference to Sound
 CP_Sound mainMenuOST;

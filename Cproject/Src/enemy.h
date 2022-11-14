@@ -6,7 +6,7 @@
 @date       31/10/2022 (last updated)
 @brief      contains declarations of Enemy functions
 *//*_________________________________________________________________________________*/
-
+#pragma once
 // MAIN ENEMY STRUCT
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -21,6 +21,11 @@ struct Enemy {
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
+
+	//collision
+	CP_Vector enemymin, enemymax;
+	float hitboxX, hitboxY;
+
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;

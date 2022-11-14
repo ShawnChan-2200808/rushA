@@ -42,7 +42,9 @@ void Level_Init()
 	playerInit(&player);
 	initAllEnemies(10, 8, 8);
 	bossInit(&boss);
-	wall1init(&wall1, 100, 100, windowWidth / 4, windowHeight / 4);
+	//tableinit(&table, windowWidth / 4, windowHeight / 4);
+	//chairinit(&chair, windowWidth / 2 +50, windowHeight / 2 +50);
+	initallwall(5, 3);
 	itemInit(&bbt, 600, 600, 55, 55, 1);
 	randomX = 0;
 	randomY = 0;
@@ -154,10 +156,54 @@ void Level_Update()
 		//COLLISION
 		CP_Settings_Fill(green);
 		if (player.alive&& !Win) {
-			CP_Graphics_DrawRect(wall1.x, wall1.y, wall1.width, wall1.height);
+			//CP_Graphics_DrawRect(table.x, table.y, table.width, table.height);
+			CP_Image_Draw(Table, table[0].x, table[0].y, table[0].width, table[0].height, 255);
+			CP_Image_Draw(Table, table[1].x, table[1].y, table[1].width, table[1].height, 255);
+			CP_Image_Draw(Table, table[2].x, table[2].y, table[2].width, table[2].height, 255);
+			CP_Image_Draw(Chair, chair[0].x, chair[0].y, chair[0].width, chair[0].height, 255);
+			CP_Image_Draw(Chair, chair[1].x, chair[1].y, chair[1].width, chair[1].height, 255);
+			CP_Image_Draw(Chair, chair[2].x, chair[2].y, chair[2].width, chair[2].height, 255);
+			CP_Image_Draw(Chair, chair[3].x, chair[3].y, chair[3].width, chair[3].height, 255);
+			CP_Image_Draw(Chair, chair[4].x, chair[4].y, chair[4].width, chair[4].height, 255);
 			// TEST FOR PLAYER HITBOX
 			//CP_Settings_RectMode(CP_POSITION_CENTER);
 			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
+			for (int j = 0;j < 5; j++)
+			{
+				pushback(&player, &chair[j]);
+				for (int q = 0; q < 10; q++)
+				{
+					pushbackEnemy(&quiz[q], &chair[j]);
+				}
+				for (int w = 0; w < 8; w++)
+				{
+					pushbackEnemy(&lab[w], &chair[j]);
+				}
+				for (int e = 0; e < 8; e++)
+				{
+					pushbackEnemy(&assignment[e], &chair[j]);
+				}
+				pushbackEnemy(&boss, &chair[j]);
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				pushback(&player, &table[i]);
+				for (int q = 0; q < 10; q++)
+				{
+					pushbackEnemy(&quiz[q], &table[i]);
+				}
+				for (int w = 0; w < 8; w++)
+				{
+					pushbackEnemy(&lab[w], &table[i]);
+				}
+				for (int e = 0; e < 8; e++)
+				{
+					pushbackEnemy(&assignment[e], &table[i]);
+				}
+				pushbackEnemy(&boss, &table[i]);
+			}
+			
+
 		}
 
 		// TIME
@@ -335,32 +381,7 @@ void Level_Update()
 		CP_Font_DrawText("Press Esc to resume", (CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
 	}
 
-	int push = 0;
-	int collided = collision(&player, &wall1);
-	//collide with right
-	if (collided == 1)
-	{
-		push += (wall1.x + wall1.width) - (player.playerPos.x - (player.worldSizeW / 2));
-		player.playerPos.x += push;
-	}
-	//collide with left
-	if (collided == 2)
-	{
-		push += (player.playerPos.x + (player.worldSizeW / 2)) - (wall1.x);
-		player.playerPos.x -= push;
-	}
-	//collide with bottom
-	if (collided == 3)
-	{
-		push += (wall1.y + wall1.height) - (player.playerPos.y - (player.worldSizeW / 2));
-		player.playerPos.y += push;
-	}
-	//collide with top
-	if (collided == 4)
-	{
-		push += (player.playerPos.y + (player.worldSizeW / 2)) - (wall1.y);
-		player.playerPos.y -= push;
-	}
+
 
 
 }

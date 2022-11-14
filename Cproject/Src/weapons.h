@@ -6,7 +6,7 @@
 @date       31/10/2022 (last updated)
 @brief      contains declarations of Weapon functions
 *//*_________________________________________________________________________________*/
-
+#pragma once
 
 //Returns 4 states:
 // 1: For when laser is tracking player

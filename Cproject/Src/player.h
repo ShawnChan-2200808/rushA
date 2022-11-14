@@ -6,7 +6,7 @@
 @date       25/10/2022 (last updated)
 @brief      contains Declarations of Player functions
 *//*_________________________________________________________________________________*/
-
+#pragma once
 // MAIN PLAYER STRUCT
 struct Player {
 	CP_Vector playerPos, tempPos, direction;
