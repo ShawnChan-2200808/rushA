@@ -1,13 +1,41 @@
-﻿  level.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(153,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(153,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(241,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(241,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(374,35): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(380,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(386,36): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(392,58): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-  Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
+﻿  mainmenu.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(30,18): warning C4142: 'spriteWidth': benign redefinition of type
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(19): message : see declaration of 'spriteWidth'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(49,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(88,21): warning C4553: '==': result of expression not used; did you intend '='?
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(154,30): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(156,18): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(156,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(164,3): warning C4013: 'printf' undefined; assuming extern returning int
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(179,27): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(181,18): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(181,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(196,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(198,19): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(198,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(219,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(221,19): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\mainmenu.c(221,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  player.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\player.c(75,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  weapons.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(34,154): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(115,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(126,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(129,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(132,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(135,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(143,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(163,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(170,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(177,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(184,139): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(243,124): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(295,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(304,56): warning C4552: '-': result of expression not used
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\weapons.c(327,160): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
   21 File(s) copied
