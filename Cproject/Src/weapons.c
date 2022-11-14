@@ -309,7 +309,7 @@ void enemybulletReset(struct Enemy* enemy) {
 }
 
 //Initialise enemy Bullet
-void enemybulletInit(struct Enemy* enemy, struct Player* player) {
+void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, int bulletSize, float bulletDamage) {
 
 	//Shotgun code
 	/*(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
@@ -330,9 +330,9 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 		if (enemy->enemyBullets[enemy->bulletIndex].active == 0) {
 			enemy->enemyBullets[enemy->bulletIndex].active = 1;
 			enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
-			enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
-			enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
-			enemy->enemyBullets[enemy->bulletIndex].damage = 0.05;
+			enemy->enemyBullets[enemy->bulletIndex].velocity = bulletSpeed;//1000;
+			enemy->enemyBullets[enemy->bulletIndex].diameter = bulletSize; //20;
+			enemy->enemyBullets[enemy->bulletIndex].damage = bulletDamage; //0.05;
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
 			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);

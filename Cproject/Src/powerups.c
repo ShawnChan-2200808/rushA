@@ -12,6 +12,7 @@
 #include "utils.h"
 #include "powerups.h"
 #include "player.h"
+#include "collsion.h"
 
 // initialising of items - Shawn
 void itemInit(struct Item *item,float posX, float posY, float width, float height, float mod) {
@@ -63,6 +64,22 @@ void randomItemPos(struct Item* item) {
 // Respawning the item to position - Shawn
 void respawnItem(struct Item* item, float posX, float posY) {
 	// FOR AFTER collision - If in wall set to another pos
+	for (int i = 0; i < 3; ++i) {
+		if (table[i].wallmax.x < posY && table[i].wallmin.x > posY) {
+			posX += table[i].width*1.5;
+		}
+		if (table[i].wallmax.y > posY && table[i].wallmin.y < posY) {
+			posX += table[i].height*1.5;
+		}
+	}
+	for (int i = 0; i < 5; ++i) {
+		if (chair[i].wallmax.x < posY && chair[i].wallmin.x > posY) {
+			posX += chair[i].width*1.5;
+		}
+		if (chair[i].wallmax.y > posY && chair[i].wallmin.y < posY) {
+			posX += chair[i].height*1.5;
+		}
 	(*item).position = CP_Vector_Set(posX, posY);
+	}
 	(*item).isActive = 1;
 }

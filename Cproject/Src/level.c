@@ -307,15 +307,15 @@ void Level_Update()
 		if (player.alive && !Win) {
 			// POWER UP
 			//
-			if (bbt.isActive && player.alive && totalElapsedTime > 10.0f) {
+			if (bbt.isActive && player.alive && totalElapsedTime > 10.0f && totalElapsedTime < 65.0f) {
 				CP_Settings_Fill(green);
 				//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
 				CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
 				playerHeal(&bbt, &player);
-			}if (!bbt.isActive) {
+			}if (!bbt.isActive && totalElapsedTime < 65.0f) {
 				coolDown(&bbt, deltaTime);
 			}
-			if (bbt.timer <= 0 && !bbt.isActive) {
+			if (bbt.timer <= 0 && !bbt.isActive && totalElapsedTime < 65.0f) {
 				randomItemPos(&bbt);
 				respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 			}
