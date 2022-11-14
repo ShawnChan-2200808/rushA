@@ -23,7 +23,7 @@ void playerInit(struct Player* player) {
 	(*player).playerPos = CP_Vector_Set(1920 / 2, 1080 / 2);
 	(*player).speed = 500;
 	(*player).alive = 1;
-	(*player).GPA = 5.00f;
+	(*player).GPA = 5000000000000000000000.00f;
 	(*player).damage = 3;
 	(*player).timer = 0;
 	(*player).weaponPos = CP_Vector_Set((*player).playerPos.x, (*player).playerPos.y);

@@ -9,6 +9,7 @@
 *//*_________________________________________________________________________________*/
 
 
+#pragma once
 struct Item {
 	CP_Vector position;
 	float randX, randY;
