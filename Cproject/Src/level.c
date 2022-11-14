@@ -156,7 +156,7 @@ void Level_Update()
 			}
 
 			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
-				CP_Engine_Terminate();
+				CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
 			}
 
 			//if (CP_Input_KeyDown(KEY_Q))
@@ -399,13 +399,28 @@ void Level_Update()
 		{
 			paused = !paused;
 		}
-		//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText("GAME PAUSED", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 40));
-		CP_Font_DrawText("Press Esc to resume studying, SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-		if (CP_Input_KeyReleased(KEY_SPACE)) {
-			CP_Engine_Terminate();
+		if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2) - 110), (float)((CP_System_GetWindowHeight() / 2) - 110), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))
+		{
+			paused = !paused;
 		}
+		if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
+		{
+			paused = !paused;
+			CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
+		}
+		if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2) + 110), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
+		{
+			paused = !paused;
+			CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
+		}
+		pauseScreen();
+		//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
+		//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		//CP_Font_DrawText("GAME PAUSED", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 40));
+		//CP_Font_DrawText("Press Esc to resume studying, SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+		//if (CP_Input_KeyReleased(KEY_SPACE)) {
+		//	CP_Engine_Terminate();
+		//}
 		//if (CP_Input_KeyDown(KEY_Q))
 		//{
 		//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
