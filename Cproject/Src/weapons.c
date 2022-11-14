@@ -28,12 +28,11 @@ extern CP_Color red;
 
 int laser(struct Enemy* enemy, struct Player* player) {
 	static float playerangle;
-
 	(*enemy).lasercolourchargeup = (*enemy).lasercolour;
 	(*enemy).floatlaserTime += (CP_System_GetDt() * 1000);
 	(*enemy).lasercolourchargeup = CP_Color_Create((*enemy).lasercolour.r, (*enemy).lasercolour.g + 30, (*enemy).lasercolour.b + 30, (*enemy).lasercolour.a + (*enemy).transparency);
 	float opposite;
-	(*enemy).intlaserTime = (int)(*enemy).floatlaserTime % 3000;
+	(*enemy).intlaserTime = (int)(*enemy).floatlaserTime % 4800;
 	//printf("total elsapse:%d\n", (*enemy).intlaserTime);
 	//Break down laser into timing
 	//laser x and y draw coordinates
@@ -107,7 +106,7 @@ int laser(struct Enemy* enemy, struct Player* player) {
 
 		//advacned shit with (*enemy).rotation
 	}
-	else if ((*enemy).intlaserTime < 600) {
+	else if ((*enemy).intlaserTime < 900) {
 		if ((*enemy).transparency < -200) {
 			(*enemy).transparency += (*enemy).intlaserTime / 300;
 		}
@@ -138,7 +137,35 @@ int laser(struct Enemy* enemy, struct Player* player) {
 		return 2;
 		//printf("recharging");
 	}
-	else if ((*enemy).intlaserTime < 2000) {
+	else if ((*enemy).intlaserTime < 1100) {
+	CP_Settings_Fill(CP_Color_Create(0,0,0,0));
+	opposite = (((*enemy).laserw / 2) / (sqrt(2))) / 2;
+	switch ((*enemy).rotation) {
+	case 0:
+	case 180:
+		CP_Graphics_DrawRect((*enemy).EnemyPos.x - (*enemy).laserw / 2, (*enemy).EnemyPos.y, (*enemy).laserw, (*enemy).laserh);
+		break;
+	case 90:
+	case 270:
+		CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh);
+		break;
+	case 45:
+		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+		break;
+	case 135:
+		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+		break;
+	case 225:
+		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+		break;
+	case 315:
+		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+		break;
+	}
+	return 2;
+	//printf("recharging");
+	}
+	else if ((*enemy).intlaserTime < 2800) {
 		//calculate opposite & adjacent
 		opposite = (((*enemy).laserw / 2) / (sqrt(2))) / 2;
 		CP_Settings_Fill((*enemy).lasercolour);
@@ -294,7 +321,7 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player) {
 	//only set a few bullets to active
 	
 	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
-	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % 500;
+	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % (*enemy).rateoffire;
 
 	printf("floatbullet time %f : intbulletime %d\n", (*enemy).floatbulletTime,(*enemy).intbulletTime);
 	if ((*enemy).intbulletTime < 20) {
@@ -337,7 +364,7 @@ void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* play
 			{
 				enemy->enemyBullets[enemy->indivBullet].active = 0;
 			}
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Settings_Fill(enemy->bulletcolour);
 			CP_Graphics_DrawCircle(enemy->enemyBullets[enemy->indivBullet].Pos.x, enemy->enemyBullets[enemy->indivBullet].Pos.y, enemy->enemyBullets[enemy->indivBullet].diameter);
 			// need to update
 			if (enemybulletDamage(enemy, player, enemy->enemyBullets[enemy->indivBullet]) == 1) {

@@ -140,6 +140,8 @@ void assInit(struct Enemy* enemy) {
 	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 	//bullet
 	enemybulletReset(&(*enemy));
+	(*enemy).bulletcolour = CP_Color_Create(173, 216, 230, 255);
+	(*enemy).rateoffire = 500;
 }
 
 void labInit(struct Enemy* enemy) {
@@ -222,6 +224,10 @@ void bossInit(struct Enemy* enemy) {
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
 	(*enemy).hitCircle = 400.0f;
+	// Bullet init
+	(*enemy).bulletcolour = black;
+	enemybulletReset(&(*enemy));
+	(*enemy).rateoffire = 60;
 }
 
 // initialising all enemies excluding boss -Shawn
@@ -466,9 +472,8 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 
 			case 2: // Projectile
 
-				//enemybulletInit(&(*boss), &(*player));
-				//enemybulletInit(ass->bulletIndex, &ass , &player);
-				//enemybulletUpdate(deltaTime, &(*boss), &(*player), black);
+				enemybulletInit(&(*boss), &(*player));
+				enemybulletUpdate(deltaTime, &(*boss), &(*player));
 				boss->hitCircle = 200;
 				CP_Settings_Fill(CP_Color_Create(0, 0, 255, 120));
 				CP_Graphics_DrawCircle(boss->EnemyPos.x, boss->EnemyPos.y, boss->hitCircle);

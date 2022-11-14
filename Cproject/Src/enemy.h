@@ -34,7 +34,8 @@ struct Enemy {
 		float velocity, bulletTimer,damage;
 	} enemyBullets[5];
 	//Bullet Variables
-	int bulletIndex,intbulletTime,indivBullet;
+	int bulletIndex,intbulletTime,indivBullet , rateoffire;
+	CP_Color bulletcolour;
 	float floatbulletTime;
 
 	//collision
