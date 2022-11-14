@@ -23,6 +23,7 @@ void pauseScreen(void)
 	CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 110), 400, 90);
 	CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2), 400, 90);
 	CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90);
+	CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 220), 400, 90);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	//	CP_Settings_TextSize(150.0f);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
@@ -30,6 +31,7 @@ void pauseScreen(void)
 	//	CP_Settings_TextSize(150.0f);
 	CP_Font_DrawText("Resume", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 110));
 	CP_Font_DrawText("Retry", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-	CP_Font_DrawText("Quit", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110));
+	CP_Font_DrawText("Return to Menu", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110));
+	CP_Font_DrawText("Quit Game", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 220));
 	//	CP_Font_DrawText("Press Esc to resume studying SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 3), (float)(CP_System_GetWindowHeight() / 3));
 }
