@@ -34,7 +34,7 @@ int laser(struct Enemy* enemy, struct Player* player) {
 	(*enemy).lasercolourchargeup = CP_Color_Create((*enemy).lasercolour.r, (*enemy).lasercolour.g + 30, (*enemy).lasercolour.b + 30, (*enemy).lasercolour.a + (*enemy).transparency);
 	float opposite;
 	(*enemy).intlaserTime = (int)(*enemy).floatlaserTime % 3000;
-	printf("total elsapse:%d\n", (*enemy).intlaserTime);
+	//printf("total elsapse:%d\n", (*enemy).intlaserTime);
 	//Break down laser into timing
 	//laser x and y draw coordinates
 	if ((*enemy).intlaserTime < 100) {
@@ -227,7 +227,6 @@ void playerbulletInit(int index, struct Player* player) {
 
 //Definition for bulletupdates
 void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssLab) {
-	//printf("playerbulletdeltatime %f", deltaTime);
 	for (index = 0; index < 10; ++index)
 	{
 		if (player.playerBullets[index].active == 1)
@@ -273,68 +272,79 @@ void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssL
 
 //Reset Enemy Bullet
 void enemybulletReset(struct Enemy* enemy) {
-	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++(enemy->bulletIndex))
+	for (enemy->bulletIndex = 0; enemy->bulletIndex < 5; ++(enemy->bulletIndex))
 	{
 		enemy->enemyBullets[enemy->bulletIndex].active = 0;
 		enemy->enemyBullets[enemy->bulletIndex].velocity = 0;
 		enemy->enemyBullets[enemy->bulletIndex].bulletTimer = 1.0f * enemy->bulletIndex;
 	}
+	(*enemy).floatbulletTime = 700;
 }
 
 //Initialise enemy Bullet
 void enemybulletInit(struct Enemy* enemy, struct Player* player,float dt,int bulletSpeed,int bulletSize, float bulletDamage) {
 
-	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
+	//Shotgun code
+	/*(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
 	(*enemy).intbulletTime = (int)(*enemy).floatlaserTime % 3000;
-	if ((*enemy).intbulletTime < 1500) {
-		for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
-		{
-			if (enemy->enemyBullets[enemy->bulletIndex].active == 0 && enemy->enemyBullets[enemy->bulletIndex].bulletTimer <= 0.0f)
-			{
-				enemy->enemyBullets[enemy->bulletIndex].active = 1;
-				enemy->enemyBullets[enemy->bulletIndex].velocity = bulletSpeed; // 700;
-				enemy->enemyBullets[enemy->bulletIndex].diameter = bulletSize; //70;
-				enemy->enemyBullets[enemy->bulletIndex].damage = bulletDamage; //0.5;
-				enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
-				enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
-				break;
-			}
-			enemy->enemyBullets[enemy->bulletIndex].bulletTimer - dt;
-			if (enemy->enemyBullets[enemy->bulletIndex].bulletTimer <= 0.0f) {
-				enemy->enemyBullets[enemy->bulletIndex].bulletTimer = 0.1f * enemy->bulletIndex;
-			}
+
+	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10 && enemy->intbulletTime < 1000; ++enemy->bulletIndex)
+	{*/
+
+	//only set a few bullets to active
+	
+	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
+	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % 500;
+
+	printf("floatbullet time %f : intbulletime %d\n", (*enemy).floatbulletTime,(*enemy).intbulletTime);
+	if ((*enemy).intbulletTime < 20) {
+		++(enemy->bulletIndex);
+		enemy->bulletIndex = enemy->bulletIndex % 5;
+		if (enemy->enemyBullets[enemy->bulletIndex].active == 0) {
+			enemy->enemyBullets[enemy->bulletIndex].active = 1;
+			enemy->enemyBullets[enemy->bulletIndex].Pos = (*enemy).EnemyPos;
+			enemy->enemyBullets[enemy->bulletIndex].velocity = 1000;
+			enemy->enemyBullets[enemy->bulletIndex].diameter = 20;
+			enemy->enemyBullets[enemy->bulletIndex].damage = 0.05;
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Set((*player).playerPos.x - (*enemy).EnemyPos.x, (*player).playerPos.y - (*enemy).EnemyPos.y);
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Normalize(enemy->enemyBullets[enemy->bulletIndex].Vector);
+			enemy->enemyBullets[enemy->bulletIndex].Vector = CP_Vector_Scale(enemy->enemyBullets[enemy->bulletIndex].Vector, enemy->enemyBullets[enemy->bulletIndex].velocity);
 		}
+		printf("bullet index%d\n", (enemy->bulletIndex));
 	}
+	//update movement & logic for all active bullets
+	/*for (enemy->indivBullet = 0; enemy->indivBullet < 10; ++enemy->indivBullet) {
+		if (enemy->enemyBullets[enemy->indivBullet].active == 1)
+		{
+			
+		}
+	}*/
 }
 
 //Definition for bulletupdates
 void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* player,CP_Color color) {
 	//printf("enemybulletdeltatime %f", deltaTime);
-	for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
-	{
-		if (enemy->enemyBullets[enemy->bulletIndex].active == 1)
+	//Shotgun code
+	/*for (enemy->bulletIndex = 0; enemy->bulletIndex < 10; ++enemy->bulletIndex)
+	{*/
+	for (enemy->indivBullet = 0; enemy->indivBullet < 5; ++enemy->indivBullet) {
+		if (enemy->enemyBullets[enemy->indivBullet].active == 1)
 		{
-			enemy->enemyBullets[enemy->bulletIndex].Pos.x += enemy->enemyBullets[enemy->bulletIndex].Vector.x * deltaTime;
-			//printf("enemybullets x: %f\n", enemy->enemyBullets[enemy->bulletIndex].Vector.x);
-			enemy->enemyBullets[enemy->bulletIndex].Pos.y += enemy->enemyBullets[enemy->bulletIndex].Vector.y * deltaTime;
-			if (enemy->enemyBullets[enemy->bulletIndex].Pos.x < 0 || enemy->enemyBullets[enemy->bulletIndex].Pos.x >= CP_System_GetWindowWidth() || enemy->enemyBullets[enemy->bulletIndex].Pos.y < 0 || enemy->enemyBullets[enemy->bulletIndex].Pos.y >= CP_System_GetWindowHeight())
+			enemy->enemyBullets[enemy->indivBullet].Pos.x += enemy->enemyBullets[enemy->indivBullet].Vector.x * deltaTime;
+			printf("enemybullets [%d] x: %f\n",enemy->indivBullet, enemy->enemyBullets[enemy->indivBullet].Vector.x);
+			enemy->enemyBullets[enemy->indivBullet].Pos.y += enemy->enemyBullets[enemy->indivBullet].Vector.y * deltaTime;
+			if (enemy->enemyBullets[enemy->indivBullet].Pos.x < 0 || enemy->enemyBullets[enemy->indivBullet].Pos.x >= CP_System_GetWindowWidth() || enemy->enemyBullets[enemy->indivBullet].Pos.y < 0 || enemy->enemyBullets[enemy->indivBullet].Pos.y >= CP_System_GetWindowHeight())
 			{
-				enemy->enemyBullets[enemy->bulletIndex].active = 0;
+				enemy->enemyBullets[enemy->indivBullet].active = 0;
 			}
-			CP_Settings_Fill(color);
-			CP_Graphics_DrawCircle(enemy->enemyBullets[enemy->bulletIndex].Pos.x, enemy->enemyBullets[enemy->bulletIndex].Pos.y, enemy->enemyBullets[enemy->bulletIndex].diameter);
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+			CP_Graphics_DrawCircle(enemy->enemyBullets[enemy->indivBullet].Pos.x, enemy->enemyBullets[enemy->indivBullet].Pos.y, enemy->enemyBullets[enemy->indivBullet].diameter);
 			// need to update
-			for ((*enemy).bulletIndex = 0; (*enemy).bulletIndex < 10; (*enemy).bulletIndex++)
-			{
-				if (enemybulletDamage(&(*enemy), player, (*enemy).enemyBullets[(*enemy).bulletIndex]) == 1) {
+			if (enemybulletDamage(enemy, player, enemy->enemyBullets[enemy->indivBullet]) == 1) {
 				{
-						(*enemy).enemyBullets[(*enemy).bulletIndex].active = 0;
+					enemy->enemyBullets[enemy->indivBullet].active = 0;
 				}
 			}
 		}
-		}
-
 	}
 }

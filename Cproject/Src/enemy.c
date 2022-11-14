@@ -495,6 +495,12 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 		// Render the animation
 		updateEnemyAnimation(&(*boss), deltaTime);
 		enemyAnimation(BossSS, &(*boss));
+	// Assignment1 Logic	
+	if ((*ass).alive && (*player).alive) {
+		updateEnemyAnimation(&(*ass), deltaTime);
+		enemyAnimation(AssSS, &(*ass));
+		enemybulletInit(&(*ass), &(*player));
+		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
