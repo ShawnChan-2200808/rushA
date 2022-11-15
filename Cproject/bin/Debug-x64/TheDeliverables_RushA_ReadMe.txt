@@ -15,15 +15,21 @@ RushA Presents...
 |______.'|________|________|_____|    \_/    |________|____| |___|____| |____|_______/________|________| \______.' 
 
 
--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
 
 Ever gotten so much work that studying feels like stu-dying?
 
-The Deliverables is a 2D top down survival game where you are a student trying to graduate in a tough university...
+The Deliverables is a 2D top down survival game where you are a student trying to graduate in a tough university!
 
 Challenge graded quizzes, labs and assignments while trying to keep up a good GPA. Oh and dont forget about the Finals!
 
--------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+
+Thank you for checking our game out!! Please fill up this feedback form below!!
+
+https://forms.gle/sFVdRk6cioQJBRZz6
+
+--------------------------------------------------------------------------------------------------------------------
 
 Software Engineering Project 1
 csd1401f22 - Section A 
