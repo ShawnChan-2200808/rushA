@@ -105,6 +105,8 @@ void Credits_Update(void)
 	CP_Font_DrawText("Sun Wei Hao", (windowWidth / 4), (windowHeight / 6) + 100);
 	CP_Font_DrawText("Low Ee Loong", (windowWidth / 4), (windowHeight / 6) + 150);
 	CP_Font_DrawText("Justin Yeo", (windowWidth / 4), (windowHeight / 6) + 200);
+	CP_Font_DrawText("Special Thanks", (windowWidth / 4), (windowHeight / 6) + 350);
+	CP_Font_DrawText("Bryan Lee", (windowWidth / 4), (windowHeight / 6) + 400);
 	CP_Font_DrawText("DigiPen Institute of Technology", ((windowWidth / 4) * 3), ((windowHeight / 6) + 300));
 	CP_Font_DrawText("Claude Comair - President", ((windowWidth / 4) * 3), (windowHeight / 6) + 350);
 	CP_Font_DrawText("Instructors", ((windowWidth / 4) * 3), (windowHeight / 9));

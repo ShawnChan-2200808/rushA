@@ -6,7 +6,7 @@
 @date       31/10/2022 (last updated)
 @brief      contains declarations of Weapon functions
 *//*_________________________________________________________________________________*/
-
+#pragma once
 
 
 
@@ -26,5 +26,5 @@ void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssL
 
 //enemy Bullers
 void enemybulletReset(struct Enemy* enemy);
-void enemybulletInit(struct Enemy* enemy, struct Player* player);
+void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, int bulletSize,float bulletDamage);
 void enemybulletUpdate(float deltaTime,struct Enemy* enemy, struct Player* player);

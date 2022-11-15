@@ -51,7 +51,7 @@
     <ClCompile Include="..\Src\credits.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\Tutorial.c">
+    <ClCompile Include="..\Src\pause.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="..\Src\mainmenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Src\Tutorial.h">
+    <ClInclude Include="..\Src\pause.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

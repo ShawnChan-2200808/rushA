@@ -90,6 +90,13 @@ void quizInit(struct Enemy* enemy) {
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
 	(*enemy).hitCircle = 50.0f;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+
 	// Set laser color for quiz
 	//(*enemy).lasercolour = red;
 }
@@ -142,6 +149,12 @@ void assInit(struct Enemy* enemy) {
 	enemybulletReset(&(*enemy));
 	(*enemy).bulletcolour = CP_Color_Create(173, 216, 230, 255);
 	(*enemy).rateoffire = 500;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 }
 
 void labInit(struct Enemy* enemy) {
@@ -181,6 +194,13 @@ void labInit(struct Enemy* enemy) {
 	(*enemy).spriteWidth = 64.0f;
 	(*enemy).SpriteHeight = 64.0f;
 	(*enemy).displayTime = 2.0f;
+
+	//collision
+	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
+	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
+	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
+	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
+
 	//Laser Init
 	//laserL is the larger value (length)
 	(*enemy).laserL = 750;
@@ -224,10 +244,11 @@ void bossInit(struct Enemy* enemy) {
 	(*enemy).laserB = 269;
 	(*enemy).lasercolour = red;
 	(*enemy).hitCircle = 400.0f;
-	// Bullet init
-	(*enemy).bulletcolour = black;
-	enemybulletReset(&(*enemy));
-	(*enemy).rateoffire = 60;
+
+	//bullet
+	//enemybulletReset(&(*enemy));
+	(*enemy).bulletcolour = CP_Color_Create(255, 0, 255, 170);
+	(*enemy).rateoffire = 500;
 }
 
 // initialising all enemies excluding boss -Shawn
@@ -402,11 +423,13 @@ void assLogic(CP_Image AssSS, struct Enemy* ass, struct Player* player) {
 	}
 	// for eeloong to add in when to start the attack
 	//if ((*ass).alive && (*player).alive && (*ass).timer <= 0.0f) {
+	if ((*ass).alive && (*player).alive && (*ass).timer <= 0.0f) {
+		enemybulletInit(&(*ass), &(*player),700,40,0.05f);
+		enemybulletUpdate(deltaTime, &(*ass), &(*player));
+	}
 	if ((*ass).alive && (*player).alive) {
 		updateEnemyAnimation(&(*ass), deltaTime);
 		enemyAnimation(AssSS, &(*ass));
-		enemybulletInit(&(*ass), &(*player));
-		enemybulletUpdate(deltaTime, &(*ass), &(*player));
 	}
 	else {
 		// move dead enemy to out of screen
@@ -426,7 +449,7 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 			(*boss).timer -= deltaTime;
 			// when timer is up
 			if ((*boss).timer <= 0.0f) {
-				(*boss).timer = 5.0f;
+				(*boss).timer = 4.0f;
 				(*boss).flag1 = 1;
 				(*player).speed = 500;
 			}
@@ -472,7 +495,7 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 
 			case 2: // Projectile
 
-				enemybulletInit(&(*boss), &(*player));
+				enemybulletInit(&(*boss), &(*player),1000,70,0.5f);
 				enemybulletUpdate(deltaTime, &(*boss), &(*player));
 				boss->hitCircle = 200;
 				CP_Settings_Fill(CP_Color_Create(0, 0, 255, 120));

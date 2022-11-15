@@ -62,6 +62,8 @@ void initAssets() {
 	bbtSS = CP_Image_Load("Assets/SPRITES/BBT.png");
 	BossSS = CP_Image_Load("Assets/SPRITES/BOSS_SS.png");
 	hitBox = CP_Image_Load("Assets/SPRITES/HitBox.png");
+	Chair = CP_Image_Load("Assets/SPRITES/Chair.png");
+	Table = CP_Image_Load("Assets/SPRITES/Table.png");
 
 	// Initialize OST
 	mainMenuOST = CP_Sound_Load("Assets/OST/2ND EDITED WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
@@ -72,7 +74,7 @@ void initAssets() {
 
 	//Initialize SFX
 	schoolBellSFX = CP_Sound_Load("Assets/SFX/EDITED BELL-SCHOOL_GEN-HDF-03494.wav");
-	playerMeleeSFX = CP_Sound_Load("Assets/SFX/WRITING-HI-LITER_GEN-HDF-26203.wav");
+	playerMeleeSFX = CP_Sound_Load("Assets/SFX/EDITED WRITING-HI-LITER_GEN-HDF-26203.wav");
 	playerSwapRangeSFX = CP_Sound_Load("Assets/SFX/GUN-HOLSTER_GEN-HDF-13335.wav");
 	playerSwapMeleeSFX = CP_Sound_Load("Assets/SFX/PEN-RETRACTABLE_GEN-HDF-18401.wav");
 	playerRangedSFX = CP_Sound_Load("Assets/SFX/TOY-GUN_GEN-HDF-23708.wav");

@@ -9,6 +9,7 @@
 
 
 
+#pragma once
 // MAIN PLAYER STRUCT
 struct Player {
 	CP_Vector playerPos, tempPos, direction;

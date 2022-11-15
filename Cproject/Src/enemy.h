@@ -8,6 +8,7 @@
 *//*_________________________________________________________________________________*/
 
 
+#pragma once
 // MAIN ENEMY STRUCT
 struct Enemy {
 	CP_Vector EnemyPos, tempPos, direction;
@@ -22,6 +23,7 @@ struct Enemy {
 	int animationSpeed, currentFrame, animTotalFrames;
 	float worldSizeW, worldSizeH, spriteWidth, SpriteHeight,
 		animationElapsedTime, displayTime;
+
 	//Laser Variables
 	int intlaserTime,rotation;
 	CP_Color lasercolour, lasercolourchargeup;

@@ -14,7 +14,7 @@
 #include "mainmenu.h"
 	
 CP_Image splashscreenDP;
-//CP_Image splashscreenRA;
+CP_Image splashscreenRA;
 
 float totalElapsedTime, alphaIncrease;
 static float deltaTime;
@@ -26,15 +26,15 @@ void Splash_Screen_Init(void)
 	initAssets();
 
 	// Load splash screen png from assets folder
-	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_RED.png");
-	//splashscreenRA = CP_Image_Load("./Assets/DigiPen_Singapore_WEB_RED.png");
+	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_WHITE.png");
+//	splashscreenRA = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
 	
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
 
 	// Set the colour for gray
-	gray = CP_Color_Create(120, 120, 120, 255);
+//	gray = CP_Color_Create(120, 120, 120, 255);
 
 	// Initialize variables
 	deltaTime = 0.0f;
@@ -75,19 +75,21 @@ void Splash_Screen_Update(void)
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 		CP_Image_Draw(splashscreenDP, (float)(windowWidth / 2), (float)(windowHeight / 2), (float)CP_Image_GetWidth(splashscreenDP), (float)CP_Image_GetHeight(splashscreenDP), alpha);
+		CP_Settings_Fill(white);
+		CP_Font_DrawText("All content © 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", CP_System_GetWindowWidth() / 2, 1060);
 		alphaIncrease = totalElapsedTime * rate;
 		alpha = (int)alphaIncrease % alphaMax;
 	}
 
 
-	// Rendering RUSHA Splashscreen
-	/*
-	else{
-		CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
-		alphaIncrease = totalElapsedTime * rate;
-		alpha = (int)alphaIncrease % 256;
-	}
-	*/
+	//// Rendering RUSHA Splashscreen
+	//
+	//else{
+	//	CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
+	//	alphaIncrease = totalElapsedTime * rate;
+	//	alpha = (int)alphaIncrease % 256;
+	//}
+	
 
 	// Change scene upon splashscreen end
 	//if (totalElapsedTime > 4)
@@ -106,6 +108,6 @@ void Splash_Screen_Exit(void)
 	// Clear the Splashscreen image upon exiting this state
 	//
 	CP_Image_Free(&splashscreenDP);
-	//CP_Image_Free(&splashscreenRA);
+//	CP_Image_Free(&splashscreenRA);
 }
 
