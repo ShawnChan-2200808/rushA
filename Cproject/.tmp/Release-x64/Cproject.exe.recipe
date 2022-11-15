@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Release-x64\Cproject.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\main.c</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\splashscreen.c</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
