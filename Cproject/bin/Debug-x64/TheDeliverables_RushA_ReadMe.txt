@@ -29,14 +29,14 @@ Software Engineering Project 1
 csd1401f22 - Section A 
 
 RushA
-1) Low Ee Loong			   eeloong.l@digipen.edu
+1) Low Ee Loong			eeloong.l@digipen.edu
 2) Yeo Kaixun, Justin		justin.yeo@digipen.edu
-3) Sun Wei Hao				   s.weihao@digipen.edu
+3) Sun Wei Hao				s.weihao@digipen.edu
 4) Shawn Chan Weng Kwang	shawnwengkwang.chan@digipen.edu
 
 5) -Special thanks to Bryan who is no longer with us-
    We wish him all the best for his future endeavours!
-   Lee Kwan Hong	        kwanhong.lee@digipen.edu
+
 --------------------------------------------------------------------------------------------------------------------
 
 CONTROLS:
