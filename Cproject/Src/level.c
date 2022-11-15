@@ -227,26 +227,73 @@ void Level_Update()
 		if (!Win && player.alive) {
 			// GAME SPAWN LOGIC 
 			//
+			
+			// school is starting shows up when game starts
+			if (totalElapsedTime < 3.0f && totalElapsedTime > 1.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("School is starting...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
+			// show week 1
+			if (totalElapsedTime < 5.0f && totalElapsedTime > 3.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Get ready for Week 1!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
 			spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L spawn at 5s
 				0, 0, 0,
 				1, 1, 1,
 				QuizSS, AssSS, LabSS);
+
+			// show week 2
+			if (totalElapsedTime < 15.0f && totalElapsedTime > 12.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Get ready for Week 2...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
 			spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L spawn at 15s
 				1, 1, 1,
 				3, 2, 2,
 				QuizSS, AssSS, LabSS);
+
+			// show week 3
+			if (totalElapsedTime < 25.0f && totalElapsedTime > 20.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Get ready for Week 3...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
 			spawnWeekly(totalElapsedTime, 25.0f,	// 2Q 2A 1L spawn at 25s
 				3, 2, 2,
 				5, 4, 3,
 				QuizSS, AssSS, LabSS);
+
+			// show week 4
+			if (totalElapsedTime < 45.0f && totalElapsedTime > 42.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Get ready for Week 4...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
 			spawnWeekly(totalElapsedTime, 45.0f,	// 2Q 2A 2L spawn at 45s
 				5, 4, 3,
 				7, 6, 5,
 				QuizSS, AssSS, LabSS);
+
+			// show week 5
+			if (totalElapsedTime < 65.0f && totalElapsedTime > 63.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Get ready for Week 5, last week before finals...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
 			spawnWeekly(totalElapsedTime, 65.0f,	// 3Q 2A 2L spawn at 1min 5s
 				7, 6, 5,
 				10, 8, 7,
 				QuizSS, AssSS, LabSS);
+
+
+			// show week 5
+			if (totalElapsedTime < 85.0f && totalElapsedTime > 83.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Oh no its finals week...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
 			spawnBoss(totalElapsedTime, 85.0f, BossSS); // Boss spawn at 1min 25s
 
 			// BOSS OST
@@ -278,7 +325,7 @@ void Level_Update()
 		if (Win) {
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You got the Degree!!!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-			CP_Font_DrawText("Press SPACE for another Degree, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			CP_Font_DrawText("Press SPACE for better GPA, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
 
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
@@ -371,7 +418,7 @@ void Level_Update()
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("BOSS", (float)(windowWidth / 3.2), (float)(windowHeight / 30));
+			CP_Font_DrawText("DR X", (float)(windowWidth / 3.2), (float)(windowHeight / 30));
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));

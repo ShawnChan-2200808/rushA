@@ -360,6 +360,7 @@ int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBu
 		//((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
 	{
 		(*player).GPA -= bullet.damage;
+		(*player).currentFrame += (*player).animTotalFrames;
 		return 1;
 	}
 	else return 0;
