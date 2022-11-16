@@ -242,7 +242,7 @@ void playerbulletInit(int index, struct Player* player) {
 			player->playerBullets[index].active = 1;
 			player->playerBullets[index].velocity = 1000;
 			player->playerBullets[index].diameter = 20;
-			player->playerBullets[index].damage = 1;
+			player->playerBullets[index].damage = 1000;
 			player->playerBullets[index].Pos = (*player).playerPos;
 			player->playerBullets[index].Vector = CP_Vector_Set((CP_Input_GetMouseX() - (*player).playerPos.x), (CP_Input_GetMouseY() - (*player).playerPos.y));
 			player->playerBullets[index].Vector = CP_Vector_Normalize(player->playerBullets[index].Vector);
