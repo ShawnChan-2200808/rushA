@@ -24,16 +24,14 @@
 static int allDead;
 static int Win;
 static int GameOver;
-static int flag;
 extern CP_Color gray, blue, green, red;
 extern int windowWidth, windowHeight;
 extern float fps;
 static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
 extern int randomX, randomY;
-float deltaTime;
-int paused, stage;
-char instructions[maxstring];
+float deltaTime, tutorialtime;
+int paused, flag, stage, projectilecount;
 
 void Tutorial_Init()
 {
@@ -55,8 +53,9 @@ void Tutorial_Init()
 	CP_Sound_PlayAdvanced(levelOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
 	CP_Sound_PlayAdvanced(schoolBellSFX, 0.1f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 	stage = 0;
-	paused = 0;
 	flag = 0;
+	projectilecount = 0;
+	tutorialtime = 0;
 }
 
 void Tutorial_Update()
@@ -65,55 +64,61 @@ void Tutorial_Update()
 	if (paused == 0) {
 		if (player.alive && !Win) {
 			SpawnBG(Floor, 6, 9);
-			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
-			{
-				moveForward(&player, Up);
-			}
-			if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
-			{
-				moveForward(&player, Left);
-			}
-			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
-			{
-				moveForward(&player, Down);
-			}
-			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
-			{
-				moveForward(&player, Right);
-			}
-
-			// SWITCH WEAPON
-			if (flag == 1) {
-				if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel())
+			if (stage >= 5) {
+				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 				{
-					player.weapon = switchWeapon(player.weapon);
-					if (player.weapon == 1) {
-						CP_Sound_PlayAdvanced(playerSwapRangeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					}
-					else if (player.weapon == 0)
-					{
-						CP_Sound_PlayAdvanced(playerSwapMeleeSFX, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					}
+					moveForward(&player, Up);
+				}
+				if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
+				{
+					moveForward(&player, Left);
+				}
+				if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
+				{
+					moveForward(&player, Down);
+				}
+				if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
+				{
+					moveForward(&player, Right);
 				}
 			}
+			// SWITCH WEAPON
+			if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel() && stage >= 8)
+			{
+				player.weapon = switchWeapon(player.weapon);
+				if (player.weapon == 1) {
+					CP_Sound_PlayAdvanced(playerSwapRangeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+				}
+				else if (player.weapon == 0)
+				{
+					CP_Sound_PlayAdvanced(playerSwapMeleeSFX, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+				}
+			}
+
 			// ATTACK
-			if (CP_Input_MouseClicked()) {
+			if (CP_Input_MouseClicked() && stage >= 6) {
 				// get vector and spawn hit point
 				if (player.weapon == 1)
 				{
 					player.currentFrame = 2;
-
 					CP_Sound_PlayAdvanced(playerRangedSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 					playerbulletInit(player.bulletIndex, &player);
+					++projectilecount;
 				}
 				else if (player.weapon == 0)
 				{
 					player.currentFrame = 2;
 					meleeVec(&player, 100);
 					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y - 75, 150, 150, 255, mouseToplayerAngle(&player) - 70);
-					damageEnemy(&quiz[0], &player, 150, 150, 6);
-					damageEnemy(&assignment[0], &player, 150, 150, 8);
-					damageEnemy(&lab[0], &player, 150, 150, 8);
+					for (int i = 0; i < 2; i++)
+					{
+						damageEnemy(&quiz[i], &player, 150, 150, 6);
+					}
+					for (int i = 0; i < 2; i++)
+					{
+						damageEnemy(&assignment[i], &player, 150, 150, 8);
+						damageEnemy(&lab[i], &player, 150, 150, 8);
+					}
 					//if (randomiser==0 || randomiser == 4) {
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 					//}
@@ -155,120 +160,233 @@ void Tutorial_Update()
 			}
 			else CP_Font_DrawText("Current weapon: Melee", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
 
+			if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive && stage >= 4)
+			{
+				paused = !paused;
+			}
+
 			switch (stage) {
 			case 0:
 				//@todo print instructions for w,a,s,d
-				CP_Font_DrawText("PRESS W NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				player.speed = 0;
+				if (flag == 0)
+					CP_Font_DrawText("PRESS W to move forward NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 				{
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 1:
-				CP_Font_DrawText("PRESS A NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (flag == 0)
+					CP_Font_DrawText("PRESS A NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
 				{
-					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					flag = 1;
 
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 2:
-				CP_Font_DrawText("PRESS S NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (flag == 0)
+					CP_Font_DrawText("PRESS S NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
 				{
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 3:
-				CP_Font_DrawText("PRESS D NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (flag == 0)
+					CP_Font_DrawText("PRESS D NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
 				{
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 4:
-				CP_Font_DrawText("PRESS esc NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
-				{
-					CP_Font_DrawText("congrats now PRESS esc again to unpause NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-					paused = !paused;
-					++stage;
-					CP_Graphics_ClearBackground(black);
+				if (flag == 0) {
+					CP_Font_DrawText("PRESS esc NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+					if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive && paused == 1)
+					{
+						CP_Graphics_ClearBackground(black);
+						CP_Font_DrawText("congrats now PRESS esc again to unpause NIGGER", windowWidth / 2, windowHeight / 2 - 500);
+						flag = 1;
+					}
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 				// move to location
 			case 5:
-				player.speed = 500;
-				CP_Graphics_DrawRect(200, 800, 80, 80);
-				CP_Font_DrawText("Go to the box NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (flag == 0) {
+					CP_Graphics_DrawRect(200, 800, 80, 80);
+					CP_Font_DrawText("Go to the box NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				}
 				//press esc to pause
 				if (1 == IsRectEntered(200, 800, 80, 80, player.playerPos.x, player.playerPos.y)) {
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 6:
-				CP_Font_DrawText("click to do meleee damage NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				CP_Sound_PlayAdvanced(playerSwapMeleeSFX, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+				if (flag == 0)
+					CP_Font_DrawText("click to do meleee damage NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (CP_Input_MouseClicked()) {
-					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					flag = 1;
 					//if (randomiser==0 || randomiser == 4) {
-					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 					//}
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 7:
-				CP_Font_DrawText("kill the quiz NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					0, 0, 0,
-					1, 0, 0,
-					QuizSS, AssSS, LabSS);
-				quiz[0].speed = 0;
+				if (flag == 0) {
+					CP_Font_DrawText("kill the quiz NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						0, 0, 0,
+						1, 0, 0,
+						QuizSS, AssSS, LabSS);
+					quiz[0].speed = 0;
+				}
 				if (quiz[0].alive == 0) {
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
-
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 8:
-				CP_Font_DrawText("use the q or scroll wheel to change weapon NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel())
-				{
-					player.weapon = switchWeapon(player.weapon);
-					if (player.weapon == 0)
-					{
-						CP_Sound_PlayAdvanced(playerSwapMeleeSFX, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					}
-					else if (player.weapon == 1) {
-						CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-						CP_Sound_PlayAdvanced(playerSwapRangeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-						++stage;
-					}
+				if (flag == 0)
+					CP_Font_DrawText("use the q or scroll wheel to change weapon NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (player.weapon == 1) {
 					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 9:
-				CP_Font_DrawText("kill the assignment NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					0, 0, 0,
-					0, 1, 0,
-					QuizSS, AssSS, LabSS);
-
-				if (assignment[0].alive == 0) {
+				if (flag == 0) {
+					CP_Font_DrawText("click the direction u would like to shoot projectiles NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+					player.weapon = 1;
+				}
+				if (projectilecount == 7) {
+					flag = 1;
+				}
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 10:
+				if (flag == 0) {
+					CP_Font_DrawText("kill the assignment NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						0, 0, 0,
+						0, 1, 0,
+						QuizSS, AssSS, LabSS);
+				}
+				if (assignment[0].alive == 0) {
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 11:
 				// RENDERING POWERUP / PLAYER / BULLETS / HUD
 				//
-				CP_Font_DrawText("get the buble tea to heal your health NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+				if (flag == 0)
+					CP_Font_DrawText("get the buble tea to heal your health NIGGER", windowWidth / 2, windowHeight / 2 - 300);
 				if (player.GPA > 4) {
 					player.GPA = 4;
 				}
@@ -289,22 +407,50 @@ void Tutorial_Update()
 				}
 
 				if (player.GPA > 4) {
-					++stage;
+					flag = 1;
 				}
-				break;
-			case 11:
-				CP_Font_DrawText("kill EVERYTHING NIGGER", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					1, 1, 0,
-					2, 2, 1,
-					QuizSS, AssSS, LabSS);
-				if (assignment[1].alive == 0 && quiz[1].alive == 0 && lab[0].alive == 0) {
+				if (flag == 1) {
 					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
-					++stage;
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
 				break;
 			case 12:
+				if (flag == 0) {
+					CP_Font_DrawText("kill EVERYTHING NIGGER", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						1, 1, 0,
+						2, 2, 1,
+						QuizSS, AssSS, LabSS);
+				}
+				if (assignment[1].alive == 0 && quiz[1].alive == 0 && lab[0].alive == 0) {
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats nigger", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 2) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 13:
 				CP_Font_DrawText("congrats nigger you are now ready to beat pussy", windowWidth / 2, windowHeight / 2 - 300);
+				CP_Font_DrawText("Return to Menu", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110));
+				CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90);
+				if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2)), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
+				{
+					CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
+					stage = 0;
+				}
 				break;
 			}
 
@@ -444,8 +590,6 @@ void Tutorial_Update()
 				}
 				pushbackEnemy(&boss, &table[i]);
 			}
-
-
 		}
 	}
 	else {
