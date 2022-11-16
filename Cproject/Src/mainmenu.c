@@ -22,19 +22,15 @@ CP_Image Gamename;
 
 CP_Image Gamename, Background;
 
-float totalElapsedTime, lerpIncrease, currentElapseTime;
+float totalElapsedTime, lerpIncrease, currentElapseTime, currentElapseTimeReturn, ElapseTimeGamename;
 static float deltaTime;
-int time, lerpMax;
-float rate, lerp, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_xpos;
+int timeplayer, timegamename, lerpMax;
+float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_xpos,lerpgamename, rategamename;
 
 int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
 float spriteWidth, SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
-
-static float Lerp(float start, float end, float value)
-{
-	return (1.f - value) * start + value * end;
-}
+BOOL firstrun, secondrun;
 
 
 void Mainmenu_Init(void)
@@ -55,13 +51,19 @@ void Mainmenu_Init(void)
 	// Initialize variables
 	deltaTime = 0.0f;
 	lerpIncrease = 0.0f;
-	time = 6;
+	timeplayer = 5;
+	timegamename = 2;
 	finalLerp = 1;
 	lerpMax = 1;
+
+	//BOOL
+	firstrun = FALSE;
+	secondrun = FALSE;
 	
 
-	// Getting the rate we need to get to reach 1 lerpfector in 3 seconds
-	rate = finalLerp / time;
+	// Getting the rate we need to get to reach 1 lerpfector in seconds
+	rateplayer = finalLerp / timeplayer;
+	rategamename = finalLerp / timegamename;
 	//
 	// Setting the window width and height
 	windowWidth = 1920;
@@ -84,17 +86,16 @@ void Mainmenu_Update(void)
 {
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
-	currentElapseTime = totalElapsedTime;
-	if (currentElapseTime >= 1)
-	{
-		currentElapseTime == 0;
-	}
+	currentElapseTime += deltaTime;
+	ElapseTimeGamename += deltaTime;
 	
-	gamename_xpos = CP_Math_LerpFloat(-2000, (float)((windowHeight / 2) - 100), lerp);
-	player_xpos = CP_Math_LerpFloat(-2000, (float)(windowWidth + 250), lerp);
+	gamename_xpos = CP_Math_LerpFloat(0, (float)((windowHeight / 2) - 100), lerpgamename);
+	player_xpos = CP_Math_LerpFloat(-500, (float)(windowWidth + 250), lerpplayer);
 	ass_xpos = (player_xpos - 180);
-	player_return_xpos = CP_Math_LerpFloat((float)(windowWidth + 2000), -250, lerp);
-	ass_return_xpos = (player_return_xpos + 180);
+	player_return_xpos = CP_Math_LerpFloat((float)(windowWidth + 500), -250, lerpplayerReturn);
+	ass_return_xpos = (player_return_xpos - 180);
+	lerpplayer = currentElapseTime * rateplayer;
+	lerpgamename = ElapseTimeGamename * rategamename;
 
 
 	//SpawnBG(Floor, 6, 9);
@@ -151,10 +152,15 @@ void Mainmenu_Update(void)
 			animationElapsedTimeP = 0.0f;
 		}
 		animationElapsedTimeP += deltaTime * animationSpeedP;
+
+		//switch BOOL once firstrun reach end
+		if (player_xpos >= (float)(windowWidth + 249)&& !firstrun)
+		{
+			firstrun = TRUE;
+		}
 		
-		printf("%d ", lerp);
+		printf("%d ", lerpplayer);
 		printf("player lerp: %d \n", currentElapseTime);
-		lerp = currentElapseTime*rate;
 
 		//CP_Image_DrawSubImage(PlayerSS,
 		//CP_Math_LerpInt(-80, windowWidth, Lerp(0, windowWidth, 10)), windowHeight - 80, 160, 160,
@@ -176,51 +182,61 @@ void Mainmenu_Update(void)
 			animationElapsedTimeE = 0.0f;
 		}
 		animationElapsedTimeE += deltaTime * animationSpeedE;
-		printf("Ass lerp: %d \n", currentElapseTime);
-		//lerp = currentElapseTime * rate;
-
-		//run back animation but not working
-		//if (lerp>=1)
-		//{
-		//	CP_Image_DrawSubImage(playerSS,
-		//		//RENDERED POS AND SIZE
-		//		player_return_xpos, windowHeight - 80, 160, 160,
-		//		// POS AND SIZE FROM SPRITESHEET
-		//		currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
-		//		255);
-		//	if (animationElapsedTimeP >= displayTime) {
-		//		currentFrameP = (currentFrameP + 1) % animTotalFramesP;
-		//		animationElapsedTimeP = 0.0f;
-		//	}
-		//	printf("%d ", lerp);
-		//	printf("player lerp: %d \n", currentElapseTime);
-		//	lerp = currentElapseTime * rate;
-
-		//	//CP_Image_DrawSubImage(PlayerSS,
-		//	//CP_Math_LerpInt(-80, windowWidth, Lerp(0, windowWidth, 10)), windowHeight - 80, 160, 160,
-		//	//// POS AND SIZE FROM SPRITESHEET
-		//	//currentFrame * spriteWidth, 0, (currentFrame + 1) * spriteWidth, spriteHeight, //row1col1, row1col2 ... L to R
-		//	//255);
+		//printf("Ass lerp: %d \n", currentElapseTime);
 
 
-		//	//CP_Image_DrawAdvanced(PlayerSS, 160 , windowHeight-80, 160, 160, 255, -180);
+		//running back
+		if (firstrun == TRUE)
+		{
+			lerpplayerReturn = currentElapseTimeReturn * rateplayer;
+			currentElapseTimeReturn += deltaTime;
+			CP_Image_DrawSubImage(playerSS,
+				//RENDERED POS AND SIZE
+				player_return_xpos, windowHeight - 80, 160, 160,
+				// POS AND SIZE FROM SPRITESHEET
+				currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+				255);
+			if (animationElapsedTimeP >= displayTime) {
+				currentFrameP = (currentFrameP + 1) % animTotalFramesP;
+				animationElapsedTimeP = 0.0f;
+			}
+			animationElapsedTimeP += deltaTime * animationSpeedP;
 
-		//	CP_Image_DrawSubImage(AssSS,
-		//		// RENDERED POS AND SIZE
-		//		ass_return_xpos, windowHeight - 80, 160, 160,
-		//		// POS AND SIZE FROM SPRITESHEET
-		//		currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
-		//		255);
-		//	if (animationElapsedTimeE >= displayTime) {
-		//		currentFrameE = (currentFrameE + 1) % animTotalFramesE;
-		//		animationElapsedTimeE = 0.0f;
-		//	}
-		//	animationElapsedTimeE += deltaTime * animationSpeedE;
-		//	printf("Ass lerp: %d \n", currentElapseTime);
+
+			CP_Image_DrawSubImage(AssSS,
+				// RENDERED POS AND SIZE
+				ass_return_xpos, windowHeight - 80, 160, 160,
+				// POS AND SIZE FROM SPRITESHEET
+				currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+				255);
+			if (animationElapsedTimeE >= displayTime) {
+				currentFrameE = (currentFrameE + 1) % animTotalFramesE;
+				animationElapsedTimeE = 0.0f;
+			}
+			animationElapsedTimeE += deltaTime * animationSpeedE;
 
 
-		//	
-		//}
+			//switch BOOL once secondrun reach end
+			if (player_return_xpos <= (float)-249 && !secondrun)
+			{
+				printf(" called\n");
+				secondrun = TRUE;
+			}
+		}
+		printf("player_xpos: %f", player_xpos);
+		if (firstrun == TRUE && secondrun == TRUE)
+		{
+			player_xpos = (float)-500;
+			player_return_xpos = (float)(windowWidth + 500);
+			firstrun = FALSE;
+			secondrun = FALSE;
+			lerpplayer = 0;
+			lerpplayerReturn = 0;
+			currentElapseTime = 0;
+			currentElapseTimeReturn = 0;
+
+		}
+		
 
 
 	// Rendering RUSHA Splashscreen
