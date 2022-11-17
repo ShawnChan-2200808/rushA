@@ -32,6 +32,7 @@ float spriteWidth, SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
 BOOL firstrun, secondrun;
 
+int creditsShown;
 
 void Mainmenu_Init(void)
 {
@@ -55,6 +56,7 @@ void Mainmenu_Init(void)
 	timegamename = 2;
 	finalLerp = 1;
 	lerpMax = 1;
+	creditsShown = 0;
 
 	//BOOL
 	firstrun = FALSE;
@@ -84,55 +86,58 @@ void Mainmenu_Init(void)
 
 void Mainmenu_Update(void)
 {
-	deltaTime = CP_System_GetDt();
-	totalElapsedTime += deltaTime;
-	currentElapseTime += deltaTime;
-	ElapseTimeGamename += deltaTime;
-	
-	gamename_xpos = CP_Math_LerpFloat(0, (float)((windowHeight / 2) - 100), lerpgamename);
-	player_xpos = CP_Math_LerpFloat(-500, (float)(windowWidth + 250), lerpplayer);
-	ass_xpos = (player_xpos - 180);
-	player_return_xpos = CP_Math_LerpFloat((float)(windowWidth + 500), -250, lerpplayerReturn);
-	ass_return_xpos = (player_return_xpos - 180);
-	lerpplayer = currentElapseTime * rateplayer;
-	lerpgamename = ElapseTimeGamename * rategamename;
+
+	if (creditsShown == 0)
+	{
+		deltaTime = CP_System_GetDt();
+		totalElapsedTime += deltaTime;
+		currentElapseTime += deltaTime;
+		ElapseTimeGamename += deltaTime;
+
+		gamename_xpos = CP_Math_LerpFloat(0, (float)((windowHeight / 2) - 100), lerpgamename);
+		player_xpos = CP_Math_LerpFloat(-500, (float)(windowWidth + 250), lerpplayer);
+		ass_xpos = (player_xpos - 180);
+		player_return_xpos = CP_Math_LerpFloat((float)(windowWidth + 500), -250, lerpplayerReturn);
+		ass_return_xpos = (player_return_xpos - 180);
+		lerpplayer = currentElapseTime * rateplayer;
+		lerpgamename = ElapseTimeGamename * rategamename;
 
 
-	//SpawnBG(Floor, 6, 9);
-	CP_Settings_ImageMode(CP_POSITION_CORNER);
-	CP_Image_Draw(Background,0,0, CP_Image_GetWidth(Background)*2, CP_Image_GetHeight(Background)*2, 255);
+		//SpawnBG(Floor, 6, 9);
+		CP_Settings_ImageMode(CP_POSITION_CORNER);
+		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
 
-	// Create background that is gray in colour
-	CP_Graphics_ClearBackground(gray);
-	CP_Settings_Fill(red);
-	CP_Settings_RectMode(CP_POSITION_CENTER);
-	//draw the draw rect in the middle of the anchor point //draw play button
-	CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80);
-	//draw the draw 2nd rect in the middle of the anchor point //draw tutorial button
-	CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80);
-	//draw the draw 3rd rect in the middle of the anchor point //draw credit button
-	CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 200, 80);
-	//draw the draw 4th rect in the middle of the anchor point //draw exit button
-	CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
+		// Create background that is gray in colour
+		CP_Graphics_ClearBackground(gray);
+		CP_Settings_Fill(red);
+		CP_Settings_RectMode(CP_POSITION_CENTER);
+		//draw the draw rect in the middle of the anchor point //draw play button
+		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80);
+		//draw the draw 2nd rect in the middle of the anchor point //draw tutorial button
+		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80);
+		//draw the draw 3rd rect in the middle of the anchor point //draw credit button
+		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 200, 80);
+		//draw the draw 4th rect in the middle of the anchor point //draw exit button
+		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
 
 
 
-	//set colour of text black
-	CP_Settings_Fill(black);
-	//set font size
-	CP_Settings_TextSize(50.0f);
-	//text in the first rect 
-	CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-	//text in the 2nd rect
-	CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-	//text in the 3nd rect
-	CP_Font_DrawText("Credit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 250);
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-	//text in the 4nd rect
-	CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		//set colour of text black
+		CP_Settings_Fill(black);
+		//set font size
+		CP_Settings_TextSize(50.0f);
+		//text in the first rect 
+		CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		//text in the 2nd rect
+		CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		//text in the 3nd rect
+		CP_Font_DrawText("Credit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 250);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		//text in the 4nd rect
+		CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 
 
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
@@ -142,7 +147,7 @@ void Mainmenu_Update(void)
 
 
 		CP_Image_DrawSubImage(playerSS,
-			 //RENDERED POS AND SIZE
+			//RENDERED POS AND SIZE
 			player_xpos, windowHeight - 80, 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
 			currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
@@ -154,11 +159,11 @@ void Mainmenu_Update(void)
 		animationElapsedTimeP += deltaTime * animationSpeedP;
 
 		//switch BOOL once firstrun reach end
-		if (player_xpos >= (float)(windowWidth + 249)&& !firstrun)
+		if (player_xpos >= (float)(windowWidth + 249) && !firstrun)
 		{
 			firstrun = TRUE;
 		}
-		
+
 		printf("%d ", lerpplayer);
 		printf("player lerp: %d \n", currentElapseTime);
 
@@ -170,7 +175,7 @@ void Mainmenu_Update(void)
 
 
 		//CP_Image_DrawAdvanced(PlayerSS, 160 , windowHeight-80, 160, 160, 255, -180);
-	
+
 		CP_Image_DrawSubImage(AssSS,
 			// RENDERED POS AND SIZE
 			ass_xpos, windowHeight - 80, 160, 160,
@@ -236,29 +241,29 @@ void Mainmenu_Update(void)
 			currentElapseTimeReturn = 0;
 
 		}
-		
 
 
-	// Rendering RUSHA Splashscreen
-	/*
-	else{
-		CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
-		alphaIncrease = totalElapsedTime * rate;
-		alpha = (int)alphaIncrease % 256;
-	}
-	*/
 
-	/*
-	elapsedtime is constantly increasing every second
-	one cycle of "fading in" is the alpha value increasing from 0 to 255 at a constant rate
-	we find the rate of increase from 0 to 255 in 2 seconds by dividing the final value by the time taken
-	then we find the increase of alpha each second by multiplying the rate by the constant elapsed time
-	after which we set the alpha value to the initial alpha value + the increase
-	since 0 % 255 = 0, 255 % 256 = 255 and 256 % 256 = 0
-	modulo will cap the alpha value and reset to 0 after it reached the amount its divided by
-	*/
+		// Rendering RUSHA Splashscreen
+		/*
+		else{
+			CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
+			alphaIncrease = totalElapsedTime * rate;
+			alpha = (int)alphaIncrease % 256;
+		}
+		*/
+
+		/*
+		elapsedtime is constantly increasing every second
+		one cycle of "fading in" is the alpha value increasing from 0 to 255 at a constant rate
+		we find the rate of increase from 0 to 255 in 2 seconds by dividing the final value by the time taken
+		then we find the increase of alpha each second by multiplying the rate by the constant elapsed time
+		after which we set the alpha value to the initial alpha value + the increase
+		since 0 % 255 = 0, 255 % 256 = 255 and 256 % 256 = 0
+		modulo will cap the alpha value and reset to 0 after it reached the amount its divided by
+		*/
 		//play button light up
-		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) +50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			CP_Settings_Fill(blue);
 			CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -321,7 +326,7 @@ void Mainmenu_Update(void)
 		//play button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
-			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2)+50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
 				CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
 
@@ -341,7 +346,7 @@ void Mainmenu_Update(void)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
-				CP_Engine_SetNextGameState(Credits_Init, Credits_Update, Credits_Exit);
+				creditsShown = 1;
 
 			}
 		}
@@ -353,7 +358,19 @@ void Mainmenu_Update(void)
 				CP_Engine_Terminate();
 			}
 		}
-
+	}
+		if (creditsShown == 1)
+		{
+			//exit button
+			if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
+			{
+				if (IsAreaClicked((windowWidth / 2), (windowHeight / 2) + 350, 500, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+				{
+					creditsShown = 0;
+				}
+			}
+			showCredits();
+		}
 }
 
 void Mainmenu_Exit(void)
