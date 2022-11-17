@@ -45,7 +45,7 @@ void showCredits(void)
 	if (IsAreaClicked((windowWidth / 2), (windowHeight / 2) + 350, 600, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 	{
 		CP_Settings_Fill(blue);
-		CP_Settings_RectMode(CP_POSITION_CENTER);d
+		CP_Settings_RectMode(CP_POSITION_CENTER);
 		//draw the draw rect in the middle of the anchor point
 		CP_Graphics_DrawRect(windowWidth / 2, (windowHeight / 2) + 350, 600, 100);
 		CP_Settings_Fill(black);
