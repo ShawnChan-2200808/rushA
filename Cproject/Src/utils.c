@@ -197,3 +197,5 @@ int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH
 		return 0;
 	}
 }
+
+void clearstring(char* string, int maxvalues);

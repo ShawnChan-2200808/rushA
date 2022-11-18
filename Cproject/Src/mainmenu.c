@@ -12,6 +12,7 @@
 #include "level.h"
 #include "player.h"
 #include "credits.h"
+#include "Tutorial.h"
 //#include "enemy.h"
 //#include "anim.c"
 	
@@ -332,7 +333,7 @@ void Mainmenu_Update(void)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
-				CP_Engine_SetNextGameState(Level_Init, Level_Update, Level_Exit);
+				CP_Engine_SetNextGameState(Tutorial_Init,Tutorial_Update,Tutorial_Exit);
 
 			}
 		}
