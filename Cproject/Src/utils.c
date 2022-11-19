@@ -29,8 +29,8 @@ float enemyPlayerAngle(struct Enemy* enemy, struct Player* player) {
 
 void initGame() {
 	// Setting the window width and height
-	windowWidth = 1920;
-	windowHeight = 1080;
+	//windowWidth = 1920;
+	//windowHeight = 1080;
 
 	//CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2,1);
 
@@ -42,12 +42,12 @@ void initGame() {
 	green = CP_Color_Create(0, 255, 0, 255);
 	red = CP_Color_Create(255, 0, 0, 255);
 
-	fps = 120.0f;
+	//fps = 120.0f;
 	// Set fps to 120fps
-	CP_System_SetFrameRate(fps);
+	//CP_System_SetFrameRate(fps);
 
 	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	//CP_System_SetWindowSize(windowWidth, windowHeight);
 	randomiser = 0;
 }
 

@@ -419,7 +419,7 @@ void Tutorial_Update()
 			break;
 		case 6:
 			if (flag == 0)
-				CP_Font_DrawText("Click and aim to do mellee damage student", windowWidth / 2, windowHeight / 2 - 300);
+				CP_Font_DrawText("Click and aim to do melee damage student", windowWidth / 2, windowHeight / 2 - 300);
 			if (CP_Input_MouseClicked()) {
 				flag = 1;
 				//if (randomiser==0 || randomiser == 4) {

@@ -49,6 +49,7 @@ void playerInit(struct Player* player) {
 
 }
 
+// check if player is alive - Shawn
 void isPlayerAlive(struct Player* player) {
 	(*player).alive = (*player).GPA <= 0 ? 0 : 1;
 }
@@ -75,11 +76,13 @@ void meleeVec(struct Player* player, int scale)
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, scale));
 }
 
+// Switch weapons
 int switchWeapon(int weapon)
 {
 	return !weapon;
 }
 
+// Get angle from mouse to player
 float mouseToplayerAngle(struct Player *player){
 	CP_Vector update = CP_Vector_Set((*player).playerPos.x - CP_Input_GetMouseX(), (*player).playerPos.y - CP_Input_GetMouseY());
 	CP_Vector normalised = CP_Vector_Normalize(update);

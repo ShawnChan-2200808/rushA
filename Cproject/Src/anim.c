@@ -12,16 +12,18 @@
 #include "player.h"
 #include "enemy.h"
 
+// Updates the elapsed time of the animation for enemies.
 void updateEnemyAnimation(struct Enemy* enemy, float dt) {
 	(*enemy).animationElapsedTime += dt * (*enemy).animationSpeed;
 }
 
+// Renders enemy animation from the spritesheet in the order of left to right
 void enemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(Spritesheet,
 		// RENDERED POS AND SIZE
 		(*enemy).EnemyPos.x, (*enemy).EnemyPos.y, (*enemy).worldSizeW, (*enemy).worldSizeH,
-		// POS AND SIZE FROM SPRITESHEET
+		// POS AND SIZE FROM SPRITESHEET 
 		(*enemy).currentFrame * (*enemy).spriteWidth, 0, ((*enemy).currentFrame + 1) * (*enemy).spriteWidth, (*enemy).SpriteHeight, //row1col1, row1col2 ... L to R
 		255);
 	if ((*enemy).animationElapsedTime >= (*enemy).displayTime) {
@@ -30,10 +32,12 @@ void enemyAnimation(CP_Image Spritesheet,struct Enemy*enemy){
 	}
 }
 
+// Updates the elapsed time of the animation for player.
 void updatePlayerAnimation(struct Player* player, float dt) {
 	(*player).animationElapsedTime += dt * (*player).animationSpeed;
 }
 
+// Renders player animation from the spritesheet in the order of left to right
 void playerAnimation(CP_Image Spritesheet, struct Player* player) {
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(Spritesheet,

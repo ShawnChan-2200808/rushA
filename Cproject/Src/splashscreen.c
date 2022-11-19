@@ -95,10 +95,7 @@ void Splash_Screen_Update(void)
 	//if (totalElapsedTime > 4)
 	if (totalElapsedTime > 2)
 	{
-		//CP_Engine_Terminate();
-
 		// Change to state
-		//CP_Engine_SetNextGameState(Main_Menu_init, Main_Menu_update, Main_Menu_exit);
 		CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
 	}
 }

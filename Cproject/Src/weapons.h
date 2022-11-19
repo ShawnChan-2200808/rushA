@@ -19,12 +19,12 @@ int laser(struct Enemy* enemy, struct Player* player);
 
 //Bullets
 
-//player Bullers
+//player Bullets
 void playerbulletReset(int index);
 void playerbulletInit(int index, struct Player* player);
 void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssLab);
 
-//enemy Bullers
+//enemy Bullets
 void enemybulletReset(struct Enemy* enemy);
 void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, int bulletSize,float bulletDamage);
 void enemybulletUpdate(float deltaTime,struct Enemy* enemy, struct Player* player);
