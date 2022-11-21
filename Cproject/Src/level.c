@@ -89,7 +89,7 @@ void Level_Update()
 			}
 
 			// SWITCH WEAPON
-			if (CP_Input_KeyReleased(KEY_Q))
+			if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel() != 0)
 			{
 				player.weapon = switchWeapon(player.weapon);
 				if (player.weapon == 1) {
