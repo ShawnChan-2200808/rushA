@@ -123,50 +123,29 @@ void Tutorial_Update()
 				}
 			}
 
-			// BULLET SIMULATION (UPDATING POSITION)
-//
-			playerbulletUpdate(player.bulletIndex, deltaTime, 10, 8);
-			// RENDER PLAYER
-			//
-			playerAnimation(playerSS, &player);
-			updatePlayerAnimation(&player, deltaTime);
-
-			// UI HUD
-			//
-			CP_Settings_RectMode(CP_POSITION_CORNER);
-			// RENDER HEALTHBAR
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
-			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), player.GPA * 100, 30);
-
-			// RENDER TEXT (GPA)
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			CP_Settings_TextSize((float)(windowWidth / 38));
-			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
-			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
-			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("GPA", (float)(windowWidth / 13), (float)(windowHeight / 1.07));
-
-			// RENDER HEALTHBAR PLACEHOLDER
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), 500, 30);
-
-			// DEBUG USE: SHOW CURRENT WEAPON
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			if (player.weapon == 1 && stage >= 8)
+			if (!player.alive)
 			{
-				CP_Font_DrawText("Current weapon: Ranged", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
-			}
-			else CP_Font_DrawText("Current weapon: Melee", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
+				if (GameOver == 0) {
+					CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
+					CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
+					CP_Sound_PlayAdvanced(gameOverOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
+					GameOver = 1;
+				}
+				CP_Settings_Fill(red);
+				CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+				CP_Font_DrawText("Press SPACE to Re-Test, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+				if (CP_Input_KeyReleased(KEY_SPACE))
+				{
+					totalElapsedTime = 0;
+					GameOver = 0;
+					CP_Engine_SetNextGameStateForced(Tutorial_Init, Tutorial_Update, NULL);
+				}
 
-			if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive && stage >= 4)
-			{
-				paused = !paused;
-				if (stage == 4) {
-					flag = 1;
+				if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+					CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
 				}
 			}
 
-			//COLLISION
 			CP_Settings_Fill(green);
 			if (player.alive && !Win) {
 				//CP_Graphics_DrawRect(table.x, table.y, table.width, table.height);
@@ -224,79 +203,50 @@ void Tutorial_Update()
 
 			isPlayerAlive(&player);
 
-			if (!player.alive)
-			{
-				if (GameOver == 0) {
-					CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
-					CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
-					CP_Sound_PlayAdvanced(gameOverOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
-					GameOver = 1;
-				}
-				CP_Settings_Fill(red);
-				CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-				CP_Font_DrawText("Press SPACE to Re-Test, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
-				if (CP_Input_KeyReleased(KEY_SPACE))
-				{
-					totalElapsedTime = 0;
-					GameOver = 0;
-					CP_Engine_SetNextGameStateForced(Tutorial_Init, Tutorial_Update, NULL);
-				}
+			// BULLET SIMULATION (UPDATING POSITION)
+//
+			playerbulletUpdate(player.bulletIndex, deltaTime, 10, 8);
+			// RENDER PLAYER
+			//
+			playerAnimation(playerSS, &player);
+			updatePlayerAnimation(&player, deltaTime);
 
-				if (CP_Input_KeyReleased(KEY_ESCAPE)) {
-					CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			// UI HUD
+			//
+			CP_Settings_RectMode(CP_POSITION_CORNER);
+			// RENDER HEALTHBAR
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
+			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), player.GPA * 100, 30);
+
+			// RENDER TEXT (GPA)
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_TextSize((float)(windowWidth / 38));
+			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
+			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
+			CP_Settings_TextAlignment(horizontal, vertical);
+			CP_Font_DrawText("GPA", (float)(windowWidth / 13), (float)(windowHeight / 1.07));
+
+			// RENDER HEALTHBAR PLACEHOLDER
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
+			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), 500, 30);
+
+			// DEBUG USE: SHOW CURRENT WEAPON
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			if (player.weapon == 1 && stage >= 8)
+			{
+				CP_Font_DrawText("Current weapon: Ranged", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
+			}
+			else CP_Font_DrawText("Current weapon: Melee", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
+
+			if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive && stage >= 4)
+			{
+				paused = !paused;
+				if (stage == 4) {
+					flag = 1;
 				}
 			}
 			//Tutorial Code
 
-		}
-		CP_Settings_Fill(green);
-		if (player.alive && !Win) {
-			//CP_Graphics_DrawRect(table.x, table.y, table.width, table.height);
-			CP_Image_Draw(Table, table[0].x, table[0].y, table[0].width, table[0].height, 255);
-			CP_Image_Draw(Table, table[1].x, table[1].y, table[1].width, table[1].height, 255);
-			CP_Image_Draw(Table, table[2].x, table[2].y, table[2].width, table[2].height, 255);
-			CP_Image_Draw(Chair, chair[0].x, chair[0].y, chair[0].width, chair[0].height, 255);
-			CP_Image_Draw(Chair, chair[1].x, chair[1].y, chair[1].width, chair[1].height, 255);
-			CP_Image_Draw(Chair, chair[2].x, chair[2].y, chair[2].width, chair[2].height, 255);
-			CP_Image_Draw(Chair, chair[3].x, chair[3].y, chair[3].width, chair[3].height, 255);
-			CP_Image_Draw(Chair, chair[4].x, chair[4].y, chair[4].width, chair[4].height, 255);
-			// TEST FOR PLAYER HITBOX
-			//CP_Settings_RectMode(CP_POSITION_CENTER);
-			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
-			for (int j = 0;j < 5; j++)
-			{
-				pushback(&player, &chair[j]);
-				for (int q = 0; q < 10; q++)
-				{
-					pushbackEnemy(&quiz[q], &chair[j]);
-				}
-				for (int w = 0; w < 8; w++)
-				{
-					pushbackEnemy(&lab[w], &chair[j]);
-				}
-				for (int e = 0; e < 8; e++)
-				{
-					pushbackEnemy(&assignment[e], &chair[j]);
-				}
-				pushbackEnemy(&boss, &chair[j]);
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				pushback(&player, &table[i]);
-				for (int q = 0; q < 10; q++)
-				{
-					pushbackEnemy(&quiz[q], &table[i]);
-				}
-				for (int w = 0; w < 8; w++)
-				{
-					pushbackEnemy(&lab[w], &table[i]);
-				}
-				for (int e = 0; e < 8; e++)
-				{
-					pushbackEnemy(&assignment[e], &table[i]);
-				}
-				pushbackEnemy(&boss, &table[i]);
-			}
 		}
 		CP_Settings_Fill(white);
 		switch (stage) {
@@ -417,9 +367,11 @@ void Tutorial_Update()
 			}
 			break;
 		case 6:
-			if (flag == 0)
+			if (flag == 0) {
+
 				player.weapon = 0;
 				CP_Font_DrawText("Click and aim to do melee damage student", windowWidth / 2, windowHeight / 2 - 300);
+			}
 			if (CP_Input_MouseClicked()) {
 				flag = 1;
 				//if (randomiser==0 || randomiser == 4) {
