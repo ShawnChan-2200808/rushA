@@ -108,6 +108,20 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	return 0;
 }
 
+void IfMouseover(float area_center_x, float area_center_y, float area_width, float area_height, char *pre_fixtext)
+{
+	CP_Settings_Fill(blue);
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	//draw the draw rect in the middle of the anchor point
+	CP_Graphics_DrawRect((float)area_center_x, (float)area_center_y, area_width, area_height);
+	CP_Settings_Fill(black);
+	//set font size
+	CP_Settings_TextSize(70.0f);
+	//text in the first rect
+	CP_Font_DrawText(pre_fixtext, (float)area_center_x, (float)area_center_y);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+}
+
 int isCircleEntered(float circle_center_x, float circle_center_y, float diameter, float click_x, float click_y)
 {
 	if (click_x <= circle_center_x + diameter / 2 && click_x >= circle_center_x - diameter / 2 &&

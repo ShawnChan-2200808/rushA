@@ -37,10 +37,10 @@ void chairinit(struct wall* chair, float posX, float posY)
 }
 
 void initallwall(int numOfchair, int numOftable) {
-	int chairx[5] = { (windowWidth / 2) + 200, (windowWidth / 2) + 250,windowWidth/3,300,windowWidth - 200};
-	int chairy[5] = { (windowHeight / 2) - 50, (windowHeight / 2) - 50,(windowHeight-200),(windowHeight/2)+50, windowHeight /5 };
-	int tablex[3] = { windowWidth / 4,(windowWidth / 2)+200, windowWidth - 350 };
-	int tabley[3] = { windowHeight / 4,windowHeight / 2, (windowHeight / 5)+150 };
+	int chairx[5] = { (windowWidth / 2) + 200, (windowWidth / 2) + 250, windowWidth / 3, 300, windowWidth - 200 };
+	int chairy[5] = { (windowHeight / 2) - 50, (windowHeight / 2) - 50,(windowHeight-200), (windowHeight / 2)+50, windowHeight / 5 };
+	int tablex[3] = { windowWidth / 4, (windowWidth / 2) + 200, windowWidth - 350 };
+	int tabley[3] = { windowHeight / 4, windowHeight / 2, (windowHeight / 5) + 150 };
 	for (int i = 0; i < numOfchair; i++)
 	{
 		chairinit(&chair[i],chairx[i], chairy[i]);

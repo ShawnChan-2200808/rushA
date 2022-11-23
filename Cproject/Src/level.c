@@ -168,15 +168,15 @@ void Level_Update()
 		//COLLISION
 		CP_Settings_Fill(green);
 		if (player.alive&& !Win) {
-			//CP_Graphics_DrawRect(table.x, table.y, table.width, table.height);
-			CP_Image_Draw(Table, table[0].x, table[0].y, table[0].width, table[0].height, 255);
-			CP_Image_Draw(Table, table[1].x, table[1].y, table[1].width, table[1].height, 255);
-			CP_Image_Draw(Table, table[2].x, table[2].y, table[2].width, table[2].height, 255);
-			CP_Image_Draw(Chair, chair[0].x, chair[0].y, chair[0].width, chair[0].height, 255);
-			CP_Image_Draw(Chair, chair[1].x, chair[1].y, chair[1].width, chair[1].height, 255);
-			CP_Image_Draw(Chair, chair[2].x, chair[2].y, chair[2].width, chair[2].height, 255);
-			CP_Image_Draw(Chair, chair[3].x, chair[3].y, chair[3].width, chair[3].height, 255);
-			CP_Image_Draw(Chair, chair[4].x, chair[4].y, chair[4].width, chair[4].height, 255);
+
+			for (int i = 0; i < 3; i++)
+			{
+				CP_Image_Draw(Table, table[i].x, table[i].y, table[i].width, table[i].height, 255);
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				CP_Image_Draw(Chair, chair[i].x, chair[i].y, chair[i].width, chair[i].height, 255);
+			}
 			// TEST FOR PLAYER HITBOX
 			//CP_Settings_RectMode(CP_POSITION_CENTER);
 			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);

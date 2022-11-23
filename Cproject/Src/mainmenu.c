@@ -17,8 +17,8 @@
 //#include "anim.c"
 	
 CP_Color gray, black, red,blue;
-int windowWidth, windowHeight, currentFrame, spriteWidth, spriteHeight;
-float fps;
+int currentFrame, spriteWidth, spriteHeight;
+float fps, windowWidth, windowHeight;
 CP_Image Gamename;
 
 CP_Image Gamename, Background;
@@ -224,7 +224,7 @@ void Mainmenu_Update(void)
 				secondrun = TRUE;
 			}
 		}
-		printf("player_xpos: %f", player_xpos);
+		//printf("player_xpos: %f", player_xpos);
 		if (firstrun == TRUE && secondrun == TRUE)
 		{
 			player_xpos = (float)-500;
@@ -261,61 +261,26 @@ void Mainmenu_Update(void)
 		//play button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) +50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 220, 100, "Play");
 		}
 
 		//tutorial button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 220, 100, "Tutorial");
 		}
 
 		//credit button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("Credit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 250);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 220, 100, "Credit");
 		}
 
 		//exit button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100, "Exit");
+
 		}
 
 
