@@ -89,7 +89,7 @@ void Level_Update()
 			}
 
 			// SWITCH WEAPON
-			if (CP_Input_KeyReleased(KEY_Q))
+			if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel() != 0)
 			{
 				player.weapon = switchWeapon(player.weapon);
 				if (player.weapon == 1) {
@@ -462,6 +462,7 @@ void Level_Update()
 		}
 		if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2)), (float)((CP_System_GetWindowHeight() / 2) + 220), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
 		{
+			freeAssets();
 			CP_Engine_Terminate();
 		}
 		pauseScreen();
@@ -485,14 +486,5 @@ void Level_Update()
 
 void Level_Exit()
 {
-	
-	CP_Image_Free(&QuizSS);
-	CP_Image_Free(&playerSS);
-	CP_Image_Free(&LabSS);
-	CP_Image_Free(&AssSS);
-	CP_Image_Free(&Floor);
-	CP_Image_Free(&bbtSS);
-	CP_Image_Free(&BossSS);
-	CP_Image_Free(&hitBox);
 	
 }

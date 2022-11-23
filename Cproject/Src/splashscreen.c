@@ -22,6 +22,8 @@ int alpha, finalAlpha, rate, time, alphaMax;
 
 void Splash_Screen_Init(void)
 {
+
+	CP_System_SetWindowTitle("The Deliverables");
 	//initialise all assets
 	initAssets();
 
@@ -32,9 +34,13 @@ void Splash_Screen_Init(void)
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
+	//CP_System_Fullscreen();
+	//CP_System_FullscreenAdvanced(1920, 1080);
+	//windowWidth = CP_System_GetDisplayWidth();
+	//windowHeight = CP_System_GetDisplayHeight();
 
-	// Set the colour for gray
-//	gray = CP_Color_Create(120, 120, 120, 255);
+	// Set the colour
+	black = CP_Color_Create(0, 0, 0, 255);
 
 	// Initialize variables
 	deltaTime = 0.0f;
@@ -58,7 +64,7 @@ void Splash_Screen_Init(void)
 void Splash_Screen_Update(void)
 {
 	// Create background that is gray in colour
-	CP_Graphics_ClearBackground(gray);
+	CP_Graphics_ClearBackground(black);
 
 	// Start time counter
 	deltaTime = CP_System_GetDt();

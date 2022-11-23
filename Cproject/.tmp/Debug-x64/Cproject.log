@@ -1,11 +1,31 @@
-﻿  level.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(155,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(155,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(334,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(334,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(456,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(456,61): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(467,3): warning C4013: 'pauseScreen' undefined; assuming extern returning int
+﻿  mainmenu.c
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(33,18): warning C4142: 'spriteWidth': benign redefinition of type
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(21): message : see declaration of 'spriteWidth'
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(49,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(108,29): warning C4087: 'CP_Input_MouseClicked': declared with 'void' parameter list
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(117,29): warning C4087: 'CP_Input_MouseClicked': declared with 'void' parameter list
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(126,29): warning C4087: 'CP_Input_MouseClicked': declared with 'void' parameter list
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(134,29): warning C4087: 'CP_Input_MouseClicked': declared with 'void' parameter list
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(151,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(151,101): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(296,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(296,101): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(389,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(389,101): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(426,29): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(428,16): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(428,53): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(447,26): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(449,17): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(449,55): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(466,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(468,18): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(468,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(479,34): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(481,18): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(481,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\mainmenu.c(493,4): warning C4013: 'printf' undefined; assuming extern returning int
+  LINK : C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe not found or not built by the last incremental link; performing full link
   Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Debug-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
