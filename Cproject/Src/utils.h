@@ -32,6 +32,7 @@ CP_Sound bossSFX;
 // Spawning of 
 void initGame();
 void initAssets();
+void freeAssets();
 
 // Drawing of Background
 void SpawnBG(CP_Image BG, int numberRow, int numberCol);

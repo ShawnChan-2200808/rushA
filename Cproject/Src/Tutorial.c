@@ -1,6 +1,7 @@
 /*!
 @file       Tutorial.c
 @course     csd1401 Software Engineering Project
+@Author		Low Ee Loong
 @section    A
 @team		RushA
 @date       31/10/1965 (last updated)
