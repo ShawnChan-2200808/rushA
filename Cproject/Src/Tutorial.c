@@ -62,21 +62,21 @@ void Tutorial_Update()
 {
 	//Game Run Code
 	if (paused == 0) {
-		if (player.alive && !Win) {
+		if (player.alive) {
 			SpawnBG(Floor, 6, 9);
-			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50 && stage >= 0)
+			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 			{
 				moveForward(&player, Up);
 			}
-			if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50 && stage >= 1)
+			if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
 			{
 				moveForward(&player, Left);
 			}
-			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50) && stage >= 2)
+			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50) )
 			{
 				moveForward(&player, Down);
 			}
-			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50) && stage >= 3)
+			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50) )
 			{
 				moveForward(&player, Right);
 			}
@@ -93,6 +93,8 @@ void Tutorial_Update()
 					CP_Sound_PlayAdvanced(playerSwapMeleeSFX, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 				}
 			}
+
+
 
 			// ATTACK
 			if (CP_Input_MouseClicked() && stage >= 6) {
@@ -121,29 +123,6 @@ void Tutorial_Update()
 					//if (randomiser==0 || randomiser == 4) {
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 					//}
-				}
-			}
-
-			if (!player.alive)
-			{
-				if (GameOver == 0) {
-					CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
-					CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
-					CP_Sound_PlayAdvanced(gameOverOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
-					GameOver = 1;
-				}
-				CP_Settings_Fill(red);
-				CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-				CP_Font_DrawText("Press SPACE to Re-Test, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
-				if (CP_Input_KeyReleased(KEY_SPACE))
-				{
-					totalElapsedTime = 0;
-					GameOver = 0;
-					CP_Engine_SetNextGameStateForced(Tutorial_Init, Tutorial_Update, NULL);
-				}
-
-				if (CP_Input_KeyReleased(KEY_ESCAPE)) {
-					CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
 				}
 			}
 
@@ -244,349 +223,316 @@ void Tutorial_Update()
 					flag = 1;
 				}
 			}
+
 			//Tutorial Code
+			CP_Settings_Fill(white);
+			switch (stage) {
+			case 0:
+				//@todo print instructions for w,a,s,d
+				if (flag == 0)
+					CP_Font_DrawText("PRESS and hold W to move forward", windowWidth / 2, windowHeight / 2 - 300);
+				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
+				{
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 1:
+				if (flag == 0)
+					CP_Font_DrawText("PRESS and hold A to move left", windowWidth / 2, windowHeight / 2 - 300);
+				if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
+				{
+					flag = 1;
 
-		}
-		//CP_Settings_Fill(green);
-		//if (player.alive && !Win) {
-		//	//draw table and chair
-		//	//for (int i = 0; i < 3; i++)
-		//	//{
-		//	//	CP_Image_Draw(Table, table[i].x, table[i].y, table[i].width, table[i].height, 255);
-		//	//}
-		//	//for (int i = 0; i < 5; i++)
-		//	//{
-		//	//	CP_Image_Draw(Chair, chair[i].x, chair[i].y, chair[i].width, chair[i].height, 255);
-		//	//}
-		//	//pushback
-		//	for (int j = 0;j < 5; j++)
-		//	{
-		//		pushback(&player, &chair[j]);
-		//		for (int q = 0; q < 10; q++)
-		//		{
-		//			pushbackEnemy(&quiz[q], &chair[j]);
-		//		}
-		//		for (int w = 0; w < 8; w++)
-		//		{
-		//			pushbackEnemy(&lab[w], &chair[j]);
-		//		}
-		//		for (int e = 0; e < 8; e++)
-		//		{
-		//			pushbackEnemy(&assignment[e], &chair[j]);
-		//		}
-		//		pushbackEnemy(&boss, &chair[j]);
-		//	}
-		//	for (int i = 0; i < 3; i++)
-		//	{
-		//		pushback(&player, &table[i]);
-		//		for (int q = 0; q < 10; q++)
-		//		{
-		//			pushbackEnemy(&quiz[q], &table[i]);
-		//		}
-		//		for (int w = 0; w < 8; w++)
-		//		{
-		//			pushbackEnemy(&lab[w], &table[i]);
-		//		}
-		//		for (int e = 0; e < 8; e++)
-		//		{
-		//			pushbackEnemy(&assignment[e], &table[i]);
-		//		}
-		//		pushbackEnemy(&boss, &table[i]);
-		//	}
-		//}
-		CP_Settings_Fill(white);
-		switch (stage) {
-		case 0:
-			//@todo print instructions for w,a,s,d
-			if (flag == 0)
-				CP_Font_DrawText("PRESS and hold W to move forward", windowWidth / 2, windowHeight / 2 - 300);
-			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
-			{
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
 				}
-			}
-			break;
-		case 1:
-			if (flag == 0)
-				CP_Font_DrawText("PRESS and hold A to move left", windowWidth / 2, windowHeight / 2 - 300);
-			if (CP_Input_KeyDown(KEY_A) && player.playerPos.x > 50)
-			{
-				flag = 1;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 2:
+				if (flag == 0)
+					CP_Font_DrawText("PRESS and hold S to move backwards", windowWidth / 2, windowHeight / 2 - 300);
+				if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
+				{
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 3:
+				if (flag == 0)
+					CP_Font_DrawText("PRESS and hold D to move right", windowWidth / 2, windowHeight / 2 - 300);
+				if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
+				{
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 4:
+				CP_Graphics_ClearBackground(black);
+				if (flag == 0) {
+					CP_Font_DrawText("PRESS esc to pause the game student", windowWidth / 2, windowHeight / 2 - 300);
+				}
+				if (flag == 1)
+				{
+					flag = 2;
+					CP_Font_DrawText("congrats now PRESS esc again to unpause student", windowWidth / 2, windowHeight / 2 - 300);
+				}
+				if (flag == 2 && paused == 0) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+				// move to location
+			case 5:
+				if (flag == 0) {
+					CP_Graphics_DrawRect(200, 800, 80, 80);
+					CP_Font_DrawText("Go to the box with the WASD keys student", windowWidth / 2, windowHeight / 2 - 300);
+				}
+				//press esc to pause
+				if (1 == IsRectEntered(200, 800, 80, 80, player.playerPos.x, player.playerPos.y)) {
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 6:
+				if (flag == 0) {
 
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+					player.weapon = 0;
+					CP_Font_DrawText("Click and aim to do melee damage student", windowWidth / 2, windowHeight / 2 - 300);
 				}
-			}
-			break;
-		case 2:
-			if (flag == 0)
-				CP_Font_DrawText("PRESS and hold S to move backwards", windowWidth / 2, windowHeight / 2 - 300);
-			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
-			{
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (CP_Input_MouseClicked()) {
+					flag = 1;
+					//if (randomiser==0 || randomiser == 4) {
+					//}
 				}
-			}
-			break;
-		case 3:
-			if (flag == 0)
-				CP_Font_DrawText("PRESS and hold D to move right", windowWidth / 2, windowHeight / 2 - 300);
-			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
-			{
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
-			}
-			break;
-		case 4:
-			CP_Graphics_ClearBackground(black);
-			if (flag == 0) {
-				CP_Font_DrawText("PRESS esc to pause the game student", windowWidth / 2, windowHeight / 2 - 300);
-			}
-			if (flag == 1)
-			{
-				flag = 2;
-				CP_Font_DrawText("congrats now PRESS esc again to unpause student", windowWidth / 2, windowHeight / 2 - 300);
-			}
-			if (flag == 2 && paused == 0) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				break;
+			case 7:
+				if (flag == 0) {
+					CP_Font_DrawText("Kill the quiz student", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						0, 0, 0,
+						1, 0, 0,
+						QuizSS, AssSS, LabSS);
+					quiz[0].speed = 0;
 				}
-			}
-			break;
-			// move to location
-		case 5:
-			if (flag == 0) {
-				CP_Graphics_DrawRect(200, 800, 80, 80);
-				CP_Font_DrawText("Go to the box with the WASD keys student", windowWidth / 2, windowHeight / 2 - 300);
-			}
-			//press esc to pause
-			if (1 == IsRectEntered(200, 800, 80, 80, player.playerPos.x, player.playerPos.y)) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (quiz[0].alive == 0) {
+					flag = 1;
 				}
-			}
-			break;
-		case 6:
-			if (flag == 0) {
-
-				player.weapon = 0;
-				CP_Font_DrawText("Click and aim to do melee damage student", windowWidth / 2, windowHeight / 2 - 300);
-			}
-			if (CP_Input_MouseClicked()) {
-				flag = 1;
-				//if (randomiser==0 || randomiser == 4) {
-				//}
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
-			}
-			break;
-		case 7:
-			if (flag == 0) {
-				CP_Font_DrawText("Kill the quiz student", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					0, 0, 0,
-					1, 0, 0,
-					QuizSS, AssSS, LabSS);
-				quiz[0].speed = 0;
-			}
-			if (quiz[0].alive == 0) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				break;
+			case 8:
+				if (flag == 0)
+					CP_Font_DrawText("Use the q or scroll wheel to change weapon student", windowWidth / 2, windowHeight / 2 - 300);
+				if (player.weapon == 1) {
+					flag = 1;
 				}
-			}
-			break;
-		case 8:
-			if (flag == 0)
-				CP_Font_DrawText("Use the q or scroll wheel to change weapon student", windowWidth / 2, windowHeight / 2 - 300);
-			if (player.weapon == 1) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
-			}
-			break;
-		case 9:
-			if (flag == 0) {
-				CP_Font_DrawText("Click the direction you would like to shoot projectiles in student", windowWidth / 2, windowHeight / 2 - 300);
-				player.weapon = 1;
-			}
-			if (projectilecount == 7) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				break;
+			case 9:
+				if (flag == 0) {
+					CP_Font_DrawText("Click the direction you would like to shoot projectiles in student", windowWidth / 2, windowHeight / 2 - 300);
+					player.weapon = 1;
 				}
-			}
-			break;
-		case 10:
-			if (flag == 0) {
-				CP_Font_DrawText("Kill the assignment student", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					0, 0, 0,
-					0, 1, 0,
-					QuizSS, AssSS, LabSS);
-			}
-			if (assignment[0].alive == 0) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (projectilecount == 7) {
+					flag = 1;
 				}
-			}
-			break;
-		case 11:
-			if (flag == 0) {
-				CP_Font_DrawText("Get the bubble tea to heal your health student", windowWidth / 2, windowHeight / 2 - 300);
-				player.GPA = 4;
-				if (!bbt.isActive) {
-					randomItemPos(&bbt);
-					respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
-					bbt.isActive = 1;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
-				//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
-				if (bbt.isActive && player.alive) {
-					CP_Settings_Fill(green);
+				break;
+			case 10:
+				if (flag == 0) {
+					CP_Font_DrawText("Kill the assignment student", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						0, 0, 0,
+						0, 1, 0,
+						QuizSS, AssSS, LabSS);
+				}
+				if (assignment[0].alive == 0) {
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 11:
+				if (flag == 0) {
+					CP_Font_DrawText("Get the bubble tea to heal your health student", windowWidth / 2, windowHeight / 2 - 300);
+					player.GPA = 4;
+					if (!bbt.isActive) {
+						randomItemPos(&bbt);
+						respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
+						bbt.isActive = 1;
+					}
 					//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
-					CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
-					playerHeal(&bbt, &player);
+					if (bbt.isActive && player.alive) {
+						CP_Settings_Fill(green);
+						//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
+						CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
+						playerHeal(&bbt, &player);
+					}
 				}
-			}
-			if (player.GPA > 4) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (player.GPA > 4) {
+					flag = 1;
 				}
-			}
-			break;
-		case 12:
-			if (flag == 0) {
-				CP_Font_DrawText("Kill EVERYTHING student", windowWidth / 2, windowHeight / 2 - 300);
-				spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
-					1, 1, 0,
-					2, 2, 1,
-					QuizSS, AssSS, LabSS);
-			}
-			if (assignment[1].alive == 0 && quiz[1].alive == 0 && lab[0].alive == 0) {
-				flag = 1;
-			}
-			if (flag == 1) {
-				CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
-				tutorialtime += CP_System_GetDt();
-				printf("delta time %f", tutorialtime);
-				if (tutorialtime > 1) {
-					++stage;
-					tutorialtime = 0;
-					flag = 0;
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
 				}
+				break;
+			case 12:
+				if (flag == 0) {
+					CP_Font_DrawText("Kill EVERYTHING student", windowWidth / 2, windowHeight / 2 - 300);
+					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
+						1, 1, 0,
+						2, 2, 1,
+						QuizSS, AssSS, LabSS);
+				}
+				if (assignment[1].alive == 0 && quiz[1].alive == 0 && lab[0].alive == 0) {
+					flag = 1;
+				}
+				if (flag == 1) {
+					CP_Font_DrawText("congrats student", windowWidth / 2, windowHeight / 2 - 300);
+					tutorialtime += CP_System_GetDt();
+					printf("delta time %f", tutorialtime);
+					if (tutorialtime > 1) {
+						++stage;
+						tutorialtime = 0;
+						flag = 0;
+					}
+				}
+				break;
+			case 13:
+				CP_Font_DrawText("Congrats student you are now ready to enroll into school", windowWidth / 2, windowHeight / 2 - 300);
+				CP_Settings_RectMode(CP_POSITION_CENTER);
+				CP_Settings_Fill(red);
+				CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90);
+				CP_Settings_Fill(black);
+				CP_Font_DrawText("Return to Menu", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110));
+				if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2)), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
+				{
+					CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
+					stage = 0;
+				}
+				break;
 			}
-			break;
-		case 13:
-			CP_Font_DrawText("Congrats student you are now ready to enroll into school", windowWidth / 2, windowHeight / 2 - 300);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90);
-			CP_Settings_Fill(black);
-			CP_Font_DrawText("Return to Menu", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110));
-			if (CP_Input_MouseReleased(MOUSE_BUTTON_LEFT) && (IsAreaClicked((float)((CP_System_GetWindowWidth() / 2)), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90, CP_Input_GetMouseX(), CP_Input_GetMouseY())))// && !Win && player.alive))
-			{
-				CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
-				stage = 0;
-			}
-			break;
 		}
-
-		// Player DIE
-		//
-		// GAME OVER SCREEN + RESET BUTTON
-
+		else {
+			if (GameOver == 0) {
+				CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
+				CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
+				CP_Sound_PlayAdvanced(gameOverOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
+				GameOver = 1;
+			}
+			CP_Settings_Fill(red);
+			CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+			CP_Font_DrawText("Press SPACE to retry or ESC to return to main menu", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			if (CP_Input_KeyReleased(KEY_SPACE))
+			{
+				player.alive = 1;
+				player.GPA = 5;
+			}
+			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+				CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			}
+		}
 	}
 	else {
 		if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
@@ -615,17 +561,7 @@ void Tutorial_Update()
 	}
 }
 
-//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
-//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-//CP_Font_DrawText("GAME PAUSED", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 40));
-//CP_Font_DrawText("Press Esc to resume studying, SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-//if (CP_Input_KeyReleased(KEY_SPACE)) {
-//	CP_Engine_Terminate();
-//}
-//if (CP_Input_KeyDown(KEY_Q))
-//{
-//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
-//}
+
 
 
 void Tutorial_Exit()
