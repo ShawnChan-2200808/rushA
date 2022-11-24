@@ -1,67 +1,10 @@
-﻿  level.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(188,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(188,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(359,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(359,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(474,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(474,61): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\level.c(486,3): warning C4013: 'pauseScreen' undefined; assuming extern returning int
-  main.c
-  utils.c
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(72,46): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [29]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(72,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(73,44): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [27]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(73,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(74,43): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [26]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(74,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(75,43): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [26]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(75,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(76,54): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [37]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(76,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(77,40): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [23]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(77,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(78,44): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [27]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(78,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(79,43): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [26]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(79,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(80,42): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [25]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(80,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(81,42): warning C4047: 'function': 'CP_Image *' differs in levels of indirection from 'char [25]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(81,16): warning C4024: 'CP_Image_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(84,87): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [70]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(84,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(85,74): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [57]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(85,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(86,75): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [58]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(86,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(87,71): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [54]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(87,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(88,87): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [70]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(88,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(90,65): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [48]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(90,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(91,70): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [53]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(91,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(92,58): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [41]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(92,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(93,62): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [45]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(93,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(94,54): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [37]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(94,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(95,55): warning C4047: 'function': 'CP_Sound *' differs in levels of indirection from 'char [38]'
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(95,16): warning C4024: 'CP_Sound_Free': different types for formal and actual parameter 1
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(104,26): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(104,74): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(104,119): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(104,142): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(189,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\Src\utils.c(190,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  weapons.c
   Generating code
-  3 of 77 functions ( 3.9%) were compiled, the rest were copied from previous compilation.
+  0 of 78 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Release-x64\Cproject.exe
+  Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Release-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
   25 File(s) copied

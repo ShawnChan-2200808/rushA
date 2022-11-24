@@ -26,5 +26,5 @@ void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssL
 
 //enemy Bullets
 void enemybulletReset(struct Enemy* enemy);
-void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, int bulletSize,float bulletDamage);
+void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, float bulletSize,float bulletDamage);
 void enemybulletUpdate(float deltaTime,struct Enemy* enemy, struct Player* player);

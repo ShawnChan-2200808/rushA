@@ -111,7 +111,7 @@ int laser(struct Enemy* enemy, struct Player* player) {
 			(*enemy).transparency += (*enemy).intlaserTime / 300;
 		}
 		CP_Settings_Fill((*enemy).lasercolourchargeup);
-		opposite = (((*enemy).laserw / 2) / (sqrt(2))) / 2;
+		opposite = (float)(((*enemy).laserw / 2) / (sqrt(2))) / 2;
 		switch ((*enemy).rotation) {
 		case 0:
 		case 180:
@@ -122,52 +122,52 @@ int laser(struct Enemy* enemy, struct Player* player) {
 			CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh);
 			break;
 		case 45:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
 			break;
 		case 135:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
 			break;
 		case 225:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite,(*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
 			break;
 		case 315:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
 			break;
 		}
 		return 2;
 		//printf("recharging");
 	}
 	else if ((*enemy).intlaserTime < 1100) {
-	CP_Settings_Fill(CP_Color_Create(0,0,0,0));
-	opposite = (((*enemy).laserw / 2) / (sqrt(2))) / 2;
-	switch ((*enemy).rotation) {
-	case 0:
-	case 180:
-		CP_Graphics_DrawRect((*enemy).EnemyPos.x - (*enemy).laserw / 2, (*enemy).EnemyPos.y, (*enemy).laserw, (*enemy).laserh);
-		break;
-	case 90:
-	case 270:
-		CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh);
-		break;
-	case 45:
-		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
-		break;
-	case 135:
-		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
-		break;
-	case 225:
-		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
-		break;
-	case 315:
-		CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 0);
-		break;
-	}
-	return 2;
-	//printf("recharging");
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 0));
+		opposite = (float)(((*enemy).laserw / 2) / (sqrt(2))) / 2;
+		switch ((*enemy).rotation) {
+		case 0:
+		case 180:
+			CP_Graphics_DrawRect((*enemy).EnemyPos.x - (*enemy).laserw / 2, (*enemy).EnemyPos.y, (*enemy).laserw, (*enemy).laserh);
+			break;
+		case 90:
+		case 270:
+			CP_Graphics_DrawRect((*enemy).EnemyPos.x, (*enemy).EnemyPos.y - (*enemy).laserh / 2, (*enemy).laserw, (*enemy).laserh);
+			break;
+		case 45:
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
+			break;
+		case 135:
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
+			break;
+		case 225:
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
+			break;
+		case 315:
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 0.f);
+			break;
+		}
+		return 2;
+		//printf("recharging");
 	}
 	else if ((*enemy).intlaserTime < 2800) {
 		//calculate opposite & adjacent
-		opposite = (((*enemy).laserw / 2) / (sqrt(2))) / 2;
+		opposite = (float) (((*enemy).laserw / 2) / (sqrt(2))) / 2;
 		CP_Settings_Fill((*enemy).lasercolour);
 		switch ((*enemy).rotation) {
 		case 0:
@@ -187,28 +187,28 @@ int laser(struct Enemy* enemy, struct Player* player) {
 			}
 			break;
 		case 45:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 2.f);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
 				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 135:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 2.f);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x + opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
 				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 225:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 2.f);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y + opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
 				//printf("DIE!\n");
 				return 4;
 			}
 			break;
 		case 315:
-			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, 2);
+			CP_Graphics_DrawRectAdvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (float)(*enemy).rotation, 2.f);
 			if (1 == isRectEnteredadvanced((*enemy).EnemyPos.x - opposite, (*enemy).EnemyPos.y - opposite, (*enemy).laserw, (*enemy).laserh, (*enemy).rotation, player)) {
 				//printf("DIE!\n");
 				return 4;
@@ -266,27 +266,27 @@ void playerbulletUpdate(int index, float deltaTime, int numOfQuiz, int numOfAssL
 				player.playerBullets[index].active = 0;
 			}
 			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-			CP_Graphics_DrawCircle(player.playerBullets[index].Pos.x, player.playerBullets[index].Pos.y, player.playerBullets[index].diameter);
+			CP_Graphics_DrawCircle(player.playerBullets[index].Pos.x, player.playerBullets[index].Pos.y, (float)player.playerBullets[index].diameter);
 			// need to update
 			for (int i = 0; i < numOfQuiz; i++)
 			{
-				if (playerbulletDamage(&quiz[i], player.playerBullets[index], 130, 130,6) == 1)
+				if (playerbulletDamage(&quiz[i], player.playerBullets[index], 130, 130, 6) == 1)
 				{
 					player.playerBullets[index].active = 0;
 				}
 			}
 			for (int i = 0; i < numOfAssLab; i++)
 			{
-				if (playerbulletDamage(&assignment[i], player.playerBullets[index], 130, 130,8) == 1)
+				if (playerbulletDamage(&assignment[i], player.playerBullets[index], 130, 130, 8) == 1)
 				{
 					player.playerBullets[index].active = 0;
 				}
-				if (playerbulletDamage(&lab[i], player.playerBullets[index], 130, 130,8) == 1)
+				if (playerbulletDamage(&lab[i], player.playerBullets[index], 130, 130, 8) == 1)
 				{
 					player.playerBullets[index].active = 0;
 				}
 			}
-			if (playerbulletDamage(&boss, player.playerBullets[index], 130, 130,4) == 1)
+			if (playerbulletDamage(&boss, player.playerBullets[index], 130, 130, 4) == 1)
 			{
 				player.playerBullets[index].active = 0;
 			}
@@ -309,7 +309,7 @@ void enemybulletReset(struct Enemy* enemy) {
 }
 
 //Initialise enemy Bullet
-void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, int bulletSize, float bulletDamage) {
+void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpeed, float bulletSize, float bulletDamage) {
 
 	//Shotgun code
 	/*(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
@@ -319,11 +319,11 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpe
 	{*/
 
 	//only set a few bullets to active
-	
+
 	(*enemy).floatbulletTime += (CP_System_GetDt() * 1000);
 	(*enemy).intbulletTime = (int)(*enemy).floatbulletTime % (*enemy).rateoffire;
 
-	printf("floatbullet time %f : intbulletime %d\n", (*enemy).floatbulletTime,(*enemy).intbulletTime);
+	printf("floatbullet time %f : intbulletime %d\n", (*enemy).floatbulletTime, (*enemy).intbulletTime);
 	if ((*enemy).intbulletTime < 20) {
 		++(enemy->bulletIndex);
 		enemy->bulletIndex = enemy->bulletIndex % 5;
@@ -343,7 +343,7 @@ void enemybulletInit(struct Enemy* enemy, struct Player* player, float bulletSpe
 	/*for (enemy->indivBullet = 0; enemy->indivBullet < 10; ++enemy->indivBullet) {
 		if (enemy->enemyBullets[enemy->indivBullet].active == 1)
 		{
-			
+
 		}
 	}*/
 }
@@ -358,7 +358,7 @@ void enemybulletUpdate(float deltaTime, struct Enemy* enemy, struct Player* play
 		if (enemy->enemyBullets[enemy->indivBullet].active == 1)
 		{
 			enemy->enemyBullets[enemy->indivBullet].Pos.x += enemy->enemyBullets[enemy->indivBullet].Vector.x * deltaTime;
-			printf("enemybullets [%d] x: %f\n",enemy->indivBullet, enemy->enemyBullets[enemy->indivBullet].Vector.x);
+			printf("enemybullets [%d] x: %f\n", enemy->indivBullet, enemy->enemyBullets[enemy->indivBullet].Vector.x);
 			enemy->enemyBullets[enemy->indivBullet].Pos.y += enemy->enemyBullets[enemy->indivBullet].Vector.y * deltaTime;
 			if (enemy->enemyBullets[enemy->indivBullet].Pos.x < 0 || enemy->enemyBullets[enemy->indivBullet].Pos.x >= CP_System_GetWindowWidth() || enemy->enemyBullets[enemy->indivBullet].Pos.y < 0 || enemy->enemyBullets[enemy->indivBullet].Pos.y >= CP_System_GetWindowHeight())
 			{

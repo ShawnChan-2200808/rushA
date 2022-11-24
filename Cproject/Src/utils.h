@@ -1,6 +1,6 @@
 #pragma once
 CP_Color black, white, gray, blue, green, red;
-int windowWidth, windowHeight;
+float windowWidth, windowHeight;
 float fps;
 int randomX, randomY, randomiser;
 

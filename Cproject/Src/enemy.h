@@ -25,15 +25,15 @@ struct Enemy {
 		animationElapsedTime, displayTime;
 
 	//Laser Variables
-	int intlaserTime,rotation;
+	int intlaserTime,rotation, transparency;
 	CP_Color lasercolour, lasercolourchargeup;
-	float laserB, laserL, laserh, laserw, transparency, floatlaserTime;
+	float laserB, laserL, laserh, laserw, floatlaserTime;
 	//Bullet Struct
 	struct enemyBullet
 	{
 		CP_Vector Pos, Vector;
-		int active, diameter;
-		float velocity, bulletTimer,damage;
+		int active;
+		float velocity, bulletTimer,damage,diameter;
 	} enemyBullets[5];
 	//Bullet Variables
 	int bulletIndex,intbulletTime,indivBullet , rateoffire;
