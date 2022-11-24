@@ -14,11 +14,12 @@ RushA Presents...
  _| |_.' /_| |__/ |_| |__/ |_| |_    \ ' /    _| |__/ |_| |  \ \_ _/ /   \ \_ _| |__) || |__/ |_| |__/ || \____) | 
 |______.'|________|________|_____|    \_/    |________|____| |___|____| |____|_______/________|________| \______.' 
 
+
 --------------------------------------------------------------------------------------------------------------------
 
 Ever gotten so much work that studying feels like stu-dying?
 
-The Deliverables is a 2D top down survival game where you are a student trying to graduate in a tough university
+The Deliverables is a 2D top down survival game where you are a student trying to graduate in a tough university!
 
 Challenge graded quizzes, labs and assignments while trying to keep up a good GPA. Oh and dont forget about the Finals!
 
@@ -41,18 +42,19 @@ RushA
 
 5) -Special thanks to Bryan who is no longer with us-
    We wish him all the best for his future endeavours!
-   Lee Kwan Hong	        kwanhong.lee@digipen.edu
 
 --------------------------------------------------------------------------------------------------------------------
 
-CONTROLS:
+CONTROLS:	
 _____________________________________________________________________________
 |________MOVEMENT________|_________COMBAT__________|__________MISC__________|
 | Move up         : W    | Aim             : Mouse |Pause           : ESC   |
-| Move left       : A    | Attack          : LMB   |					          |
+| Move left       : A    | Attack          : LMB   |					    |
 | Move down       : S    | Switch Weapon   : Q	   |                        |
-| Move right      : D	 |	                	      |                        |
------------------------------------------------------------------------------				   
+| Move right      : D	 |	                	   |                        |
+-----------------------------------------------------------------------------	
+
+*Press O to toggle 1 Hit Kill*			   
 
 ---------------------------------------------------------------------------------------------------------------------
 

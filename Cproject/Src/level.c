@@ -4,8 +4,17 @@
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      This file contains the main level that we integrate
-		*** ONLY UPDATE THIS AFTER APPROVAL OF TEAM ***
+@brief      This file contains our main level logic. 
+
+	Shawn:	worked on player movement, player health HUD, player melee attack,
+			spawning enemies and transitioning throught the weeks and to the end, 
+			rendering background, spawning of powerups, audio.
+
+	Justin: worked on 
+
+   Wei Hao: worked on collision
+
+  Ee Loong: worked on
 *//*_________________________________________________________________________*/
 
 //#include "stdio.h" 
@@ -34,9 +43,11 @@ static int allDead;
 static int Win;
 static int GameOver;
 static int bossOut;
+int cheat;
 
 void Level_Init()
 {
+	// Initialising everything for the level
 	initGame();
 	initAssets();
 	playerInit(&player);
@@ -56,21 +67,38 @@ void Level_Init()
 	playerbulletReset(player.bulletIndex);
 	totalElapsedTime = 0;
 
-	//MUSIC
+	//MUSIC - Shawn
 	//
 	CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 	CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
 	CP_Sound_PlayAdvanced(levelOST, 0.3f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
 	CP_Sound_PlayAdvanced(schoolBellSFX,0.1f,1.0f,FALSE, CP_SOUND_GROUP_SFX);
+
+	cheat = 0;
 }
 
 void Level_Update()
 {
+	// CHEATS lol
+	if (CP_Input_KeyDown(KEY_O)) {
+		cheat = !cheat;
+	}
+	if (cheat) {
+		player.damage = 1000;
+	}
+	else
+	{
+		player.damage = 3;
+	}
+
 	if (paused == 0)
 	{
-		// PLAYER MOVEMENT + BOUNDARIES
+		// PLAYER MOVEMENT + BOUNDARIES - Shawn
 		if (player.alive && !Win) {
+			// render background
 			SpawnBG(Floor, 6, 9);
+
+			// WASD movement + offset so the player wont get off the screen
 			if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
 			{
 				moveForward(&player, Up);
@@ -88,7 +116,7 @@ void Level_Update()
 				moveForward(&player, Right);
 			}
 
-			// SWITCH WEAPON
+			// SWITCH WEAPON - Justin, Eeloong
 			if (CP_Input_KeyReleased(KEY_Q) || CP_Input_MouseWheel() != 0)
 			{
 				player.weapon = switchWeapon(player.weapon);
@@ -102,21 +130,27 @@ void Level_Update()
 			}
 
 
-			// ATTACK
+			// ATTACK - Shawn Melee & Justin Ranged
 			if (CP_Input_MouseClicked()) {
-				// get vector and spawn hit point
+				
 				if (player.weapon == 1)
 				{
+					// Set the hit animation frame
 					player.currentFrame = 2;
-					
+					// Play Ranged attack sound
 					CP_Sound_PlayAdvanced(playerRangedSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
+					// Spawn the bullet
 					playerbulletInit(player.bulletIndex, &player);
 				}
 				else if(player.weapon == 0)
 				{
+					// Set the hit animation frame
 					player.currentFrame = 2;
+					// Get vector and spawn hit point
 					meleeVec(&player, 100);
+					// Draws the hitbox sprite
 					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y -75, 150, 150 ,255, mouseToplayerAngle(&player)- 70);
+					// Looping through to check which enemy gets hit
 					for (int i = 0; i < 10; i++)
 					{
 						damageEnemy(&quiz[i], &player, 150, 150, 6);
@@ -126,17 +160,16 @@ void Level_Update()
 						damageEnemy(&assignment[i], &player, 150, 150, 8);
 						damageEnemy(&lab[i], &player, 150, 150,8);
 					}
-					//if (randomiser==0 || randomiser == 4) {
-						damageEnemy(&boss, &player, 150, 150, 4);
-						CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					//}
+					damageEnemy(&boss, &player, 150, 150, 4);
+					// Play Melee attack sound
+					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 				}
 			}
 		}
 
 		// Player DIE
 		//
-		// GAME OVER SCREEN + RESET BUTTON
+		// GAME OVER SCREEN + RESET BUTTON - Justin
 		if(!player.alive)
 		{
 			if (GameOver == 0) {
@@ -158,14 +191,9 @@ void Level_Update()
 			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
 				CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
 			}
-
-			//if (CP_Input_KeyDown(KEY_Q))
-			//{
-			//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
-			//}
 		}
 
-		//COLLISION
+		//COLLISION - WeiHao
 		CP_Settings_Fill(green);
 		if (player.alive&& !Win) {
 
@@ -177,7 +205,7 @@ void Level_Update()
 			{
 				CP_Image_Draw(Chair, chair[i].x, chair[i].y, chair[i].width, chair[i].height, 255);
 			}
-			// TEST FOR PLAYER HITBOX
+			// TEST FOR PLAYER HITBOX - WeiHao
 			//CP_Settings_RectMode(CP_POSITION_CENTER);
 			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
 			for (int j = 0;j < 5; j++)
@@ -218,16 +246,17 @@ void Level_Update()
 
 		}
 
-		// TIME
+		// TIME 
 		//
 		deltaTime = CP_System_GetDt();
 		totalElapsedTime += deltaTime;
 
+		//Check if player is alive
 		isPlayerAlive(&player);
+
 		if (!Win && player.alive) {
-			// GAME SPAWN LOGIC 
+			// GAME SPAWN LOGIC - Shawn
 			//
-			
 			// school is starting shows up when game starts
 			if (totalElapsedTime < 3.0f && totalElapsedTime > 1.0f) {
 				CP_Settings_Fill(white);
@@ -250,7 +279,6 @@ void Level_Update()
 				CP_Settings_Fill(white);
 				CP_Font_DrawText("Get ready for Week 2...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
 			}
-
 			spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L spawn at 15s
 				1, 1, 1,
 				3, 2, 2,
@@ -261,7 +289,6 @@ void Level_Update()
 				CP_Settings_Fill(white);
 				CP_Font_DrawText("Get ready for Week 3...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
 			}
-
 			spawnWeekly(totalElapsedTime, 25.0f,	// 2Q 2A 1L spawn at 25s
 				3, 2, 2,
 				5, 4, 3,
@@ -272,7 +299,6 @@ void Level_Update()
 				CP_Settings_Fill(white);
 				CP_Font_DrawText("Get ready for Week 4...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
 			}
-
 			spawnWeekly(totalElapsedTime, 45.0f,	// 2Q 2A 2L spawn at 45s
 				5, 4, 3,
 				7, 6, 5,
@@ -288,8 +314,7 @@ void Level_Update()
 				10, 8, 7,
 				QuizSS, AssSS, LabSS);
 
-
-			// show week 5
+			// show final week
 			if (totalElapsedTime < 85.0f && totalElapsedTime > 83.0f) {
 				CP_Settings_Fill(white);
 				CP_Font_DrawText("Oh no its finals week...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
@@ -307,16 +332,16 @@ void Level_Update()
 			}
 		}
 
-		// END GAME
+		// END GAME - Shawn
 		// 
 		if (totalElapsedTime >= 300 || boss.alive == 0 && boss.inGame == 1) {
-			boss.inGame = 0;
-			//CP_Engine_Terminate();
+			boss.inGame = 0; // Turn Off the boss so that it triggers the below sequence
 		}
 
-		// WIN GAME
+		// WIN GAME - Shawn
 		//
 		if (Win == 0 && boss.inGame == 0 && boss.alive == 0) {
+			// stop level music and play win music and trigger the rendering of the win screen
 			CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 			CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
 			CP_Sound_PlayAdvanced(winOST, 0.4f, 1.0f, TRUE, CP_SOUND_GROUP_MUSIC);
@@ -325,7 +350,7 @@ void Level_Update()
 		if (Win) {
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You got the Degree!!!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-			CP_Font_DrawText("Press SPACE for better GPA, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			CP_Font_DrawText("Press SPACE for better GPA, Q to main menu, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
 
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
@@ -338,13 +363,12 @@ void Level_Update()
 				CP_Engine_Terminate();
 			}
 
-			//if (CP_Input_KeyDown(KEY_Q))
-			//{
-			//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
-			//}
+			if (CP_Input_KeyDown(KEY_Q))
+			{
+				CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			}
 		}
-		 
-		//boss extra spawns
+		//boss extra spawns if u want it to be harder xd
 		//spawnWeekly(totalElapsedTime, 85.0f,
 		//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
 
@@ -368,7 +392,7 @@ void Level_Update()
 			}
 
 
-			// BULLET SIMULATION (UPDATING POSITION)
+			// BULLET SIMULATION (UPDATING POSITION) - Justin
 			//
 			playerbulletUpdate(player.bulletIndex, deltaTime,10,8);
 			// RENDER PLAYER
@@ -376,10 +400,10 @@ void Level_Update()
 			playerAnimation(playerSS, &player);
 			updatePlayerAnimation(&player, deltaTime);
 
-			// UI HUD
+			// UI HUD - Shawn and Justin
 			//
 			CP_Settings_RectMode(CP_POSITION_CORNER);
-			// RENDER HEALTHBAR
+			// RENDER HEALTHBAR 
 			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
 			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), player.GPA * 100, 30);
 
@@ -395,7 +419,7 @@ void Level_Update()
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
 			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), 500, 30);
 
-			// DEBUG USE: SHOW CURRENT WEAPON
+			// DEBUG USE: SHOW CURRENT WEAPON - Justin
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 			if (player.weapon == 1)
 			{
@@ -405,7 +429,7 @@ void Level_Update()
 
 		}
 
-		// BOSS HEALTHBAR
+		// BOSS HEALTHBAR - Shawn
 		//
 		if (boss.inGame && boss.alive && player.alive) {
 			CP_Settings_RectMode(CP_POSITION_CORNER);
@@ -425,14 +449,8 @@ void Level_Update()
 			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), 500, 30);
 		}
 
-
-		// OLD UI HUD
-		// 
-		//if (player.alive) {
-		//	
-		//}
-
-		// PAUSE KEY
+		// PAUSE KEY - Justin
+		//
 		if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
 		{
 			paused = !paused;
@@ -466,17 +484,6 @@ void Level_Update()
 			CP_Engine_Terminate();
 		}
 		pauseScreen();
-		//CP_Graphics_ClearBackground(CP_Color_Create(70, 70, 70, 70));
-		//CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		//CP_Font_DrawText("GAME PAUSED", (float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) - 40));
-		//CP_Font_DrawText("Press Esc to resume studying, SPACE to Drop Out", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-		//if (CP_Input_KeyReleased(KEY_SPACE)) {
-		//	CP_Engine_Terminate();
-		//}
-		//if (CP_Input_KeyDown(KEY_Q))
-		//{
-		//	CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
-		//}
 	}
 
 
