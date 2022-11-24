@@ -113,8 +113,7 @@ void Mainmenu_Update(void)
 
 			}
 		}
-		//printf("player_xpos: %f", player_xpos);
-		if (firstrun == TRUE && secondrun == TRUE)
+
 		//tutorial button
 		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
 		{
@@ -202,23 +201,13 @@ void Mainmenu_Update(void)
 		//credit button light up
 		if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 250, 220, 100, "Credit");
+			IfMouseover((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 220, 100, "Credit");
 		}
 
 		//settings button light up
 		if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 220, 100, "Settings");
-			// CP_Settings_Fill(blue);
-			// CP_Settings_RectMode(CP_POSITION_CENTER);
-			// //draw the draw rect in the middle of the anchor point
-			// CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 220, 100);
-			// CP_Settings_Fill(black);
-			// //set font size
-			// CP_Settings_TextSize(70.0f);
-			// //text in the first rect
-			// CP_Font_DrawText("Settings", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
-			// CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 		}
 
 		//exit button light up
@@ -267,6 +256,7 @@ void Mainmenu_Update(void)
 		//
 		if (!SFX)
 		{
+
 			CP_Graphics_ClearBackground(gray);
 			//rect in the SFX
 			CP_Settings_Fill(blue);
@@ -329,16 +319,7 @@ void Mainmenu_Update(void)
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 80, "Back");
 		}
 	}
 
@@ -371,20 +352,12 @@ void Mainmenu_Update(void)
 		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
 		CP_Settings_TextSize(50.0f);
 		CP_Settings_Fill(black);
-		CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
+		CP_Font_DrawText("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
-			CP_Settings_Fill(blue);
-			CP_Settings_RectMode(CP_POSITION_CENTER);
-			//draw the draw rect in the middle of the anchor point
-			CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100);
-			CP_Settings_Fill(black);
-			//set font size
-			CP_Settings_TextSize(70.0f);
-			//text in the first rect
-			CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 80, "Back");
+
 		}
 	}
 
