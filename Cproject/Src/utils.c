@@ -135,6 +135,36 @@ void IfMouseover(float area_center_x, float area_center_y, float area_width, flo
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 }
 
+void Draw_Button(char*pre_fixtext, float x , float y)
+{
+	float const w = 200, h = 80;
+	//Draw Rect
+	CP_Settings_Fill(red); //set colour of text red
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Graphics_DrawRect(x, y, w, h);
+	//Draw Text
+	CP_Settings_Fill(black); 	//set colour of text black
+	CP_Settings_TextSize(50.0f);	//set font size
+	CP_Font_DrawText(pre_fixtext, x, y);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+}
+
+void Toggle_Button(char* pre_fixtext, float x, float y)
+{
+	float const w = 200, h = 80;
+	//Draw Rect
+	CP_Settings_Fill(blue); //set colour of text red
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Graphics_DrawRect(x, y, w, h);
+	//Draw Text
+	CP_Settings_Fill(black); 	//set colour of text black
+	CP_Settings_TextSize(50.0f);	//set font size
+	CP_Font_DrawText(pre_fixtext, x, y);
+	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+}
+
+
+
 int isCircleEntered(float circle_center_x, float circle_center_y, float diameter, float click_x, float click_y)
 {
 	if (click_x <= circle_center_x + diameter / 2 && click_x >= circle_center_x - diameter / 2 &&

@@ -20,7 +20,6 @@
 CP_Color gray, black, red,blue;
 int currentFrame, spriteWidth, spriteHeight;
 float fps, windowWidth, windowHeight;
-CP_Image Gamename;
 
 CP_Image Gamename, Background;
 
@@ -153,38 +152,11 @@ void Mainmenu_Update(void)
 
 		// Create background that is gray in colour
 		CP_Graphics_ClearBackground(gray);
-		CP_Settings_Fill(red);
-		CP_Settings_RectMode(CP_POSITION_CENTER);
-		//draw the draw rect in the middle of the anchor point //draw play button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80);
-		//draw the draw 2nd rect in the middle of the anchor point //draw tutorial button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80);
-		//draw the draw 3rd rect in the middle of the anchor point //draw credit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw rect in the middle of the anchor point //draw settings button
-		CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-
-		//set colour of text black
-		CP_Settings_Fill(black);
-		//set font size
-		CP_Settings_TextSize(50.0f);
-		//text in the first rect 
-		CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 2nd rect
-		CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 3nd rect
-		CP_Font_DrawText("Credit", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the settings rect
-		CP_Font_DrawText("Settings", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 4nd rect
-		CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		Draw_Button("Play", (float)(windowWidth / 2), (float)((windowHeight / 2) + 50));
+		Draw_Button("Tutorial", (float)(windowWidth / 2), (float)((windowHeight / 2) + 150));
+		Draw_Button("Credit", (float)(windowWidth / 2) - 180, (float)((windowHeight / 2) + 250));
+		Draw_Button("Settings", (float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
+		Draw_Button("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 
 		//play button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
@@ -258,27 +230,13 @@ void Mainmenu_Update(void)
 		{
 
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Toggle_Button("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Draw_Button("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 1.0f);
 		}
 
@@ -287,35 +245,18 @@ void Mainmenu_Update(void)
 		if (!MUSIC)
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC OFF", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Toggle_Button("MUSIC OFF", (float)(float)(windowWidth / 2)+180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC ON", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Draw_Button("MUSIC ON", (float)(float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 1.0f);
 		}
 		// BACK BUTTON
-		//
+		Draw_Button("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		CP_Settings_Fill(red);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-		CP_Settings_TextSize(50.0f);
-		CP_Settings_Fill(black);
-		CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
@@ -431,11 +372,9 @@ void Mainmenu_Update(void)
 		//switch BOOL once secondrun reach end
 		if (player_return_xpos <= (float)-249 && !secondrun)
 		{
-			printf(" called\n");
 			secondrun = TRUE;
 		}
 	}
-	printf("player_xpos: %f", player_xpos);
 	if (firstrun == TRUE && secondrun == TRUE)
 	{
 		player_xpos = (float)-500;
