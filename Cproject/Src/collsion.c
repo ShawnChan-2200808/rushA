@@ -37,10 +37,10 @@ void chairinit(struct wall* chair, float posX, float posY)
 }
 
 void initallwall(int numOfchair, int numOftable) {
-	int chairx[5] = { (windowWidth / 2) + 200, (windowWidth / 2) + 250, windowWidth / 3, 300, windowWidth - 200 };
-	int chairy[5] = { (windowHeight / 2) - 50, (windowHeight / 2) - 50,(windowHeight-200), (windowHeight / 2)+50, windowHeight / 5 };
-	int tablex[3] = { windowWidth / 4, (windowWidth / 2) + 200, windowWidth - 350 };
-	int tabley[3] = { windowHeight / 4, windowHeight / 2, (windowHeight / 5) + 150 };
+	float chairx[5] = { (windowWidth / 2) + 200, (windowWidth / 2) + 250, windowWidth / 3, 300, windowWidth - 200 };
+	float chairy[5] = { (windowHeight / 2) - 50, (windowHeight / 2) - 50,(windowHeight-200), (windowHeight / 2)+50, windowHeight / 5 };
+	float tablex[3] = { windowWidth / 4, (windowWidth / 2) + 200, windowWidth - 350 };
+	float tabley[3] = { windowHeight / 4, windowHeight / 2, (windowHeight / 5) + 150 };
 	for (int i = 0; i < numOfchair; i++)
 	{
 		chairinit(&chair[i],chairx[i], chairy[i]);
@@ -122,7 +122,7 @@ int collisionEnemy(struct Enemy* Enemy, struct wall* object)
 
 void pushback(struct Player* player, struct wall* object)
 {
-	int push = 0;
+	float push = 0;
 	int collided = collision(player, object);
 	//collide with right
 	if (collided == 1)
@@ -151,7 +151,7 @@ void pushback(struct Player* player, struct wall* object)
 }
 void pushbackEnemy(struct Enemy* Enemy, struct wall* object)
 {
-	int push = 0;
+	float push = 0;
 	int collided = collisionEnemy(Enemy, object);
 	//collide with right
 	if (collided == 1)
