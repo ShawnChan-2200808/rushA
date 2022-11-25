@@ -28,10 +28,9 @@
 #include "powerups.h"
 #include "collsion.h"
 #include "mainmenu.h"
-
+#include "pause.h"
 
 extern CP_Color gray, blue, green, red;
-extern int windowWidth, windowHeight;
 extern float fps;
 static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
