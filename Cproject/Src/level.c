@@ -485,10 +485,6 @@ void Level_Update()
 		}
 		pauseScreen();
 	}
-
-
-
-
 }
 
 void Level_Exit()
