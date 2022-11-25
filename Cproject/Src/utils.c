@@ -101,7 +101,7 @@ void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
 		for (int col = 0; col < numberCol; col++)
 		{
 			CP_Settings_ImageMode(CP_POSITION_CORNER);
-			CP_Image_Draw(BG, col * (CP_System_GetWindowWidth() / numberCol), row * (CP_System_GetWindowHeight() / numberRow), CP_Image_GetWidth(BG), CP_Image_GetHeight(BG), 255);
+			CP_Image_Draw(BG, (float)(col * (CP_System_GetWindowWidth() / numberCol)), (float)(row * (CP_System_GetWindowHeight() / numberRow)), (float)(CP_Image_GetWidth(BG)), (float)(CP_Image_GetHeight(BG)), 255);
 		}
 	}
 }
@@ -186,11 +186,11 @@ int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH
 {
 	
 	//Find opposite and adjecent length of laser given hypotenuse (length or height)
-	float oppadW = ((laserW) / (sqrt(2)));
-	float oppadH = ((laserH) / (sqrt(2)));
+	float oppadW = (float)((laserW) / (sqrt(2)));
+	float oppadH = (float)((laserH) / (sqrt(2)));
 	CP_Vector playerUL = CP_Vector_Set((*player).playerPos.x - laserX, (*player).playerPos.y - laserY);
-	CP_Vector length;
-	CP_Vector orthogonal;
+	CP_Vector length = CP_Vector_Zero();
+	CP_Vector orthogonal = CP_Vector_Zero();
 	switch (rotation) {
 	case 45:
 		// set rotation vectors with opp and adj

@@ -313,7 +313,7 @@ void damageEnemy(struct Enemy* enemy, struct Player* player, float hitboxX, floa
 }
 
 // Respawning the enemies if need to -Shawn
-void respawnEnemy(struct Enemy* enemy, int hp) {
+void respawnEnemy(struct Enemy* enemy, float hp) {
 	(*enemy).HP = hp;
 	randomiser = CP_Random_RangeInt(0, 3);
 	switch (randomiser)
