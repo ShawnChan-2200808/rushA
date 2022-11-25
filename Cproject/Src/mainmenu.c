@@ -16,22 +16,22 @@
 #include "Tutorial.h"
 //#include "enemy.h"
 //#include "anim.c"
-	
-CP_Color gray, black, red,blue;
-int currentFrame, spriteWidth, spriteHeight;
-float fps, windowWidth, windowHeight;
+
+CP_Color gray, black, red, blue;
+int currentFrame;
+float fps, windowWidth, windowHeight, spriteWidth, spriteHeight;
 
 CP_Image Gamename, Background;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime, currentElapseTimeReturn, ElapseTimeGamename;
 static float deltaTime;
 int timeplayer, timegamename, lerpMax;
-float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos,lerpgamename, rategamename;
+float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos, lerpgamename, rategamename;
 
 int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
-float spriteWidth, SpriteHeight, displayTime;
+float SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
-BOOL firstrun, secondrun, settings,SFX = TRUE, MUSIC = TRUE, credits;
+BOOL firstrun, secondrun, settings, SFX = TRUE, MUSIC = TRUE, credits;
 
 
 void Mainmenu_Init(void)
@@ -44,7 +44,7 @@ void Mainmenu_Init(void)
 	displayTime = 2;
 	currentFrameP = 0, currentFrameE = 0;
 	animationSpeedP = 10, animationSpeedE = 15;
-	animTotalFramesP =2, animTotalFramesE = 8;
+	animTotalFramesP = 2, animTotalFramesE = 8;
 	spriteWidth = 64.0f, SpriteHeight = 64.0f;
 	animationElapsedTimeP = 0.0f, animationElapsedTimeE = 0.0f;
 
@@ -65,7 +65,7 @@ void Mainmenu_Init(void)
 	// Getting the rate we need to get to reach 1 lerpfector in seconds
 	rateplayer = finalLerp / timeplayer;
 	rategamename = finalLerp / timegamename;
-	
+
 	// Setting the window width and height
 	//windowWidth = 1920;
 	//windowHeight = 1080;
@@ -104,7 +104,7 @@ void Mainmenu_Update(void)
 	if (!settings && !credits) {
 
 		//play button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -114,7 +114,7 @@ void Mainmenu_Update(void)
 		}
 
 		//tutorial button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -123,7 +123,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//credit button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -131,7 +131,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//settings
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1 && !settings)
 			{
@@ -148,8 +148,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
-
+		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 		// Create background that is gray in colour
 		CP_Graphics_ClearBackground(gray);
 		Draw_Button("Play", (float)(windowWidth / 2), (float)((windowHeight / 2) + 50));
@@ -222,7 +221,7 @@ void Mainmenu_Update(void)
 		//Draw BG
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
+		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 
 		// SFX BUTTON
 		//
@@ -276,7 +275,7 @@ void Mainmenu_Update(void)
 	if (credits) {
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
+		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 		CreditsWords();
 		// BACK button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
@@ -305,9 +304,9 @@ void Mainmenu_Update(void)
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(playerSS,
 		//RENDERED POS AND SIZE
-		player_xpos, windowHeight - 80, 160, 160,
+		player_xpos, (float)(windowHeight - 80), 160, 160,
 		// POS AND SIZE FROM SPRITESHEET
-		currentFrameP* spriteWidth, 0, (currentFrameP + 1)* spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+		(float)(currentFrameP * spriteWidth), 0, (float)((currentFrameP + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R	
 		255);
 	if (animationElapsedTimeP >= displayTime) {
 		currentFrameP = (currentFrameP + 1) % animTotalFramesP;
@@ -326,9 +325,9 @@ void Mainmenu_Update(void)
 
 	CP_Image_DrawSubImage(AssSS,
 		// RENDERED POS AND SIZE
-		ass_xpos, windowHeight - 80, 160, 160,
+		ass_xpos, (float)(windowHeight - 80), 160.f, 160.f,
 		// POS AND SIZE FROM SPRITESHEET
-		currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+		(float)(currentFrameE * spriteWidth), 0, (float)((currentFrameE + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R
 		255);
 	if (animationElapsedTimeE >= displayTime) {
 		currentFrameE = (currentFrameE + 1) % animTotalFramesE;
@@ -345,9 +344,9 @@ void Mainmenu_Update(void)
 		currentElapseTimeReturn += deltaTime;
 		CP_Image_DrawSubImage(playerSS,
 			//RENDERED POS AND SIZE
-			player_return_xpos, windowHeight - 80, 160, 160,
+			player_return_xpos, (float)(windowHeight - 80), 160.f, 160.f,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+			(float)(currentFrameP * spriteWidth), 0, (float)((currentFrameP + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R	
 			255);
 		if (animationElapsedTimeP >= displayTime) {
 			currentFrameP = (currentFrameP + 1) % animTotalFramesP;
@@ -358,9 +357,9 @@ void Mainmenu_Update(void)
 
 		CP_Image_DrawSubImage(AssSS,
 			// RENDERED POS AND SIZE
-			ass_return_xpos, windowHeight - 80, 160, 160,
+			ass_return_xpos, (float)(windowHeight - 80), 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+			(float)(currentFrameE * spriteWidth), 0, (float)((currentFrameE + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R
 			255);
 		if (animationElapsedTimeE >= displayTime) {
 			currentFrameE = (currentFrameE + 1) % animTotalFramesE;

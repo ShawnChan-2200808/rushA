@@ -146,7 +146,7 @@ void Level_Update(void)
 					// Set the hit animation frame
 					player.currentFrame = 2;
 					// Get vector and spawn hit point
-					meleeVec(&player, 100);
+					meleeVec(&player, 100.f);
 					// Draws the hitbox sprite
 					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y -75, 150, 150 ,255, mouseToplayerAngle(&player)- 70);
 					// Looping through to check which enemy gets hit

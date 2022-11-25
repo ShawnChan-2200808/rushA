@@ -69,7 +69,7 @@ void moveBack(struct Player* player, CP_Vector direction) {
 }
 
 // Get position from player to direction of mouse
-void meleeVec(struct Player* player, int scale) 
+void meleeVec(struct Player* player, float scale) 
 {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
 	CP_Vector temp = CP_Vector_Normalize(update);

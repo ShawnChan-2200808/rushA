@@ -82,7 +82,7 @@ void Splash_Screen_Update(void)
 		CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 		CP_Image_Draw(splashscreenDP, (float)(windowWidth / 2), (float)(windowHeight / 2), (float)CP_Image_GetWidth(splashscreenDP), (float)CP_Image_GetHeight(splashscreenDP), alpha);
 		CP_Settings_Fill(white);
-		CP_Font_DrawText("All content © 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", CP_System_GetWindowWidth() / 2, 1060);
+		CP_Font_DrawText("All content © 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", (float)(CP_System_GetWindowWidth() / 2), 1060.f);
 		alphaIncrease = totalElapsedTime * rate;
 		alpha = (int)alphaIncrease % alphaMax;
 	}

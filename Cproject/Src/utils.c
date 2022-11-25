@@ -69,30 +69,29 @@ void initAssets() {
 
 }
 void freeAssets() {
-	CP_Image_Free("Assets/SPRITES/player_SS.png");
-	CP_Image_Free("Assets/SPRITES/QUIZ_SS.png");
-	CP_Image_Free("Assets/SPRITES/ASS_SS.png");
-	CP_Image_Free("Assets/SPRITES/LAB_SS.png");
-	CP_Image_Free("Assets/SPRITES/School_Hall_Floor.png");
-	CP_Image_Free("Assets/SPRITES/BBT.png");
-	CP_Image_Free("Assets/SPRITES/BOSS_SS.png");
-	CP_Image_Free("Assets/SPRITES/HitBox.png");
-	CP_Image_Free("Assets/SPRITES/Chair.png");
-	CP_Image_Free("Assets/SPRITES/Table.png");
+	CP_Image_Free(&playerSS);
+	CP_Image_Free(&QuizSS);
+	CP_Image_Free(&AssSS);
+	CP_Image_Free(&LabSS);
+	CP_Image_Free(&Floor);
+	CP_Image_Free(&bbtSS);
+	CP_Image_Free(&BossSS);
+	CP_Image_Free(&hitBox);
+	CP_Image_Free(&Chair);
+	CP_Image_Free(&Table);
 
-	
-	CP_Sound_Free("Assets/OST/2ND EDITED WHITE LEISURE SUIT - DanceTechno MSCDNT2_25.wav");
-	CP_Sound_Free("Assets/OST/EDITED AEROMATIC - DanceTechno MSCDNT1_49.wav");
-	CP_Sound_Free("Assets/OST/EDITED KEEPING UP - DanceTechno MSCDNT1_33.wav");
-	CP_Sound_Free("Assets/OST/EDITED REGRETS - WorldMusic MSCLAT1_37.wav");
-	CP_Sound_Free("Assets/OST/2ND EDITED MEETING OF THE MINDS - Corporate MSCCRP1_21.wav");
+	CP_Sound_Free(&mainMenuOST);
+	CP_Sound_Free(&levelOST);
+	CP_Sound_Free(&bossOST);
+	CP_Sound_Free(&gameOverOST);
+	CP_Sound_Free(&winOST);
 
-	CP_Sound_Free("Assets/SFX/EDITED BELL-SCHOOL_GEN-HDF-03494.wav");
-	CP_Sound_Free("Assets/SFX/EDITED WRITING-HI-LITER_GEN-HDF-26203.wav");
-	CP_Sound_Free("Assets/SFX/GUN-HOLSTER_GEN-HDF-13335.wav");
-	CP_Sound_Free("Assets/SFX/PEN-RETRACTABLE_GEN-HDF-18401.wav");
-	CP_Sound_Free("Assets/SFX/TOY-GUN_GEN-HDF-23708.wav");
-	CP_Sound_Free("Assets/SFX/HumanLaugh CTE03_37.10.wav");
+	CP_Sound_Free(&schoolBellSFX);
+	CP_Sound_Free(&playerMeleeSFX);
+	CP_Sound_Free(&playerSwapRangeSFX);
+	CP_Sound_Free(&playerMeleeSFX);
+	CP_Sound_Free(&playerRangedSFX);
+	CP_Sound_Free(&bossSFX);
 }
 
 void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
@@ -101,7 +100,7 @@ void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
 		for (int col = 0; col < numberCol; col++)
 		{
 			CP_Settings_ImageMode(CP_POSITION_CORNER);
-			CP_Image_Draw(BG, col * (CP_System_GetWindowWidth() / numberCol), row * (CP_System_GetWindowHeight() / numberRow), CP_Image_GetWidth(BG), CP_Image_GetHeight(BG), 255);
+			CP_Image_Draw(BG, (float)(col * (CP_System_GetWindowWidth() / numberCol)), (float)(row * (CP_System_GetWindowHeight() / numberRow)), (float)(CP_Image_GetWidth(BG)), (float)(CP_Image_GetHeight(BG)), 255);
 		}
 	}
 }
@@ -216,11 +215,11 @@ int isRectEnteredadvanced(float	laserX, float laserY, float laserW, float laserH
 {
 	
 	//Find opposite and adjecent length of laser given hypotenuse (length or height)
-	float oppadW = ((laserW) / (sqrt(2)));
-	float oppadH = ((laserH) / (sqrt(2)));
+	float oppadW = (float)((laserW) / (sqrt(2)));
+	float oppadH = (float)((laserH) / (sqrt(2)));
 	CP_Vector playerUL = CP_Vector_Set((*player).playerPos.x - laserX, (*player).playerPos.y - laserY);
-	CP_Vector length;
-	CP_Vector orthogonal;
+	CP_Vector length = CP_Vector_Zero();
+	CP_Vector orthogonal = CP_Vector_Zero();
 	switch (rotation) {
 	case 45:
 		// set rotation vectors with opp and adj

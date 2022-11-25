@@ -12,7 +12,7 @@
 
 void pauseScreen(void)
 {
-	CP_Color gray, black, red, blue;
+	CP_Color black, red, blue;
 	black = CP_Color_Create(0, 0, 0, 255);
 	red = CP_Color_Create(255, 0, 0, 255);
 	blue = CP_Color_Create(0, 0, 255, 255);

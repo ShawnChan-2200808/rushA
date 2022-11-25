@@ -12,10 +12,10 @@
 #include "collsion.h"
 
 float hitCircleSize, deltaTime;
-extern CP_Color red,green;
+extern CP_Color red, green;
 
 
-void tableinit(struct wall * table, float posX, float posY)
+void tableinit(struct wall* table, float posX, float posY)
 {
 	(*table).x = posX;
 	(*table).y = posY;
@@ -37,17 +37,17 @@ void chairinit(struct wall* chair, float posX, float posY)
 }
 
 void initallwall(int numOfchair, int numOftable) {
-	float chairx[5] = { (windowWidth / 2) + 200, (windowWidth / 2) + 250, windowWidth / 3, 300, windowWidth - 200 };
-	float chairy[5] = { (windowHeight / 2) - 50, (windowHeight / 2) - 50,(windowHeight-200), (windowHeight / 2)+50, windowHeight / 5 };
-	float tablex[3] = { windowWidth / 4, (windowWidth / 2) + 200, windowWidth - 350 };
-	float tabley[3] = { windowHeight / 4, windowHeight / 2, (windowHeight / 5) + 150 };
+	float chairx[5] = { (float)((windowWidth / 2) + 200), (float)((windowWidth / 2) + 250),(float)(windowWidth / 3), 300,(float)(windowWidth - 200) };
+	float chairy[5] = { (float)((windowHeight / 2) - 50),(float)((windowHeight / 2) - 50),(float)((windowHeight - 200)), (float)((windowHeight / 2) + 50), (float)(windowHeight / 5) };
+	float tablex[3] = { (float)(windowWidth / 4),(float)((windowWidth / 2) + 200), (float)(windowWidth - 350) };
+	float tabley[3] = { (float)(windowHeight / 4), (float)(windowHeight / 2), (float)((windowHeight / 5 + 150)) };
 	for (int i = 0; i < numOfchair; i++)
 	{
-		chairinit(&chair[i],chairx[i], chairy[i]);
+		chairinit(&chair[i], chairx[i], chairy[i]);
 	}
 	for (int i = 0; i < numOftable; i++)
 	{
-		tableinit(&table[i],tablex[i], tabley[i]);
+		tableinit(&table[i], tablex[i], tabley[i]);
 	}
 }
 
@@ -66,7 +66,7 @@ int collision(struct Player* player, struct wall* object)
 	//if the player is not colliding with the box
 	if (!is_x_withinbox || !is_y_withinbox)
 		return 0;
-	
+
 	//if player collide with the box
 	//left collision
 	if (((*player).playermin.x < (*object).wallmax.x && (*player).playermax.x >(*object).wallmax.x) && ((*player).playerPos.y > (*object).wallmin.y && (*player).playerPos.y < (*object).wallmax.y))
