@@ -44,7 +44,7 @@ static int GameOver;
 static int bossOut;
 int cheat;
 
-void Level_Init()
+void Level_Init(void)
 {
 	// Initialising everything for the level
 	initGame();
@@ -76,7 +76,7 @@ void Level_Init()
 	cheat = 0;
 }
 
-void Level_Update()
+void Level_Update(void)
 {
 	// CHEATS lol
 	if (CP_Input_KeyDown(KEY_O)) {
@@ -486,7 +486,7 @@ void Level_Update()
 	}
 }
 
-void Level_Exit()
+void Level_Exit(void)
 {
 	
 }
