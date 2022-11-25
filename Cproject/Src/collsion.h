@@ -21,6 +21,6 @@ int collisionEnemy(struct Enemy* Enemy, struct wall* object);
 void tableinit(struct wall* table, float posX, float posY);
 void chairinit(struct wall* chair, float posX, float posY);
 void initallwall(int numOfchair, int numOftable);
-int pushback(struct Player* player, struct wall* object);
-int pushbackEnemy(struct Enemy* Enemy, struct wall* object);
+void pushback(struct Player* player, struct wall* object);
+void pushbackEnemy(struct Enemy* Enemy, struct wall* object);
 

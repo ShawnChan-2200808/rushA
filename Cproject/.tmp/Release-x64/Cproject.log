@@ -1,8 +1,63 @@
-﻿  weapons.c
+﻿  Tutorial.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(28,23): warning C4142: 'windowWidth': benign redefinition of type
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.h(3): message : see declaration of 'windowWidth'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(28,37): warning C4142: 'windowHeight': benign redefinition of type
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.h(3): message : see declaration of 'windowHeight'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(241,6): warning C4013: 'printf' undefined; assuming extern returning int
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(549,50): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(549,67): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\Tutorial.c(560,3): warning C4013: 'pauseScreen' undefined; assuming extern returning int
+  collsion.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(46,29): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(46,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(50,29): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(50,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(40,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(40,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(40,82): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(40,104): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(41,39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(41,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(41,69): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(41,107): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(41,125): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(42,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(42,55): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(42,74): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(43,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(43,51): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(43,75): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(130,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(136,64): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(142,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(148,64): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(159,31): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(165,61): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(171,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\collsion.c(177,61): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  enemy.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\enemy.c(317,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  level.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(34,23): warning C4142: 'windowWidth': benign redefinition of type
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.h(3): message : see declaration of 'windowWidth'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(34,37): warning C4142: 'windowHeight': benign redefinition of type
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\utils.h(3): message : see declaration of 'windowHeight'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(188,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(188,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(359,48): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(359,62): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(474,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(474,61): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\level.c(486,3): warning C4013: 'pauseScreen' undefined; assuming extern returning int
+  powerups.c
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\powerups.c(69,26): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\powerups.c(72,27): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\powerups.c(77,26): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\Src\powerups.c(80,27): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   Generating code
-  0 of 78 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  2 of 78 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Release-x64\Cproject.exe
   1 File(s) copied

@@ -120,7 +120,7 @@ int collisionEnemy(struct Enemy* Enemy, struct wall* object)
 }
 
 
-int pushback(struct Player* player, struct wall* object)
+void pushback(struct Player* player, struct wall* object)
 {
 	int push = 0;
 	int collided = collision(player, object);
@@ -149,7 +149,7 @@ int pushback(struct Player* player, struct wall* object)
 		(*player).playerPos.y -= push;
 	}
 }
-int pushbackEnemy(struct Enemy* Enemy, struct wall* object)
+void pushbackEnemy(struct Enemy* Enemy, struct wall* object)
 {
 	int push = 0;
 	int collided = collisionEnemy(Enemy, object);
