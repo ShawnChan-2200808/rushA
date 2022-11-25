@@ -105,7 +105,7 @@ void Mainmenu_Update(void)
 	if (!settings && !credits) {
 
 		//play button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -115,7 +115,7 @@ void Mainmenu_Update(void)
 		}
 
 		//tutorial button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -124,7 +124,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//credit button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -132,7 +132,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//settings
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1 && !settings)
 			{
@@ -363,7 +363,7 @@ void Mainmenu_Update(void)
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(playerSS,
 		//RENDERED POS AND SIZE
-		player_xpos, windowHeight - 80, 160, 160,
+		player_xpos, (float)(windowHeight - 80), 160, 160,
 		// POS AND SIZE FROM SPRITESHEET
 		(float)(currentFrameP * spriteWidth), 0, (float)((currentFrameP + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R	
 		255);
@@ -416,7 +416,7 @@ void Mainmenu_Update(void)
 
 		CP_Image_DrawSubImage(AssSS,
 			// RENDERED POS AND SIZE
-			ass_return_xpos, windowHeight - 80, 160, 160,
+			ass_return_xpos, (float)(windowHeight - 80), 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
 			(float)(currentFrameE * spriteWidth), 0, (float)((currentFrameE + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R
 			255);

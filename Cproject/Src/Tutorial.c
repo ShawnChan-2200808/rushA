@@ -72,11 +72,11 @@ void Tutorial_Update(void)
 			{
 				moveForward(&player, Left);
 			}
-			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50) )
+			if (CP_Input_KeyDown(KEY_S) && player.playerPos.y < (windowHeight - 50))
 			{
 				moveForward(&player, Down);
 			}
-			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50) )
+			if (CP_Input_KeyDown(KEY_D) && player.playerPos.x < (windowWidth - 50))
 			{
 				moveForward(&player, Right);
 			}
@@ -487,7 +487,7 @@ void Tutorial_Update(void)
 				}
 				break;
 			case 13:
-				CP_Font_DrawText("Congrats student you are now ready to enroll into school", windowWidth / 2, windowHeight / 2 - 300);
+				CP_Font_DrawText("Congrats student you are now ready to enroll into school", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				CP_Settings_RectMode(CP_POSITION_CENTER);
 				CP_Settings_Fill(red);
 				CP_Graphics_DrawRect((float)(CP_System_GetWindowWidth() / 2), (float)((CP_System_GetWindowHeight() / 2) + 110), 400, 90);
