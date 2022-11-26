@@ -1,10 +1,10 @@
-﻿  Tutorial.c
+﻿  powerups.c
   Generating code
   1 of 80 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    5 functions had inline decision re-evaluated but remain unchanged
+    6 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Release-x64\Cproject.exe
+  Cproject.vcxproj -> C:\1_Shawn\Trimester1\GitHub\rushA\Cproject\bin\Release-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
   25 File(s) copied

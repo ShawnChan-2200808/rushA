@@ -66,18 +66,18 @@ void respawnItem(struct Item* item, float posX, float posY) {
 	// FOR AFTER collision - If in wall set to another pos
 	for (int i = 0; i < 3; ++i) {
 		if (table[i].wallmax.x < posX && table[i].wallmin.x > posX) {
-			posX += table[i].width*1.5f;
+			posX += table[i].width+2.5f;
 		}
 		if (table[i].wallmax.y > posY && table[i].wallmin.y < posY) {
-			posY += table[i].height*1.5f;
+			posY += table[i].height+2.5f;
 		}
 	}
 	for (int i = 0; i < 5; ++i) {
 		if (chair[i].wallmax.x < posX && chair[i].wallmin.x > posX) {
-			posX += chair[i].width*1.5f;
+			posX += chair[i].width+2.5f;
 		}
 		if (chair[i].wallmax.y > posY && chair[i].wallmin.y < posY) {
-			posY += chair[i].height*1.5f;
+			posY += chair[i].height+2.5f;
 		}
 	(*item).position = CP_Vector_Set(posX, posY);
 	}
