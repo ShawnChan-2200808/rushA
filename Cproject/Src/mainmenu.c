@@ -19,7 +19,7 @@
 
 CP_Color gray, black, red, blue;
 int currentFrame;
-float fps, windowWidth, windowHeight, spriteWidth, spriteHeight;
+float fps, spriteWidth, spriteHeight;
 
 CP_Image Gamename, Background;
 
