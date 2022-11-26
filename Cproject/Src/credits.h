@@ -1,10 +1,12 @@
 /*!
-@file       mainmenu.h
+@file       credits.c
 @course     csd1401 Software Engineering Project
+@author		Justin Yeo
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      contains declarations of main menu functions
+@brief      contains declarations of credits functions
 *//*_________________________________________________________________________________*/
+
 
 void CreditsWords(void);

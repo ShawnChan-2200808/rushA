@@ -1,10 +1,11 @@
 /*!
-@file       enemy.h
+@file       collsion.c
 @course     csd1401 Software Engineering Project
+@author		Sun Wei Hao
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      contains declarations of Enemy functions
+@brief      contains declarations of Obstacles and Collision functions
 *//*_________________________________________________________________________________*/
 #pragma once
 #include "player.h"

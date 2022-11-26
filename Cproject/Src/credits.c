@@ -1,5 +1,5 @@
 /*!
-@file       mainmenu.c
+@file       credits.c
 @course     csd1401 Software Engineering Project
 @author		Justin Yeo
 @section    A

@@ -27,6 +27,7 @@ float enemyPlayerAngle(struct Enemy* enemy, struct Player* player) {
 	return normalised.x > 0 ? angle : angle + 180;
 }
 
+// Initialise colors and variables that are needed in game
 void initGame() {
 	// Set the colour for gray
 	black = CP_Color_Create(0, 0, 0, 255);
@@ -38,6 +39,7 @@ void initGame() {
 	randomiser = 0;
 }
 
+// Initialise all assets
 void initAssets() {
 
 	// Initialize images
@@ -68,6 +70,8 @@ void initAssets() {
 	bossSFX = CP_Sound_Load("Assets/SFX/HumanLaugh CTE03_37.10.wav");
 
 }
+
+// Free all the assets
 void freeAssets() {
 	CP_Image_Free(&playerSS);
 	CP_Image_Free(&QuizSS);
@@ -94,6 +98,8 @@ void freeAssets() {
 	CP_Sound_Free(&bossSFX);
 }
 
+// Draw background based on the number of rows and columns that fits the screen
+//
 void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
 	for (int row = 0; row < numberRow; row++)
 	{
@@ -105,6 +111,8 @@ void SpawnBG(CP_Image BG, int numberRow, int numberCol) {
 	}
 }
 
+// 
+//
 int IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 {
 	// check if the x and y pos of the is within the width and height

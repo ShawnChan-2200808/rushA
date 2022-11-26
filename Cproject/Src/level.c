@@ -17,8 +17,6 @@
   Ee Loong: worked on
 *//*_________________________________________________________________________*/
 
-//#include "stdio.h" 
-//#include "stdlib.h"
 #include "cprocessing.h"
 #include "utils.h"
 #include "player.h"
