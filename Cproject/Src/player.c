@@ -5,6 +5,12 @@
 @team		RushA
 @date       25/10/2022 (last updated)
 @brief      contains defininition of Player functions
+@authors
+
+	Shawn: worked on player movement, player melee attack logic, player level logic
+
+   Justin: worked on player projectile logic
+
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -13,7 +19,7 @@
 CP_Vector Up, Left, Down, Right;
 extern float deltaTime,windowHeight,windowWidth;
 
-// Initiallize player settings
+// Initiallize player settings - Shawn
 void playerInit(struct Player* player) {
 
 	Up = CP_Vector_Set(0, -1);
@@ -54,21 +60,21 @@ void isPlayerAlive(struct Player* player) {
 	(*player).alive = (*player).GPA <= 0 ? 0 : 1;
 }
 
-// Move forward
+// Move forward - Shawn
 void moveForward(struct Player* player, CP_Vector direction) {
 	(*player).tempPos = CP_Vector_Normalize(direction);
 	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
 	(*player).playerPos = CP_Vector_Add((*player).playerPos, (*player).tempPos);
 }
 
-// Move backwards
+// Move backwards - Shawn
 void moveBack(struct Player* player, CP_Vector direction) {
 	(*player).tempPos = CP_Vector_Normalize(direction);
 	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
 	(*player).playerPos = CP_Vector_Subtract((*player).playerPos, (*player).tempPos);
 }
 
-// Get position from player to direction of mouse
+// Get position from player to direction of mouse - Shawn
 void meleeVec(struct Player* player, float scale) 
 {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
@@ -76,13 +82,13 @@ void meleeVec(struct Player* player, float scale)
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, scale));
 }
 
-// Switch weapons
+// Switch weapons - Justin
 int switchWeapon(int weapon)
 {
 	return !weapon;
 }
 
-// Get angle from mouse to player
+// Get angle from mouse to player - Justin
 float mouseToplayerAngle(struct Player *player){
 	CP_Vector update = CP_Vector_Set((*player).playerPos.x - CP_Input_GetMouseX(), (*player).playerPos.y - CP_Input_GetMouseY());
 	CP_Vector normalised = CP_Vector_Normalize(update);

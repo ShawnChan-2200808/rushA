@@ -4,7 +4,7 @@
 @author		Justin Yeo (justin.yeo@digipen.edu)
 @section    A
 @team		RushA
-@date       31/10/2022 (last updated)
+@date       27/11//2022 (last updated)
 @brief      contains defininition of credits functions
 *//*_________________________________________________________________________________*/
 
@@ -18,9 +18,12 @@ void RollCredits(void) {
 	//draw the draw rect in the middle of the anchor point
 	CP_Graphics_DrawRect((float)(windowWidth/2), (float)(windowHeight/2), 1900.f, 800.f);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Settings_Fill(white);
+	CP_Settings_TextSize(50.0f);
+	CP_Font_DrawText("All content COPYRIGHT 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", (float)(windowWidth / 2), (float)(windowHeight / 20 + 110));
 	CP_Settings_Fill(black);
 	CP_Settings_TextSize(80.0f);
-	CP_Font_DrawText("Credits", (float)(windowWidth / 2), (float)(windowHeight / 20) + 150); //�  <- COPYRIGHT SYMBOL??
+	CP_Font_DrawText("Credits", (float)(windowWidth / 2), (float)(windowHeight / 20) + 170); //�  <- COPYRIGHT SYMBOL??
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_Draw(TeamLogo, (float)(windowWidth / 4), (float)(windowHeight / 2), 960, 540, 255);
 	CP_Settings_TextSize(50.0f);
@@ -46,9 +49,12 @@ void CreditsDigipen(void) {
 	//draw the draw rect in the middle of the anchor point
 	CP_Graphics_DrawRect((float)windowWidth / 2, windowHeight / 2, 1900, 800);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Settings_TextSize(50.0f);
+	CP_Font_DrawText("All content COPYRIGHT 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", (float)(windowWidth / 2), (float)(windowHeight / 20 + 110));
 	CP_Settings_Fill(black);
 	CP_Settings_TextSize(80.0f);
-	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 150); //�  <- COPYRIGHT SYMBOL??
+	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 170); //�  <- COPYRIGHT SYMBOL??
 	CP_Settings_TextSize(50.0f);
 	// DigiPen President
 	CP_Font_DrawText("DigiPen Institute of Technology", (windowWidth / 2), (windowHeight / 10) + 200);

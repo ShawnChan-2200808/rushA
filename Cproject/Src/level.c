@@ -6,7 +6,7 @@
 @date       31/10/2022 (last updated)
 @brief      This file contains our main level logic. 
 
-	Shawn:	worked on player movement, player health HUD, player melee attack,
+	Shawn:	worked on player movement, player health HUD, player melee attack,		(shawnwengkwang.chan@digipen.edu)
 			spawning enemies and transitioning throught the weeks and to the end, 
 			rendering background, spawning of powerups, audio.
 
@@ -14,7 +14,7 @@
 
    Wei Hao: worked on collision
 
-  Ee Loong: worked on
+  EeLoong: worked on Ranged Enemies attack both projectile and laser.
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -41,6 +41,19 @@ static int Win;
 static int GameOver;
 static int bossOut;
 int cheat;
+
+// HUD / UI
+//
+CP_Vector popUpTextPos;
+CP_Vector endGameMessagePos;
+CP_Vector endGameInsructPos;
+CP_Vector weaponTxtPos;
+CP_Vector playerHealthbarPos;
+CP_Vector playerNamePos;
+CP_Vector bossHealthbarPos;
+CP_Vector bossNamePos;
+
+
 
 void Level_Init(void)
 {
@@ -71,15 +84,16 @@ void Level_Init(void)
 
 	cheat = 0;
 
-	/*
-	// FOR PITCH
+	// UI
 	//
-	quiz[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
-	assignment[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
-	lab[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
-	boss.EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2.5));
-	bbt.position = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
-	*/
+	popUpTextPos = CP_Vector_Set((CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 4));
+	endGameMessagePos = CP_Vector_Set((CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
+	endGameInsructPos = CP_Vector_Set(((CP_System_GetWindowWidth() / 2)), (CP_System_GetWindowHeight() / 2 + 420));
+	weaponTxtPos = CP_Vector_Set((windowWidth / 1.2), (windowHeight / 1.07));
+	playerHealthbarPos = CP_Vector_Set((windowWidth / 10), (windowHeight / 1.08));
+	playerNamePos = CP_Vector_Set((windowWidth / 13), (windowHeight / 1.07));
+	bossHealthbarPos = CP_Vector_Set((windowWidth / 2.8), (windowHeight / 40));
+	bossNamePos = CP_Vector_Set((windowWidth / 3.5), (windowHeight / 30));
 }
 
 void Level_Update(void)
@@ -184,8 +198,8 @@ void Level_Update(void)
 				GameOver = 1;
 			}
 			CP_Settings_Fill(red);
-			CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-			CP_Font_DrawText("Press SPACE to Re-Test, Q to main menu, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			CP_Font_DrawText("You failed...", endGameMessagePos.x, endGameMessagePos.y);
+			CP_Font_DrawText("Press SPACE to Re-Test, Q to main menu, ESC to Drop Out :(", endGameInsructPos.x, endGameInsructPos.y);
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				totalElapsedTime = 0;
@@ -270,15 +284,15 @@ void Level_Update(void)
 			// GAME SPAWN LOGIC - Shawn
 			//
 			// school is starting shows up when game starts
-			if (totalElapsedTime < 3.0f && totalElapsedTime > 1.0f) {
+			if (totalElapsedTime > 1.0f && totalElapsedTime < 3.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("School is starting...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("School is starting...", popUpTextPos.x, popUpTextPos.y);
 			}
 
-			// show week 1
-			if (totalElapsedTime < 5.0f && totalElapsedTime > 3.0f) {
+			// show week 1 txt at 3s-5s spawn at 5s
+			if (totalElapsedTime > 3.0f && totalElapsedTime < 5.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Get ready for Week 1!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Get ready for Week 1!", popUpTextPos.x, popUpTextPos.y);
 			}
 
 			spawnWeekly(totalElapsedTime, 5.0f,		// 1Q 1A 1L spawn at 5s
@@ -286,121 +300,53 @@ void Level_Update(void)
 				1, 1, 1,
 				QuizSS, AssSS, LabSS);
 
-			// show week 2
-			if (totalElapsedTime < 15.0f && totalElapsedTime > 12.0f) {
+			// show week 2 txt at 12s-15s spawn at 15s
+			if (totalElapsedTime > 12.0f && totalElapsedTime < 15.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Get ready for Week 2...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Get ready for Week 2...", popUpTextPos.x, popUpTextPos.y);
 			}
 			spawnWeekly(totalElapsedTime, 15.0f,	// 1Q 1A 1L spawn at 15s
 				1, 1, 1,
 				3, 2, 2,
 				QuizSS, AssSS, LabSS);
 
-			// show week 3
-			if (totalElapsedTime < 25.0f && totalElapsedTime > 20.0f) {
+			// show week 3 txt at 20s-25s spawn at 25s
+			if (totalElapsedTime > 20.0f && totalElapsedTime < 25.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Get ready for Week 3...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Get ready for Week 3...", popUpTextPos.x, popUpTextPos.y);
 			}
 			spawnWeekly(totalElapsedTime, 25.0f,	// 2Q 2A 1L spawn at 25s
 				3, 2, 2,
 				5, 4, 3,
 				QuizSS, AssSS, LabSS);
 
-			// show week 4
-			if (totalElapsedTime < 45.0f && totalElapsedTime > 42.0f) {
+			// show week 4 txt at 42s-45s spawn at 45s
+			if (totalElapsedTime > 42.0f && totalElapsedTime < 45.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Get ready for Week 4...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Get ready for Week 4...", popUpTextPos.x, popUpTextPos.y);
 			}
 			spawnWeekly(totalElapsedTime, 45.0f,	// 2Q 2A 2L spawn at 45s
 				5, 4, 3,
 				7, 6, 5,
 				QuizSS, AssSS, LabSS);
 
-			// show week 5
-			if (totalElapsedTime < 65.0f && totalElapsedTime > 63.0f) {
+			// show week 5 txt at 1min3s-1min5s spawn at 1min 5s
+			if (totalElapsedTime > 63.0f && totalElapsedTime < 65.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Get ready for Week 5, last week before finals...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Get ready for Week 5, last week before finals...", popUpTextPos.x, popUpTextPos.y);
 			}
 			spawnWeekly(totalElapsedTime, 65.0f,	// 3Q 2A 2L spawn at 1min 5s
 				7, 6, 5,
 				10, 8, 7,
 				QuizSS, AssSS, LabSS);
 
-			// show final week
-			if (totalElapsedTime < 85.0f && totalElapsedTime > 83.0f) {
+			// show final week at 1min23s-1min25s spawn at 1min 25s
+			if (totalElapsedTime > 83.0f && totalElapsedTime < 85.0f) {
 				CP_Settings_Fill(white);
-				CP_Font_DrawText("Oh no its finals week...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+				CP_Font_DrawText("Oh no its finals week...", popUpTextPos.x, popUpTextPos.y);
 			}
 			spawnBoss(totalElapsedTime, 85.0f, BossSS); // Boss spawn at 1min 25s
-			
 
-			/*
-//***** PRESENTATION LVL *****
-
-			// school is starting shows up when game starts
-			if (totalElapsedTime < 3.0f && totalElapsedTime > 1.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("Welcome to The Deliverables", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			if (totalElapsedTime < 8.0f && totalElapsedTime > 3.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("You are the student!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-
-			// show QUiZ
-			if (totalElapsedTime < 18.0f && totalElapsedTime > 14.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("This is a quiz", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			quiz[0].speed = 50;
-			spawnWeekly(totalElapsedTime, 15.0f,		// 1Quiz spawn at 15s
-				0, 0, 0,
-				1, 0, 0,
-				QuizSS, AssSS, LabSS);
-
-			// show ASS
-			if (totalElapsedTime < 28.0f && totalElapsedTime > 24.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("This is an assignment", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			spawnWeekly(totalElapsedTime, 25.0f,	// 1Ass spawns at 25s
-				0, 0, 0,
-				0, 1, 0,
-				QuizSS, AssSS, LabSS);
-
-			// show LAB
-			if (totalElapsedTime < 38.0f && totalElapsedTime > 34.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("This is a lab", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			spawnWeekly(totalElapsedTime, 35.0f,	// 1Lab spawn at 35s
-				0, 0, 0,
-				0, 0, 1,
-				QuizSS, AssSS, LabSS);
-
-			// show BBT
-			if (totalElapsedTime < 48.0f && totalElapsedTime > 44.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("This is a Bubble Tea", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			if (bbt.isActive && player.alive && totalElapsedTime > 45.0f && totalElapsedTime < 50.0f) {
-				CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
-				playerHeal(&bbt, &player);
-				}if (!bbt.isActive) {
-					coolDown(&bbt, deltaTime);
-				}
-				if (bbt.timer <= 0 && !bbt.isActive) {
-					respawnItem(&bbt, (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
-				}
-
-			// show Dr Wadini
-			if (totalElapsedTime < 55.0f && totalElapsedTime > 49.0f) {
-				CP_Settings_Fill(white);
-				CP_Font_DrawText("This is Dr Wadini", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
-			}
-			spawnBoss(totalElapsedTime, 50.0f, BossSS); // Boss spawn at 1min 25s
-//***** END OF PRESENTATION LVL *****
-			*/
 
 			// BOSS OST
 			//
@@ -431,8 +377,8 @@ void Level_Update(void)
 		}
 		if (Win) {
 			CP_Settings_Fill(red);
-			CP_Font_DrawText("You got the Degree!!!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-			CP_Font_DrawText("Press SPACE for better GPA, Q to main menu, ESC to Graduate!!!", ((float)(CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			CP_Font_DrawText("You got the Degree!!!", endGameMessagePos.x, endGameMessagePos.y);
+			CP_Font_DrawText("Press SPACE for better GPA, Q to main menu, ESC to Graduate!!!", endGameInsructPos.x, endGameInsructPos.y);
 
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
@@ -459,7 +405,7 @@ void Level_Update(void)
 		//
 		if (player.alive && !Win) {
 			
-			// POWER UP (need to remove for pitch)
+			// POWER UP 
 			//
 			// render the bubble tea sprite if the item is ready and checks if player come into contact with it 
 			if (bbt.isActive && player.alive && totalElapsedTime > 10.0f && totalElapsedTime < 65.0f) {
@@ -492,28 +438,28 @@ void Level_Update(void)
 			//
 			CP_Settings_RectMode(CP_POSITION_CORNER);
 			// RENDER HEALTHBAR 
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 150));
-			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), player.GPA * 100, 30);
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 120));
+			CP_Graphics_DrawRect(playerHealthbarPos.x, playerHealthbarPos.y, player.GPA * 100, 30);
 
 			// RENDER TEXT (GPA)
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_Fill(white);
 			CP_Settings_TextSize((float)(windowWidth / 38));
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("GPA", (float)(windowWidth / 13), (float)(windowHeight / 1.07));
+			CP_Font_DrawText("GPA", playerNamePos.x, playerNamePos.y);
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect((float)(windowWidth / 10), (float)(windowHeight / 1.08), 500, 30);
+			CP_Graphics_DrawRect(playerHealthbarPos.x, playerHealthbarPos.y, 500, 30);
 
 			// DEBUG USE: SHOW CURRENT WEAPON - Justin
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_Fill(white);
 			if (player.weapon == 1)
 			{
-				CP_Font_DrawText("Current weapon: Ranged", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
+				CP_Font_DrawText("Current weapon: Ranged", weaponTxtPos.x, weaponTxtPos.y);
 			}
-			else CP_Font_DrawText("Current weapon: Melee", (float)(windowWidth / 1.2), (float)(windowHeight / 1.07));
+			else CP_Font_DrawText("Current weapon: Melee", weaponTxtPos.x, weaponTxtPos.y);
 
 		}
 
@@ -522,19 +468,19 @@ void Level_Update(void)
 		if (boss.inGame && boss.alive && player.alive) {
 			CP_Settings_RectMode(CP_POSITION_CORNER);
 			// RENDER HEALTHBAR
-			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 150));
-			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), boss.HP * 5, 30);
+			CP_Settings_Fill(CP_Color_Create(255, 0, 0, 120));
+			CP_Graphics_DrawRect(bossHealthbarPos.x, bossHealthbarPos.y, boss.HP * 5, 30);
 			// RENDER TEXT (GPA)
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Settings_Fill(white);
 			CP_Settings_TextSize((float)(windowWidth / 38));
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("DR WADINI", (float)(windowWidth / 3.5), (float)(windowHeight / 30));
+			CP_Font_DrawText("DR WADINI", bossNamePos.x, bossNamePos.y);
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
-			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), 500, 30);
+			CP_Graphics_DrawRect(bossHealthbarPos.x, bossHealthbarPos.y, 500, 30);
 		}
 
 		// PAUSE SCREEN - Justin

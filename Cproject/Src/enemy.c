@@ -5,6 +5,13 @@
 @team		RushA
 @date       31/10/2022 (last updated)
 @brief      contains defininition of Enemy functions
+@authors
+
+	Shawn: worked on melee enemy attack logic, boss attack, enemy spawn, enemy animation,		(shawnwengkwang.chan@digipen.edu)
+		   boss logic
+
+   EeLoong: worked on enemy projectile logic, enemy laser logic
+
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"

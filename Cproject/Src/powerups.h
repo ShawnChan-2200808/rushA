@@ -4,8 +4,8 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       25/10/2022 (last updated)
-@brief      contains Declarations of Player functions
+@date       27/11/2022 (last updated)
+@brief      contains Declarations of Powerups functions
 *//*_________________________________________________________________________________*/
 
 

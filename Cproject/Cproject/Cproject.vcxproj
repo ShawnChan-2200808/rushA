@@ -114,6 +114,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\Src\pause.c" />
     <ClCompile Include="..\Src\player.c" />
     <ClCompile Include="..\Src\powerups.c" />
+    <ClCompile Include="..\Src\presentationLevel.c" />
     <ClCompile Include="..\Src\splashscreen.c">
       <DeploymentContent>true</DeploymentContent>
     </ClCompile>
@@ -132,6 +133,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Src\pause.h" />
     <ClInclude Include="..\Src\player.h" />
     <ClInclude Include="..\Src\powerups.h" />
+    <ClInclude Include="..\Src\presentationLevel.h" />
     <ClInclude Include="..\Src\Tutorial.h" />
     <ClInclude Include="..\Src\utils.h" />
     <ClInclude Include="..\Src\weapons.h" />
