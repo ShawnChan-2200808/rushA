@@ -4,7 +4,7 @@
 @section    A
 @team		RushA
 @date       27/11/2022 (last updated)
-@brief      contains assets and variables that we are reusing and  also
+@brief      contains assets and variables that we are reusing and also
 			declarations of utilites shared functions
 *//*_________________________________________________________________________________*/
 #pragma once

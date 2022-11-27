@@ -225,11 +225,10 @@ void Tutorial_Update(void)
 				}
 			}
 
-			//Tutorial Code
+			//Tutorial Code, tutorial is split into 13 different stages to guide players on all the different functionailites of the game
 			CP_Settings_Fill(white);
 			switch (stage) {
 			case 0:
-				//@todo print instructions for w,a,s,d
 				if (flag == 0)
 					CP_Font_DrawText("PRESS and hold W to move forward", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
@@ -547,9 +546,6 @@ void Tutorial_Update(void)
 		pauseScreen();
 	}
 }
-
-
-
 
 void Tutorial_Exit(void)
 {
