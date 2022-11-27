@@ -4,7 +4,7 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       11/10/2022 (last updated)
+@date       27/11/2022 (last updated)
 @brief      This file contains the splashscreen execution.
 *//*_________________________________________________________________________*/
 
@@ -34,10 +34,7 @@ void Splash_Screen_Init(void)
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
-	//CP_System_Fullscreen();
-	//CP_System_FullscreenAdvanced(1920, 1080);
-	//windowWidth = CP_System_GetDisplayWidth();
-	//windowHeight = CP_System_GetDisplayHeight();
+
 
 	// Set the colour
 	black = CP_Color_Create(0, 0, 0, 255);
@@ -109,5 +106,6 @@ void Splash_Screen_Exit(void)
 	// Clear the Splashscreen image upon exiting this state
 	//
 	CP_Image_Free(&splashscreenDP);
+	CP_Image_Free(&TeamLogo);
 }
 

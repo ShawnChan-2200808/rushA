@@ -10,5 +10,4 @@
 void Mainmenu_Init(void);
 void Mainmenu_Update(void);
 void Mainmenu_Exit(void);
-
 CP_Image TeamLogo;

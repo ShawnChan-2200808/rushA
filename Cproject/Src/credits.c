@@ -4,7 +4,7 @@
 @author		Justin Yeo (justin.yeo@digipen.edu)
 @section    A
 @team		RushA
-@date       31/10/2022 (last updated)
+@date       27/11/2022 (last updated)
 @brief      contains defininition of credits functions
 *//*_________________________________________________________________________________*/
 
