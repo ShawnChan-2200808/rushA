@@ -51,8 +51,6 @@ void Level_Init(void)
 	initAllEnemies(10, 8, 8);
 	bossInit(&boss);
 	itemInit(&bbt, 600, 600, 55, 55, 1.0f);
-	//tableinit(&table, windowWidth / 4, windowHeight / 4);
-	//chairinit(&chair, windowWidth / 2 +50, windowHeight / 2 +50);
 	initallwall(5, 3);
 	randomX = 0;
 	randomY = 0;
@@ -207,7 +205,7 @@ void Level_Update(void)
 		//COLLISION - WeiHao
 		CP_Settings_Fill(green);
 		if (player.alive&& !Win) {
-
+			//Draw table and chair
 			for (int i = 0; i < 3; i++)
 			{
 				CP_Image_Draw(Table, table[i].x, table[i].y, table[i].width, table[i].height, 255);
@@ -221,7 +219,8 @@ void Level_Update(void)
 			//CP_Graphics_DrawRect(player.playerPos.x, player.playerPos.y, player.worldSizeW, player.worldSizeH);
 			for (int j = 0;j < 5; j++)
 			{
-				pushback(&player, &chair[j]);
+				pushback(&player, &chair[j]);	//Collision for player for chair
+				//Collision for enemies for chair
 				for (int q = 0; q < 10; q++)
 				{
 					pushbackEnemy(&quiz[q], &chair[j]);
@@ -238,7 +237,8 @@ void Level_Update(void)
 			}
 			for (int i = 0; i < 3; i++)
 			{
-				pushback(&player, &table[i]);
+				pushback(&player, &table[i]);	//Collision for player for table
+				//Collision for enemies for table
 				for (int q = 0; q < 10; q++)
 				{
 					pushbackEnemy(&quiz[q], &table[i]);

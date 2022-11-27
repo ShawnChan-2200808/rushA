@@ -88,12 +88,13 @@ void Mainmenu_Init(void)
 
 void Mainmenu_Update(void)
 {
+	// Initialize time
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 	currentElapseTime += deltaTime;
 	ElapseTimeGamename += deltaTime;
 
-
+	// Lerp 
 	gamename_ypos = CP_Math_LerpFloat(0, (float)(windowHeight / 3.2), lerpgamename);
 	player_xpos = CP_Math_LerpFloat(-500, (float)(windowWidth + 250), lerpplayer);
 	ass_xpos = (player_xpos - 180);
@@ -152,37 +153,38 @@ void Mainmenu_Update(void)
 		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 		// Create background that is gray in colour
 		CP_Graphics_ClearBackground(gray);
+		// Draw buttons
 		Draw_Button("Play", (float)(windowWidth / 2), (float)((windowHeight / 2) + 50));
 		Draw_Button("Tutorial", (float)(windowWidth / 2), (float)((windowHeight / 2) + 150));
 		Draw_Button("Credit", (float)(windowWidth / 2) - 180, (float)((windowHeight / 2) + 250));
 		Draw_Button("Settings", (float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
 		Draw_Button("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 
-		//play button light up
+		//Play button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 220, 100, "Play");
 		}
 
-		//tutorial button light up
+		//Tutorial button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 220, 100, "Tutorial");
 		}
 
-		//credit button light up
+		//Credit button light up
 		if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 220, 100, "Credit");
 		}
 
-		//settings button light up
+		//Settings button light up
 		if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 220, 100, "Settings");
 		}
 
-		//exit button light up
+		//Exit button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100, "Exit");
@@ -193,7 +195,7 @@ void Mainmenu_Update(void)
 	// SETTINGS
 	//
 	if (settings) {
-		//credit button
+		//Credit button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
@@ -202,7 +204,7 @@ void Mainmenu_Update(void)
 
 			}
 		}
-		//settings
+		//Settings
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1 && settings)

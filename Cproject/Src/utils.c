@@ -127,7 +127,7 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	}
 	return 0;
 }
-
+//lights up the button if the user mouse over a button
 void IfMouseover(float area_center_x, float area_center_y, float area_width, float area_height, char *pre_fixtext)
 {
 	CP_Settings_Fill(blue);
@@ -155,7 +155,7 @@ void Draw_Button(char*pre_fixtext, float x , float y)
 	CP_Font_DrawText(pre_fixtext, x, y);
 	CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 }
-
+// use for SFX and Music when they are turned off
 void Toggle_Button(char* pre_fixtext, float x, float y)
 {
 	float const w = 200, h = 80;
