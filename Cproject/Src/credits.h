@@ -1,10 +1,12 @@
 /*!
-@file       mainmenu.h
+@file       credits.h
 @course     csd1401 Software Engineering Project
+@author		Justin Yeo
 @section    A
 @team		RushA
-@date       31/10/2022 (last updated)
-@brief      contains declarations of main menu functions
+@date       27/11/2022 (last updated)
+@brief      contains declarations of credits functions
 *//*_________________________________________________________________________________*/
 
-void CreditsWords(void);
+void RollCredits(void);
+void CreditsDigipen(void);

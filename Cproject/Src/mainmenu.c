@@ -4,8 +4,8 @@
 @author		Sun Wei Hao
 @section    A
 @team		RushA
-@date       31/10/2022 (last updated)
-@brief      contains defininition of Enemy functions
+@date       27/11/2022 (last updated)
+@brief      contains defininition of main menu functions
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -20,16 +20,15 @@
 CP_Color gray, black, red, blue;
 int currentFrame;
 float fps, spriteWidth, spriteHeight;
-CP_Image Gamename;
 
-CP_Image Gamename, Background;
+CP_Image Gamename, Background, TeamLogo;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime, currentElapseTimeReturn, ElapseTimeGamename;
 static float deltaTime;
 int timeplayer, timegamename, lerpMax;
 float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos, lerpgamename, rategamename;
 
-int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
+int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE, creditsPage;
 float SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
 BOOL firstrun, secondrun, settings, SFX = TRUE, MUSIC = TRUE, credits;
@@ -40,6 +39,7 @@ void Mainmenu_Init(void)
 	// Load image png from assets folder
 	Gamename = CP_Image_Load("Assets/SPRITES/THE DELIVERABLES.png");
 	Background = CP_Image_Load("Assets/SPRITES/School Background.png");
+	TeamLogo = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
 
 	//animation 
 	displayTime = 2;
@@ -57,6 +57,7 @@ void Mainmenu_Init(void)
 	timegamename = 2;
 	finalLerp = 1;
 	lerpMax = 1;
+	creditsPage = 1;
 
 	//BOOL
 	firstrun = FALSE;
@@ -67,7 +68,7 @@ void Mainmenu_Init(void)
 	rateplayer = finalLerp / timeplayer;
 	rategamename = finalLerp / timegamename;
 
-	// Setting the window width and height
+	//Setting the window width and height
 	//windowWidth = 1920;
 	//windowHeight = 1080;
 
@@ -77,7 +78,7 @@ void Mainmenu_Init(void)
 	blue = CP_Color_Create(0, 0, 255, 255);
 
 	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 
 	CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 	CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);
@@ -88,12 +89,13 @@ void Mainmenu_Init(void)
 
 void Mainmenu_Update(void)
 {
+	// Initialize time
 	deltaTime = CP_System_GetDt();
 	totalElapsedTime += deltaTime;
 	currentElapseTime += deltaTime;
 	ElapseTimeGamename += deltaTime;
 
-
+	// Lerp 
 	gamename_ypos = CP_Math_LerpFloat(0, (float)(windowHeight / 3.2), lerpgamename);
 	player_xpos = CP_Math_LerpFloat(-500, (float)(windowWidth + 250), lerpplayer);
 	ass_xpos = (player_xpos - 180);
@@ -152,64 +154,38 @@ void Mainmenu_Update(void)
 		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 		// Create background that is gray in colour
 		CP_Graphics_ClearBackground(gray);
-		CP_Settings_Fill(red);
-		CP_Settings_RectMode(CP_POSITION_CENTER);
-		//draw the draw rect in the middle of the anchor point //draw play button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80);
-		//draw the draw 2nd rect in the middle of the anchor point //draw tutorial button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80);
-		//draw the draw 3rd rect in the middle of the anchor point //draw credit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw rect in the middle of the anchor point //draw settings button
-		CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
+		// Draw buttons
+		Draw_Button("Play", (float)(windowWidth / 2), (float)((windowHeight / 2) + 50));
+		Draw_Button("Tutorial", (float)(windowWidth / 2), (float)((windowHeight / 2) + 150));
+		Draw_Button("Credit", (float)(windowWidth / 2) - 180, (float)((windowHeight / 2) + 250));
+		Draw_Button("Settings", (float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
+		Draw_Button("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 
-		//set colour of text black
-		CP_Settings_Fill(black);
-		//set font size
-		CP_Settings_TextSize(50.0f);
-		//text in the first rect 
-		CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 2nd rect
-		CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 3nd rect
-		CP_Font_DrawText("Credit", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the settings rect
-		CP_Font_DrawText("Settings", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 4nd rect
-		CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-
-		//play button light up
+		//Play button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 220, 100, "Play");
 		}
 
-		//tutorial button light up
+		//Tutorial button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 220, 100, "Tutorial");
 		}
 
-		//credit button light up
+		//Credit button light up
 		if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 220, 100, "Credit");
 		}
 
-		//settings button light up
+		//Settings button light up
 		if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 220, 100, "Settings");
 		}
 
-		//exit button light up
+		//Exit button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 100, "Exit");
@@ -220,7 +196,7 @@ void Mainmenu_Update(void)
 	// SETTINGS
 	//
 	if (settings) {
-		//credit button
+		//Credit button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
@@ -229,7 +205,7 @@ void Mainmenu_Update(void)
 
 			}
 		}
-		//settings
+		//Settings
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1 && settings)
@@ -257,27 +233,13 @@ void Mainmenu_Update(void)
 		{
 
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Toggle_Button("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Draw_Button("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 1.0f);
 		}
 
@@ -286,35 +248,18 @@ void Mainmenu_Update(void)
 		if (!MUSIC)
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC OFF", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Toggle_Button("MUSIC OFF", (float)(float)(windowWidth / 2)+180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC ON", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Draw_Button("MUSIC ON", (float)(float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 1.0f);
 		}
 		// BACK BUTTON
-		//
+		Draw_Button("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		CP_Settings_Fill(red);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-		CP_Settings_TextSize(50.0f);
-		CP_Settings_Fill(black);
-		CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
@@ -334,29 +279,47 @@ void Mainmenu_Update(void)
 	if (credits) {
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
-		CreditsWords();
+		CP_Image_Draw(Background, 0, 0, (float)CP_Image_GetWidth(Background) * 2, (float)CP_Image_GetHeight(Background) * 2, 255);
 		// BACK button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
 				credits = FALSE;
+				creditsPage = 1;
+			}
+			if (IsAreaClicked((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				creditsPage = 2;
+			}
+			if (IsAreaClicked((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				creditsPage = 1;
 			}
 		}
-		// BACK BUTTON
-		//
-		CP_Settings_Fill(red);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-		CP_Settings_TextSize(50.0f);
-		CP_Settings_Fill(black);
-		CP_Font_DrawText("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
+		if (creditsPage == 1)
+		{
+			RollCredits();
+			//next button light up
+			if (IsAreaClicked((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				IfMouseover((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 220, 80, "Next");
+
+			}
+		}
+		else
+		{
+			CreditsDigipen();
+			if (IsAreaClicked((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				IfMouseover((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 220, 80, "Previous");
+			}
+		}
+
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 80, "Back");
-
 		}
 	}
 
@@ -453,5 +416,5 @@ void Mainmenu_Exit(void)
 	//
 	CP_Image_Free(&Gamename);
 	CP_Image_Free(&Background);
-
+	CP_Image_Free(&TeamLogo);
 }

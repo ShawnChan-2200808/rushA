@@ -29,7 +29,7 @@ extern CP_Color gray, blue, green, red;
 extern float fps;
 static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
-extern int randomX, randomY;
+int randomX, randomY, clickcount;
 float deltaTime, tutorialtime;
 int paused, flag, stage, projectilecount;
 
@@ -56,6 +56,7 @@ void Tutorial_Init(void)
 	flag = 0;
 	projectilecount = 0;
 	tutorialtime = 0;
+	clickcount = 0;
 }
 
 void Tutorial_Update(void)
@@ -109,20 +110,23 @@ void Tutorial_Update(void)
 				else if (player.weapon == 0)
 				{
 					player.currentFrame = 2;
-					meleeVec(&player, 100.f);
-					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y - 75, 150, 150, 255, mouseToplayerAngle(&player) - 70);
-					for (int i = 0; i < 2; i++)
+					// Get vector and spawn hit point
+					meleeVec(&player, 200.f);
+					// Draws the hitbox sprite
+					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 80, player.weaponPos.y - 80, 200, 200, 255, mouseToplayerAngle(&player) - 70);
+					// Looping through to check which enemy gets hit
+					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150, 6);
+						damageEnemy(&quiz[i], &player, 200, 200, 6);
 					}
-					for (int i = 0; i < 2; i++)
+					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150, 8);
-						damageEnemy(&lab[i], &player, 150, 150, 8);
+						damageEnemy(&assignment[i], &player, 200, 200, 8);
+						damageEnemy(&lab[i], &player, 200, 200,8);
 					}
-					//if (randomiser==0 || randomiser == 4) {
+					damageEnemy(&boss, &player, 200, 200, 4);
+					// Play Melee attack sound
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					//}
 				}
 			}
 
@@ -224,11 +228,10 @@ void Tutorial_Update(void)
 				}
 			}
 
-			//Tutorial Code
+			//Tutorial Code, tutorial is split into 13 different stages to guide players on all the different functionailites of the game
 			CP_Settings_Fill(white);
 			switch (stage) {
 			case 0:
-				//@todo print instructions for w,a,s,d
 				if (flag == 0)
 					CP_Font_DrawText("PRESS and hold W to move forward", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
@@ -236,7 +239,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -254,7 +257,7 @@ void Tutorial_Update(void)
 
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -271,7 +274,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -288,7 +291,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -305,10 +308,10 @@ void Tutorial_Update(void)
 				if (flag == 1)
 				{
 					flag = 2;
-					CP_Font_DrawText("congrats now PRESS esc again to unpause student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats now PRESS esc again to unpause student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				}
 				if (flag == 2 && paused == 0) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -328,7 +331,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -338,18 +341,17 @@ void Tutorial_Update(void)
 				}
 				break;
 			case 6:
-				if (flag == 0) {
+				if (clickcount < 7) {
 
 					player.weapon = 0;
-					CP_Font_DrawText("Click and aim to do melee damage student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Spam click left mouse button at where you want to swing your pencil student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+
+					if (CP_Input_MouseClicked()) {
+						++clickcount;
+					}
 				}
-				if (CP_Input_MouseClicked()) {
-					flag = 1;
-					//if (randomiser==0 || randomiser == 4) {
-					//}
-				}
-				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+				if (clickcount >= 7) {
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -360,7 +362,7 @@ void Tutorial_Update(void)
 				break;
 			case 7:
 				if (flag == 0) {
-					CP_Font_DrawText("Kill the quiz student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Kill the quiz with your melee weapon", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
 						0, 0, 0,
 						1, 0, 0,
@@ -371,7 +373,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -382,12 +384,12 @@ void Tutorial_Update(void)
 				break;
 			case 8:
 				if (flag == 0)
-					CP_Font_DrawText("Use the q or scroll wheel to change weapon student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Use the Q button or mouse scroll wheel to change weapon student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				if (player.weapon == 1) {
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -398,14 +400,14 @@ void Tutorial_Update(void)
 				break;
 			case 9:
 				if (flag == 0) {
-					CP_Font_DrawText("Click the direction you would like to shoot projectiles in student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Spam click left mouse button you would like to shoot projectiles student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					player.weapon = 1;
 				}
 				if (projectilecount == 7) {
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -416,7 +418,7 @@ void Tutorial_Update(void)
 				break;
 			case 10:
 				if (flag == 0) {
-					CP_Font_DrawText("Kill the assignment student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Kill the assignment that just spawned student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					spawnWeekly(1, 0,		// 1Q 1A 1L spawn at 5s
 						0, 0, 0,
 						0, 1, 0,
@@ -426,7 +428,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -456,7 +458,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -477,7 +479,7 @@ void Tutorial_Update(void)
 					flag = 1;
 				}
 				if (flag == 1) {
-					CP_Font_DrawText("congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
+					CP_Font_DrawText("Congrats student", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 					tutorialtime += CP_System_GetDt();
 					if (tutorialtime > 1) {
 						++stage;
@@ -547,9 +549,6 @@ void Tutorial_Update(void)
 		pauseScreen();
 	}
 }
-
-
-
 
 void Tutorial_Exit(void)
 {

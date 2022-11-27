@@ -4,7 +4,7 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       11/10/2022 (last updated)
+@date       27/11/2022 (last updated)
 @brief      This file contains the splashscreen execution.
 *//*_________________________________________________________________________*/
 
@@ -14,7 +14,7 @@
 #include "mainmenu.h"
 	
 CP_Image splashscreenDP;
-CP_Image splashscreenRA;
+CP_Image TeamLogo;
 
 float totalElapsedTime, alphaIncrease;
 static float deltaTime;
@@ -26,18 +26,15 @@ void Splash_Screen_Init(void)
 	CP_System_SetWindowTitle("The Deliverables");
 	//initialise all assets
 	initAssets();
+	initGame();
 
 	// Load splash screen png from assets folder
 	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_WHITE.png");
-//	splashscreenRA = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
+	TeamLogo = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
 	
 	// Setting the window width and height
 	windowWidth = 1920;
 	windowHeight = 1080;
-	//CP_System_Fullscreen();
-	//CP_System_FullscreenAdvanced(1920, 1080);
-	//windowWidth = CP_System_GetDisplayWidth();
-	//windowHeight = CP_System_GetDisplayHeight();
 
 	// Set the colour
 	black = CP_Color_Create(0, 0, 0, 255);
@@ -57,7 +54,7 @@ void Splash_Screen_Init(void)
 	CP_System_SetFrameRate(fps);
 
 	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 	
 }
 
@@ -72,7 +69,7 @@ void Splash_Screen_Update(void)
 
 	if (CP_Input_KeyReleased(KEY_ENTER))
 	{
-		totalElapsedTime = 2;
+		totalElapsedTime = 4;
 	}
 
 	// Rendering Digipen Splashscreen 
@@ -81,25 +78,24 @@ void Splash_Screen_Update(void)
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 		CP_Image_Draw(splashscreenDP, (float)(windowWidth / 2), (float)(windowHeight / 2), (float)CP_Image_GetWidth(splashscreenDP), (float)CP_Image_GetHeight(splashscreenDP), alpha);
+		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
 		CP_Settings_Fill(white);
-		CP_Font_DrawText("All content © 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", (float)(CP_System_GetWindowWidth() / 2), 1060.f);
+		CP_Settings_TextSize(40.0f);
+		CP_Font_DrawText("All content COPYRIGHT 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", (float)(CP_System_GetWindowWidth() / 2), 1060.f); //©
 		alphaIncrease = totalElapsedTime * rate;
 		alpha = (int)alphaIncrease % alphaMax;
 	}
 
-
-	//// Rendering RUSHA Splashscreen
-	//
-	//else{
-	//	CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
-	//	alphaIncrease = totalElapsedTime * rate;
-	//	alpha = (int)alphaIncrease % 256;
-	//}
+	// Rendering RUSHA Splashscreen
+	else{
+		CP_Image_Draw(TeamLogo, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(TeamLogo), (float)CP_Image_GetHeight(TeamLogo), alpha);
+		alphaIncrease = totalElapsedTime * rate;
+		alpha = (int)alphaIncrease % 256;
+	}
 	
 
 	// Change scene upon splashscreen end
-	//if (totalElapsedTime > 4)
-	if (totalElapsedTime > 2)
+	if (totalElapsedTime > 4)
 	{
 		// Change to state
 		CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
@@ -111,6 +107,6 @@ void Splash_Screen_Exit(void)
 	// Clear the Splashscreen image upon exiting this state
 	//
 	CP_Image_Free(&splashscreenDP);
-//	CP_Image_Free(&splashscreenRA);
+	CP_Image_Free(&TeamLogo);
 }
 

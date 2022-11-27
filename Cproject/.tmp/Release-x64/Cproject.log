@@ -1,22 +1,10 @@
-﻿  anim.c
-  collsion.c
-  credits.c
-  enemy.c
-  level.c
-  main.c
-  mainmenu.c
-  pause.c
-  player.c
-  powerups.c
-  splashscreen.c
-  Tutorial.c
-  utils.c
+﻿  Tutorial.c
   weapons.c
   Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 78 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
   Finished generating code
+  All 78 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Cproject.vcxproj -> C:\Users\login\OneDrive\Desktop\SIT\CS\Project\Git\rushA\Cproject\bin\Release-x64\Cproject.exe
   1 File(s) copied
   1 File(s) copied
-  25 File(s) copied
+  26 File(s) copied

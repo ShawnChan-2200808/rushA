@@ -3,8 +3,13 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       25/10/2022 (last updated)
+@date       27/11/2022 (last updated)
 @brief      contains Declarations of Player functions
+@authors
+
+	Shawn: worked on player movement, player melee attack logic, player level logic
+
+   Justin: worked on player projectile logic
 *//*_________________________________________________________________________________*/
 
 

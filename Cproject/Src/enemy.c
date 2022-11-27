@@ -5,6 +5,13 @@
 @team		RushA
 @date       31/10/2022 (last updated)
 @brief      contains defininition of Enemy functions
+@authors
+
+	Shawn: worked on melee enemy attack logic, boss attack, enemy spawn, enemy animation,		(shawnwengkwang.chan@digipen.edu)
+		   boss logic
+
+   EeLoong: worked on enemy projectile logic, enemy laser logic
+
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -149,12 +156,6 @@ void assInit(struct Enemy* enemy) {
 	enemybulletReset(&(*enemy));
 	(*enemy).bulletcolour = CP_Color_Create(173, 216, 230, 255);
 	(*enemy).rateoffire = 500;
-
-	//collision
-	(*enemy).hitboxX = ((*enemy).worldSizeW / 2);
-	(*enemy).hitboxY = ((*enemy).worldSizeH / 2);
-	(*enemy).enemymin = CP_Vector_Set(((*enemy).EnemyPos.x - ((*enemy).hitboxX)), ((*enemy).EnemyPos.y - ((*enemy).hitboxY)));
-	(*enemy).enemymax = CP_Vector_Set(((*enemy).EnemyPos.x + ((*enemy).hitboxX)), ((*enemy).EnemyPos.y + ((*enemy).hitboxY)));
 }
 
 void labInit(struct Enemy* enemy) {
@@ -354,10 +355,6 @@ int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBu
 {
 	if ((*player).alive &&
 		isCircleEntered(bullet.Pos.x, bullet.Pos.y, bullet.diameter, (*player).playerPos.x, (*player).playerPos.y))
-		//((bullet.Pos.x - (bullet.diameter / 2)) >= ((*player).playerPos.x) - ((*enemy).hitboxX / 2)) &&
-		//((bullet.Pos.x + (bullet.diameter / 2)) <= ((*player).playerPos.x) + ((*enemy).hitboxX / 2)) &&
-		//((bullet.Pos.y - (bullet.diameter / 2)) >= ((*player).playerPos.y) - ((*enemy).hitboxY / 2)) &&
-		//((bullet.Pos.y + (bullet.diameter / 2)) <= ((*player).playerPos.y) + ((*enemy).hitboxY / 2)))
 	{
 		(*player).GPA -= bullet.damage;
 		(*player).currentFrame += (*player).animTotalFrames;
@@ -464,7 +461,7 @@ void bossLogic(CP_Image BossSS, struct Enemy* boss, struct Player* player) {
 			// based on random number do following case
 			switch (randomiser)
 			{
-			case 0: // Death zone chase 
+			case 0: // Death zone circle chase 
 
 				boss->speed = 150;
 				boss->hitCircle = 500;
