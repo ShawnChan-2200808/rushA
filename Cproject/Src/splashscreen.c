@@ -14,7 +14,7 @@
 #include "mainmenu.h"
 	
 CP_Image splashscreenDP;
-CP_Image splashscreenRA;
+CP_Image TeamLogo;
 
 float totalElapsedTime, alphaIncrease;
 static float deltaTime;
@@ -29,7 +29,7 @@ void Splash_Screen_Init(void)
 
 	// Load splash screen png from assets folder
 	splashscreenDP = CP_Image_Load("./Assets/SPLASHSCREEN/DigiPen_Singapore_WEB_WHITE.png");
-//	splashscreenRA = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
+	TeamLogo = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
 	
 	// Setting the window width and height
 	windowWidth = 1920;
@@ -72,7 +72,7 @@ void Splash_Screen_Update(void)
 
 	if (CP_Input_KeyReleased(KEY_ENTER))
 	{
-		totalElapsedTime = 2;
+		totalElapsedTime = 4;
 	}
 
 	// Rendering Digipen Splashscreen 
@@ -87,19 +87,17 @@ void Splash_Screen_Update(void)
 		alpha = (int)alphaIncrease % alphaMax;
 	}
 
-
-	//// Rendering RUSHA Splashscreen
-	//
-	//else{
-	//	CP_Image_Draw(splashscreenRA, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(splashscreenRA), (float)CP_Image_GetHeight(splashscreenRA), alpha);
-	//	alphaIncrease = totalElapsedTime * rate;
-	//	alpha = (int)alphaIncrease % 256;
-	//}
+	// Rendering RUSHA Splashscreen
+	
+	else{
+		CP_Image_Draw(TeamLogo, windowWidth / 2, windowHeight / 2, (float)CP_Image_GetWidth(TeamLogo), (float)CP_Image_GetHeight(TeamLogo), alpha);
+		alphaIncrease = totalElapsedTime * rate;
+		alpha = (int)alphaIncrease % 256;
+	}
 	
 
 	// Change scene upon splashscreen end
-	//if (totalElapsedTime > 4)
-	if (totalElapsedTime > 2)
+	if (totalElapsedTime > 4)
 	{
 		// Change to state
 		CP_Engine_SetNextGameState(Mainmenu_Init, Mainmenu_Update, Mainmenu_Exit);
@@ -111,6 +109,5 @@ void Splash_Screen_Exit(void)
 	// Clear the Splashscreen image upon exiting this state
 	//
 	CP_Image_Free(&splashscreenDP);
-//	CP_Image_Free(&splashscreenRA);
 }
 

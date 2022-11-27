@@ -20,9 +20,8 @@
 CP_Color gray, black, red,blue;
 int currentFrame, spriteWidth, spriteHeight;
 float fps, windowWidth, windowHeight;
-CP_Image Gamename;
 
-CP_Image Gamename, Background;
+CP_Image Gamename, Background, TeamLogo;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime, currentElapseTimeReturn, ElapseTimeGamename;
 static float deltaTime;
@@ -336,7 +335,7 @@ void Mainmenu_Update(void)
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
 		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
-		CreditsWords();
+		RollCredits();
 		// BACK button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
@@ -456,5 +455,5 @@ void Mainmenu_Exit(void)
 	//
 	CP_Image_Free(&Gamename);
 	CP_Image_Free(&Background);
-
+	CP_Image_Free(&TeamLogo);
 }

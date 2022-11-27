@@ -7,4 +7,5 @@
 @brief      contains declarations of main menu functions
 *//*_________________________________________________________________________________*/
 
-void CreditsWords(void);
+void RollCredits(void);
+void CreditsDigipen(void);

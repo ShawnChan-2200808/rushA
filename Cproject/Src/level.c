@@ -131,7 +131,7 @@ void Level_Update()
 
 
 			// ATTACK - Shawn Melee & Justin Ranged
-			if (CP_Input_MouseClicked()) {
+			if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT)) {
 				
 				if (player.weapon == 1)
 				{
@@ -373,7 +373,7 @@ void Level_Update()
 		//9, 2, 2, 5, 3, 3, QuizSS, AssSS, LabSS);
 
 
-		// RENDERING POWERUP / PLAYER / BULLETS / HUD
+		// RENDERING POWERUP / PLAYER / BULLETS / HUD - Justin
 		//
 		if (player.alive && !Win) {
 			// POWER UP
@@ -449,7 +449,7 @@ void Level_Update()
 			CP_Graphics_DrawRect((float)(windowWidth / 2.8), (float)(windowHeight / 40), 500, 30);
 		}
 
-		// PAUSE KEY - Justin
+		// PAUSE SCREEN - Justin
 		//
 		if (CP_Input_KeyReleased(KEY_ESCAPE) && !Win && player.alive)
 		{
