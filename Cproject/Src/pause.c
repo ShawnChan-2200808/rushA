@@ -1,11 +1,11 @@
 /*!
 @file       pause.c
 @course     csd1401 Software Engineering Project
-@author		Justin Yeo
 @section    A
 @team		RushA
 @date       14/11/2022 (last updated)
 @brief      This file contains the implementation of the pause function
+		*** ONLY UPDATE THIS AFTER APPROVAL OF TEAM ***
 *//*_________________________________________________________________________*/
 
 #include "cprocessing.h"

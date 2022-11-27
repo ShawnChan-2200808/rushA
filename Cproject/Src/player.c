@@ -3,14 +3,8 @@
 @course     csd1401 Software Engineering Project
 @section    A
 @team		RushA
-@date       27/11/2022 (last updated)
+@date       25/10/2022 (last updated)
 @brief      contains defininition of Player functions
-@authors
-
-	Shawn: worked on player movement, player melee attack logic, player level logic	
-
-   Justin: worked on player projectile logic
-
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -60,21 +54,21 @@ void isPlayerAlive(struct Player* player) {
 	(*player).alive = (*player).GPA <= 0 ? 0 : 1;
 }
 
-// Move forward - Shawn
+// Move forward
 void moveForward(struct Player* player, CP_Vector direction) {
 	(*player).tempPos = CP_Vector_Normalize(direction);
 	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
 	(*player).playerPos = CP_Vector_Add((*player).playerPos, (*player).tempPos);
 }
 
-// Move backwards - Shawn
+// Move backwards
 void moveBack(struct Player* player, CP_Vector direction) {
 	(*player).tempPos = CP_Vector_Normalize(direction);
 	(*player).tempPos = CP_Vector_Scale((*player).tempPos, (*player).speed * deltaTime);
 	(*player).playerPos = CP_Vector_Subtract((*player).playerPos, (*player).tempPos);
 }
 
-// Get position from player to direction of mouse - Shawn
+// Get position from player to direction of mouse
 void meleeVec(struct Player* player, float scale) 
 {
 	CP_Vector update = CP_Vector_Set(CP_Input_GetMouseX() - (*player).playerPos.x, CP_Input_GetMouseY() - (*player).playerPos.y);
@@ -82,13 +76,13 @@ void meleeVec(struct Player* player, float scale)
 	(*player).weaponPos = CP_Vector_Add((*player).playerPos, CP_Vector_Scale(temp, scale));
 }
 
-// Switch weapons - justin
+// Switch weapons
 int switchWeapon(int weapon)
 {
 	return !weapon;
 }
 
-// Get angle from mouse to player - Justin
+// Get angle from mouse to player
 float mouseToplayerAngle(struct Player *player){
 	CP_Vector update = CP_Vector_Set((*player).playerPos.x - CP_Input_GetMouseX(), (*player).playerPos.y - CP_Input_GetMouseY());
 	CP_Vector normalised = CP_Vector_Normalize(update);

@@ -1,7 +1,6 @@
 /*!
 @file       weapons.c
 @course     csd1401 Software Engineering Project
-@author		Low Ee Loong
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)

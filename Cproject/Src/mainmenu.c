@@ -4,7 +4,7 @@
 @author		Sun Wei Hao
 @section    A
 @team		RushA
-@date       27/11/2022 (last updated)
+@date       31/10/2022 (last updated)
 @brief      contains defininition of main menu functions
 *//*_________________________________________________________________________________*/
 
@@ -39,7 +39,6 @@ void Mainmenu_Init(void)
 	// Load image png from assets folder
 	Gamename = CP_Image_Load("Assets/SPRITES/THE DELIVERABLES.png");
 	Background = CP_Image_Load("Assets/SPRITES/School Background.png");
-	TeamLogo = CP_Image_Load("./Assets/SPLASHSCREEN/RushA.png");
 
 	//animation 
 	displayTime = 2;
