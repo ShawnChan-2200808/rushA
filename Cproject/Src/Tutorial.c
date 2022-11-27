@@ -110,20 +110,23 @@ void Tutorial_Update(void)
 				else if (player.weapon == 0)
 				{
 					player.currentFrame = 2;
-					meleeVec(&player, 100.f);
-					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y - 75, 150, 150, 255, mouseToplayerAngle(&player) - 70);
-					for (int i = 0; i < 2; i++)
+					// Get vector and spawn hit point
+					meleeVec(&player, 200.f);
+					// Draws the hitbox sprite
+					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 80, player.weaponPos.y - 80, 200, 200, 255, mouseToplayerAngle(&player) - 70);
+					// Looping through to check which enemy gets hit
+					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150, 6);
+						damageEnemy(&quiz[i], &player, 200, 200, 6);
 					}
-					for (int i = 0; i < 2; i++)
+					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150, 8);
-						damageEnemy(&lab[i], &player, 150, 150, 8);
+						damageEnemy(&assignment[i], &player, 200, 200, 8);
+						damageEnemy(&lab[i], &player, 200, 200,8);
 					}
-					//if (randomiser==0 || randomiser == 4) {
+					damageEnemy(&boss, &player, 200, 200, 4);
+					// Play Melee attack sound
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					//}
 				}
 			}
 
@@ -225,11 +228,10 @@ void Tutorial_Update(void)
 				}
 			}
 
-			//Tutorial Code
+			//Tutorial Code, tutorial is split into 13 different stages to guide players on all the different functionailites of the game
 			CP_Settings_Fill(white);
 			switch (stage) {
 			case 0:
-				//@todo print instructions for w,a,s,d
 				if (flag == 0)
 					CP_Font_DrawText("PRESS and hold W to move forward", (float)(windowWidth / 2), (float)(windowHeight / 2 - 300));
 				if (CP_Input_KeyDown(KEY_W) && player.playerPos.y > 50)
@@ -547,9 +549,6 @@ void Tutorial_Update(void)
 		pauseScreen();
 	}
 }
-
-
-
 
 void Tutorial_Exit(void)
 {
