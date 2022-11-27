@@ -64,7 +64,7 @@ int playerbulletDamage(struct Enemy* enemy, struct playerBullet bullet, float hi
 int enemybulletDamage(struct Enemy* enemy, struct Player* player, struct enemyBullet bullet);
 
 // function affecting the enemys position and affecting direction its facing
-void respawnEnemy(struct Enemy* enemy, int hp);
+void respawnEnemy(struct Enemy* enemy, float hp);
 void removeEnemy(struct Enemy* enemy);
 void rotatenemy(struct Enemy* enemy, struct Player* player);
 

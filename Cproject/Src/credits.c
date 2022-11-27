@@ -1,5 +1,5 @@
 /*!
-@file       mainmenu.c
+@file       credits.c
 @course     csd1401 Software Engineering Project
 @author		Justin Yeo
 @section    A
@@ -16,11 +16,11 @@
 void RollCredits(void) {
 	CP_Settings_Fill(gray);
 	//draw the draw rect in the middle of the anchor point
-	CP_Graphics_DrawRect(windowWidth/2, windowHeight/2, 1900, 800);
+	CP_Graphics_DrawRect((float)(windowWidth/2), (float)(windowHeight/2), 1900.f, 800.f);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(black);
 	CP_Settings_TextSize(50.0f);
-	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 150); //©  <- FOR JUSTIN
+	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 150); //ï¿½  <- FOR JUSTIN
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_Draw(TeamLogo, (windowWidth / 4), (windowHeight / 2), 960, 540, 255);
 	// Development Team - Right Side
@@ -42,7 +42,7 @@ void CreditsDigipen(void) {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Settings_Fill(black);
 	CP_Settings_TextSize(50.0f);
-	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 150); //©  <- FOR JUSTIN
+	CP_Font_DrawText("Credits", (windowWidth / 2), (windowHeight / 20) + 150); //ï¿½  <- FOR JUSTIN
 
 	// DigiPen President
 	CP_Font_DrawText("DigiPen Institute of Technology", (windowWidth / 2), (windowHeight / 9) + 200);

@@ -17,8 +17,6 @@
   Ee Loong: worked on
 *//*_________________________________________________________________________*/
 
-//#include "stdio.h" 
-//#include "stdlib.h"
 #include "cprocessing.h"
 #include "utils.h"
 #include "player.h"
@@ -28,10 +26,9 @@
 #include "powerups.h"
 #include "collsion.h"
 #include "mainmenu.h"
-
+#include "pause.h"
 
 extern CP_Color gray, blue, green, red;
-extern int windowWidth, windowHeight;
 extern float fps;
 static float totalElapsedTime;
 CP_Vector Up, Left, Down, Right;
@@ -45,7 +42,7 @@ static int GameOver;
 static int bossOut;
 int cheat;
 
-void Level_Init()
+void Level_Init(void)
 {
 	// Initialising everything for the level
 	initGame();
@@ -75,9 +72,19 @@ void Level_Init()
 	CP_Sound_PlayAdvanced(schoolBellSFX,0.1f,1.0f,FALSE, CP_SOUND_GROUP_SFX);
 
 	cheat = 0;
+
+	/*
+	// FOR PITCH
+	//
+	quiz[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
+	assignment[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
+	lab[0].EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
+	boss.EnemyPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2.5));
+	bbt.position = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
+	*/
 }
 
-void Level_Update()
+void Level_Update(void)
 {
 	// CHEATS lol
 	if (CP_Input_KeyDown(KEY_O)) {
@@ -147,7 +154,7 @@ void Level_Update()
 					// Set the hit animation frame
 					player.currentFrame = 2;
 					// Get vector and spawn hit point
-					meleeVec(&player, 100);
+					meleeVec(&player, 100.f);
 					// Draws the hitbox sprite
 					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y -75, 150, 150 ,255, mouseToplayerAngle(&player)- 70);
 					// Looping through to check which enemy gets hit
@@ -180,7 +187,7 @@ void Level_Update()
 			}
 			CP_Settings_Fill(red);
 			CP_Font_DrawText("You failed...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
-			CP_Font_DrawText("Press SPACE to Re-Test, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
+			CP_Font_DrawText("Press SPACE to Re-Test, Q to main menu, ESC to Drop Out :(", (float)((CP_System_GetWindowWidth() / 2)), (float)(CP_System_GetWindowHeight() / 2 + 420));
 			if (CP_Input_KeyReleased(KEY_SPACE))
 			{
 				totalElapsedTime = 0;
@@ -188,8 +195,12 @@ void Level_Update()
 				CP_Engine_SetNextGameStateForced(Level_Init, Level_Update, NULL);
 			}
 
-			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+			if (CP_Input_KeyReleased(KEY_Q)) {
 				CP_Engine_SetNextGameStateForced(Mainmenu_Init, Mainmenu_Update, NULL);
+			}
+
+			if (CP_Input_KeyReleased(KEY_ESCAPE)) {
+				CP_Engine_Terminate();
 			}
 		}
 
@@ -255,6 +266,7 @@ void Level_Update()
 		isPlayerAlive(&player);
 
 		if (!Win && player.alive) {
+			
 			// GAME SPAWN LOGIC - Shawn
 			//
 			// school is starting shows up when game starts
@@ -320,6 +332,75 @@ void Level_Update()
 				CP_Font_DrawText("Oh no its finals week...", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
 			}
 			spawnBoss(totalElapsedTime, 85.0f, BossSS); // Boss spawn at 1min 25s
+			
+
+			/*
+//***** PRESENTATION LVL *****
+
+			// school is starting shows up when game starts
+			if (totalElapsedTime < 3.0f && totalElapsedTime > 1.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("Welcome to The Deliverables", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			if (totalElapsedTime < 8.0f && totalElapsedTime > 3.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("You are the student!", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+
+			// show QUiZ
+			if (totalElapsedTime < 18.0f && totalElapsedTime > 14.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("This is a quiz", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			quiz[0].speed = 50;
+			spawnWeekly(totalElapsedTime, 15.0f,		// 1Quiz spawn at 15s
+				0, 0, 0,
+				1, 0, 0,
+				QuizSS, AssSS, LabSS);
+
+			// show ASS
+			if (totalElapsedTime < 28.0f && totalElapsedTime > 24.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("This is an assignment", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			spawnWeekly(totalElapsedTime, 25.0f,	// 1Ass spawns at 25s
+				0, 0, 0,
+				0, 1, 0,
+				QuizSS, AssSS, LabSS);
+
+			// show LAB
+			if (totalElapsedTime < 38.0f && totalElapsedTime > 34.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("This is a lab", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			spawnWeekly(totalElapsedTime, 35.0f,	// 1Lab spawn at 35s
+				0, 0, 0,
+				0, 0, 1,
+				QuizSS, AssSS, LabSS);
+
+			// show BBT
+			if (totalElapsedTime < 48.0f && totalElapsedTime > 44.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("This is a Bubble Tea", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			if (bbt.isActive && player.alive && totalElapsedTime > 45.0f && totalElapsedTime < 50.0f) {
+				CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
+				playerHeal(&bbt, &player);
+				}if (!bbt.isActive) {
+					coolDown(&bbt, deltaTime);
+				}
+				if (bbt.timer <= 0 && !bbt.isActive) {
+					respawnItem(&bbt, (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 3));
+				}
+
+			// show Dr Wadini
+			if (totalElapsedTime < 55.0f && totalElapsedTime > 49.0f) {
+				CP_Settings_Fill(white);
+				CP_Font_DrawText("This is Dr Wadini", (float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+			}
+			spawnBoss(totalElapsedTime, 50.0f, BossSS); // Boss spawn at 1min 25s
+//***** END OF PRESENTATION LVL *****
+			*/
 
 			// BOSS OST
 			//
@@ -336,6 +417,7 @@ void Level_Update()
 		// 
 		if (totalElapsedTime >= 300 || boss.alive == 0 && boss.inGame == 1) {
 			boss.inGame = 0; // Turn Off the boss so that it triggers the below sequence
+			boss.alive = 0; // For if the player survives until 5mins mark 
 		}
 
 		// WIN GAME - Shawn
@@ -376,21 +458,27 @@ void Level_Update()
 		// RENDERING POWERUP / PLAYER / BULLETS / HUD - Justin
 		//
 		if (player.alive && !Win) {
-			// POWER UP
+			
+			// POWER UP (need to remove for pitch)
 			//
+			// render the bubble tea sprite if the item is ready and checks if player come into contact with it 
 			if (bbt.isActive && player.alive && totalElapsedTime > 10.0f && totalElapsedTime < 65.0f) {
-				CP_Settings_Fill(green);
+				//CP_Settings_Fill(green);
 				//CP_Graphics_DrawRect(bbt.position.x, bbt.position.y, bbt.Width, bbt.Height);
 				CP_Image_Draw(bbtSS, bbt.position.x, bbt.position.y, bbt.Width, bbt.Height, 255);
 				playerHeal(&bbt, &player);
+
+			// If the player has taken bubble tea it will not be active and activate the cooldown
 			}if (!bbt.isActive && totalElapsedTime < 65.0f) {
 				coolDown(&bbt, deltaTime);
 			}
+
+			// when the cooldown for bbt is up, respawn it at a random position
 			if (bbt.timer <= 0 && !bbt.isActive && totalElapsedTime < 65.0f) {
 				randomItemPos(&bbt);
 				respawnItem(&bbt, bbt.randX, bbt.randY); //CP_Random_RangeFloat(50, 1800), CP_Random_RangeFloat(50,900));
 			}
-
+			
 
 			// BULLET SIMULATION (UPDATING POSITION) - Justin
 			//
@@ -442,7 +530,7 @@ void Level_Update()
 			CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 			CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 			CP_Settings_TextAlignment(horizontal, vertical);
-			CP_Font_DrawText("DR X", (float)(windowWidth / 3.2), (float)(windowHeight / 30));
+			CP_Font_DrawText("DR WADINI", (float)(windowWidth / 3.5), (float)(windowHeight / 30));
 
 			// RENDER HEALTHBAR PLACEHOLDER
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 20));
@@ -485,13 +573,9 @@ void Level_Update()
 		}
 		pauseScreen();
 	}
-
-
-
-
 }
 
-void Level_Exit()
+void Level_Exit(void)
 {
 	
 }

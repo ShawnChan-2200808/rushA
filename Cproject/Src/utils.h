@@ -1,6 +1,6 @@
 #pragma once
 CP_Color black, white, gray, blue, green, red;
-float windowWidth, windowHeight;
+int windowWidth, windowHeight;
 float fps;
 int randomX, randomY, randomiser;
 
@@ -33,6 +33,8 @@ CP_Sound bossSFX;
 void initGame();
 void initAssets();
 void freeAssets();
+void Draw_Button(char* pre_fixtext, float x, float y);
+void Toggle_Button(char* pre_fixtext, float x, float y);
 
 // Drawing of Background
 void SpawnBG(CP_Image BG, int numberRow, int numberCol);

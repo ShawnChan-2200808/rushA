@@ -1,10 +1,11 @@
 /*!
-@file       enemy.h
+@file       collsion.c
 @course     csd1401 Software Engineering Project
+@author		Sun Wei Hao
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      contains declarations of Enemy functions
+@brief      contains declarations of Obstacles and Collision functions
 *//*_________________________________________________________________________________*/
 #pragma once
 #include "player.h"
@@ -21,6 +22,6 @@ int collisionEnemy(struct Enemy* Enemy, struct wall* object);
 void tableinit(struct wall* table, float posX, float posY);
 void chairinit(struct wall* chair, float posX, float posY);
 void initallwall(int numOfchair, int numOftable);
-int pushback(struct Player* player, struct wall* object);
-int pushbackEnemy(struct Enemy* Enemy, struct wall* object);
+void pushback(struct Player* player, struct wall* object);
+void pushbackEnemy(struct Enemy* Enemy, struct wall* object);
 

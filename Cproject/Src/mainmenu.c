@@ -16,22 +16,22 @@
 #include "Tutorial.h"
 //#include "enemy.h"
 //#include "anim.c"
-	
-CP_Color gray, black, red,blue;
-int currentFrame, spriteWidth, spriteHeight;
-float fps, windowWidth, windowHeight;
+
+CP_Color gray, black, red, blue;
+int currentFrame;
+float fps, spriteWidth, spriteHeight;
 
 CP_Image Gamename, Background, TeamLogo;
 
 float totalElapsedTime, lerpIncrease, currentElapseTime, currentElapseTimeReturn, ElapseTimeGamename;
 static float deltaTime;
 int timeplayer, timegamename, lerpMax;
-float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos,lerpgamename, rategamename;
+float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos, lerpgamename, rategamename;
 
 int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
-float spriteWidth, SpriteHeight, displayTime;
+float SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
-BOOL firstrun, secondrun, settings,SFX = TRUE, MUSIC = TRUE, credits;
+BOOL firstrun, secondrun, settings, SFX = TRUE, MUSIC = TRUE, credits;
 
 
 void Mainmenu_Init(void)
@@ -44,7 +44,7 @@ void Mainmenu_Init(void)
 	displayTime = 2;
 	currentFrameP = 0, currentFrameE = 0;
 	animationSpeedP = 10, animationSpeedE = 15;
-	animTotalFramesP =2, animTotalFramesE = 8;
+	animTotalFramesP = 2, animTotalFramesE = 8;
 	spriteWidth = 64.0f, SpriteHeight = 64.0f;
 	animationElapsedTimeP = 0.0f, animationElapsedTimeE = 0.0f;
 
@@ -65,7 +65,7 @@ void Mainmenu_Init(void)
 	// Getting the rate we need to get to reach 1 lerpfector in seconds
 	rateplayer = finalLerp / timeplayer;
 	rategamename = finalLerp / timegamename;
-	
+
 	// Setting the window width and height
 	//windowWidth = 1920;
 	//windowHeight = 1080;
@@ -104,7 +104,7 @@ void Mainmenu_Update(void)
 	if (!settings && !credits) {
 
 		//play button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -114,7 +114,7 @@ void Mainmenu_Update(void)
 		}
 
 		//tutorial button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -123,7 +123,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//credit button
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
@@ -131,7 +131,7 @@ void Mainmenu_Update(void)
 			}
 		}
 		//settings
-		if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT) == 1)
+		if (CP_Input_MouseClicked() == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1 && !settings)
 			{
@@ -148,42 +148,14 @@ void Mainmenu_Update(void)
 			}
 		}
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
-
+		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 		// Create background that is gray in colour
 		CP_Graphics_ClearBackground(gray);
-		CP_Settings_Fill(red);
-		CP_Settings_RectMode(CP_POSITION_CENTER);
-		//draw the draw rect in the middle of the anchor point //draw play button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80);
-		//draw the draw 2nd rect in the middle of the anchor point //draw tutorial button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 150, 200, 80);
-		//draw the draw 3rd rect in the middle of the anchor point //draw credit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw rect in the middle of the anchor point //draw settings button
-		CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-
-		//set colour of text black
-		CP_Settings_Fill(black);
-		//set font size
-		CP_Settings_TextSize(50.0f);
-		//text in the first rect 
-		CP_Font_DrawText("Play", (float)(windowWidth / 2), (float)(windowHeight / 2) + 50);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 2nd rect
-		CP_Font_DrawText("Tutorial", (float)(windowWidth / 2), (float)(windowHeight / 2) + 150);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 3nd rect
-		CP_Font_DrawText("Credit", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the settings rect
-		CP_Font_DrawText("Settings", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-		//text in the 4nd rect
-		CP_Font_DrawText("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
-		CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
+		Draw_Button("Play", (float)(windowWidth / 2), (float)((windowHeight / 2) + 50));
+		Draw_Button("Tutorial", (float)(windowWidth / 2), (float)((windowHeight / 2) + 150));
+		Draw_Button("Credit", (float)(windowWidth / 2) - 180, (float)((windowHeight / 2) + 250));
+		Draw_Button("Settings", (float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
+		Draw_Button("Exit", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 
 		//play button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 50, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
@@ -249,7 +221,7 @@ void Mainmenu_Update(void)
 		//Draw BG
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
+		CP_Image_Draw(Background, 0, 0, (float)(CP_Image_GetWidth(Background) * 2), (float)(CP_Image_GetHeight(Background) * 2), 255);
 
 		// SFX BUTTON
 		//
@@ -257,27 +229,13 @@ void Mainmenu_Update(void)
 		{
 
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Toggle_Button("SFX OFF", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the SFX
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the SFX
-			CP_Settings_TextSize(50.0f);
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
+			Draw_Button("SFX ON", (float)(windowWidth / 2.5), (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_SFX, 1.0f);
 		}
 
@@ -286,35 +244,18 @@ void Mainmenu_Update(void)
 		if (!MUSIC)
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(blue);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC OFF", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Toggle_Button("MUSIC OFF", (float)(float)(windowWidth / 2)+180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 0.0f);
 		}
 		else
 		{
 			CP_Graphics_ClearBackground(gray);
-			//rect in the music 
-			CP_Settings_Fill(red);
-			CP_Graphics_DrawRect((float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250, 200, 80);
-			//text in the music
-			CP_Settings_Fill(black);
-			CP_Settings_TextAlignment(CP_TEXT_ALIGN_H_CENTER, CP_TEXT_ALIGN_V_MIDDLE);
-			CP_Font_DrawText("MUSIC ON", (float)(windowWidth / 1.67), (float)(windowHeight / 2) + 250);
+			Draw_Button("MUSIC ON", (float)(float)(windowWidth / 2) + 180, (float)(windowHeight / 2) + 250);
 			CP_Sound_SetGroupVolume(CP_SOUND_GROUP_MUSIC, 1.0f);
 		}
 		// BACK BUTTON
-		//
+		Draw_Button("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		CP_Settings_Fill(red);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-		CP_Settings_TextSize(50.0f);
-		CP_Settings_Fill(black);
-		CP_Font_DrawText("back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
@@ -334,7 +275,7 @@ void Mainmenu_Update(void)
 	if (credits) {
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
-		CP_Image_Draw(Background, 0, 0, CP_Image_GetWidth(Background) * 2, CP_Image_GetHeight(Background) * 2, 255);
+		CP_Image_Draw(Background, 0, 0, (float)CP_Image_GetWidth(Background) * 2, (float)CP_Image_GetHeight(Background) * 2, 255);
 		RollCredits();
 		// BACK button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
@@ -363,9 +304,9 @@ void Mainmenu_Update(void)
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Image_DrawSubImage(playerSS,
 		//RENDERED POS AND SIZE
-		player_xpos, windowHeight - 80, 160, 160,
+		player_xpos, (float)(windowHeight - 80), 160, 160,
 		// POS AND SIZE FROM SPRITESHEET
-		currentFrameP* spriteWidth, 0, (currentFrameP + 1)* spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+		(float)(currentFrameP * spriteWidth), 0, (float)((currentFrameP + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R	
 		255);
 	if (animationElapsedTimeP >= displayTime) {
 		currentFrameP = (currentFrameP + 1) % animTotalFramesP;
@@ -384,9 +325,9 @@ void Mainmenu_Update(void)
 
 	CP_Image_DrawSubImage(AssSS,
 		// RENDERED POS AND SIZE
-		ass_xpos, windowHeight - 80, 160, 160,
+		ass_xpos, (float)(windowHeight - 80), 160.f, 160.f,
 		// POS AND SIZE FROM SPRITESHEET
-		currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+		(float)(currentFrameE * spriteWidth), 0, (float)((currentFrameE + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R
 		255);
 	if (animationElapsedTimeE >= displayTime) {
 		currentFrameE = (currentFrameE + 1) % animTotalFramesE;
@@ -403,9 +344,9 @@ void Mainmenu_Update(void)
 		currentElapseTimeReturn += deltaTime;
 		CP_Image_DrawSubImage(playerSS,
 			//RENDERED POS AND SIZE
-			player_return_xpos, windowHeight - 80, 160, 160,
+			player_return_xpos, (float)(windowHeight - 80), 160.f, 160.f,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrameP * spriteWidth, 0, (currentFrameP + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R	
+			(float)(currentFrameP * spriteWidth), 0, (float)((currentFrameP + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R	
 			255);
 		if (animationElapsedTimeP >= displayTime) {
 			currentFrameP = (currentFrameP + 1) % animTotalFramesP;
@@ -416,9 +357,9 @@ void Mainmenu_Update(void)
 
 		CP_Image_DrawSubImage(AssSS,
 			// RENDERED POS AND SIZE
-			ass_return_xpos, windowHeight - 80, 160, 160,
+			ass_return_xpos, (float)(windowHeight - 80), 160, 160,
 			// POS AND SIZE FROM SPRITESHEET
-			currentFrameE * spriteWidth, 0, (currentFrameE + 1) * spriteWidth, SpriteHeight, //row1col1, row1col2 ... L to R
+			(float)(currentFrameE * spriteWidth), 0, (float)((currentFrameE + 1) * spriteWidth), SpriteHeight, //row1col1, row1col2 ... L to R
 			255);
 		if (animationElapsedTimeE >= displayTime) {
 			currentFrameE = (currentFrameE + 1) % animTotalFramesE;
@@ -430,11 +371,9 @@ void Mainmenu_Update(void)
 		//switch BOOL once secondrun reach end
 		if (player_return_xpos <= (float)-249 && !secondrun)
 		{
-			printf(" called\n");
 			secondrun = TRUE;
 		}
 	}
-	printf("player_xpos: %f", player_xpos);
 	if (firstrun == TRUE && secondrun == TRUE)
 	{
 		player_xpos = (float)-500;
