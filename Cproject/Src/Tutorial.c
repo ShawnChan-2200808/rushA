@@ -110,20 +110,23 @@ void Tutorial_Update(void)
 				else if (player.weapon == 0)
 				{
 					player.currentFrame = 2;
-					meleeVec(&player, 100.f);
-					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 75, player.weaponPos.y - 75, 150, 150, 255, mouseToplayerAngle(&player) - 70);
-					for (int i = 0; i < 2; i++)
+					// Get vector and spawn hit point
+					meleeVec(&player, 200.f);
+					// Draws the hitbox sprite
+					CP_Image_DrawAdvanced(hitBox, player.weaponPos.x - 80, player.weaponPos.y - 80, 200, 200, 255, mouseToplayerAngle(&player) - 70);
+					// Looping through to check which enemy gets hit
+					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150, 6);
+						damageEnemy(&quiz[i], &player, 200, 200, 6);
 					}
-					for (int i = 0; i < 2; i++)
+					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150, 8);
-						damageEnemy(&lab[i], &player, 150, 150, 8);
+						damageEnemy(&assignment[i], &player, 200, 200, 8);
+						damageEnemy(&lab[i], &player, 200, 200,8);
 					}
-					//if (randomiser==0 || randomiser == 4) {
+					damageEnemy(&boss, &player, 200, 200, 4);
+					// Play Melee attack sound
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
-					//}
 				}
 			}
 

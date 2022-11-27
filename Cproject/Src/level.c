@@ -172,14 +172,14 @@ void Level_Update(void)
 					// Looping through to check which enemy gets hit
 					for (int i = 0; i < 10; i++)
 					{
-						damageEnemy(&quiz[i], &player, 150, 150, 6);
+						damageEnemy(&quiz[i], &player, 220, 220, 6);
 					}
 					for (int i = 0; i < 8; i++)
 					{
-						damageEnemy(&assignment[i], &player, 150, 150, 8);
-						damageEnemy(&lab[i], &player, 150, 150,8);
+						damageEnemy(&assignment[i], &player, 220, 220, 8);
+						damageEnemy(&lab[i], &player, 220, 220,8);
 					}
-					damageEnemy(&boss, &player, 150, 150, 4);
+					damageEnemy(&boss, &player, 220, 220, 4);
 					// Play Melee attack sound
 					CP_Sound_PlayAdvanced(playerMeleeSFX, 0.4f, 1.0f, FALSE, CP_SOUND_GROUP_SFX);
 				}
