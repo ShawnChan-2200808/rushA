@@ -68,7 +68,7 @@ void Mainmenu_Init(void)
 	rateplayer = finalLerp / timeplayer;
 	rategamename = finalLerp / timegamename;
 
-	// Setting the window width and height
+	//Setting the window width and height
 	//windowWidth = 1920;
 	//windowHeight = 1080;
 
@@ -78,7 +78,7 @@ void Mainmenu_Init(void)
 	blue = CP_Color_Create(0, 0, 255, 255);
 
 	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 
 	CP_Sound_StopGroup(CP_SOUND_GROUP_MUSIC);
 	CP_Sound_StopGroup(CP_SOUND_GROUP_SFX);

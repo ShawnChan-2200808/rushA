@@ -26,7 +26,7 @@ void playerInit(struct Player* player) {
 	Down = CP_Vector_Set(0, 1);
 	Right = CP_Vector_Set(1, 0);
 	Left = CP_Vector_Set(-1, 0);
-	(*player).playerPos = CP_Vector_Set(1920 / 2, 1080 / 2);
+	(*player).playerPos = CP_Vector_Set(windowWidth / 2, windowHeight / 2);
 	(*player).speed = 500;
 	(*player).alive = 1;
 	(*player).GPA = 5.00f;

@@ -54,7 +54,7 @@ void Splash_Screen_Init(void)
 	CP_System_SetFrameRate(fps);
 
 	// Set the window when executed to the size of the splashscreen image
-	CP_System_SetWindowSize(windowWidth, windowHeight);
+	CP_System_SetWindowSize((int)windowWidth, (int)windowHeight);
 	
 }
 

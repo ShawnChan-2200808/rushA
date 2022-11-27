@@ -86,14 +86,14 @@ void Level_Init(void)
 
 	// UI
 	//
-	popUpTextPos = CP_Vector_Set((CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 4));
-	endGameMessagePos = CP_Vector_Set((CP_System_GetWindowWidth() / 2), (CP_System_GetWindowHeight() / 2));
-	endGameInsructPos = CP_Vector_Set(((CP_System_GetWindowWidth() / 2)), (CP_System_GetWindowHeight() / 2 + 420));
-	weaponTxtPos = CP_Vector_Set((windowWidth / 1.2), (windowHeight / 1.07));
-	playerHealthbarPos = CP_Vector_Set((windowWidth / 10), (windowHeight / 1.08));
-	playerNamePos = CP_Vector_Set((windowWidth / 13), (windowHeight / 1.07));
-	bossHealthbarPos = CP_Vector_Set((windowWidth / 2.8), (windowHeight / 40));
-	bossNamePos = CP_Vector_Set((windowWidth / 3.5), (windowHeight / 30));
+	popUpTextPos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 4));
+	endGameMessagePos = CP_Vector_Set((float)(CP_System_GetWindowWidth() / 2), (float)(CP_System_GetWindowHeight() / 2));
+	endGameInsructPos = CP_Vector_Set((float)((CP_System_GetWindowWidth() / 2)), (float)((CP_System_GetWindowHeight() / 2 + 420)));
+	weaponTxtPos = CP_Vector_Set((windowWidth / 1.2f), (windowHeight / 1.07f));
+	playerHealthbarPos = CP_Vector_Set((windowWidth / 10), (windowHeight / 1.08f));
+	playerNamePos = CP_Vector_Set((windowWidth / 13), (windowHeight / 1.07f));
+	bossHealthbarPos = CP_Vector_Set((windowWidth / 2.8f), (windowHeight / 40));
+	bossNamePos = CP_Vector_Set((windowWidth / 3.5f), (windowHeight / 30));
 }
 
 void Level_Update(void)
@@ -150,7 +150,7 @@ void Level_Update(void)
 
 
 			// ATTACK - Shawn Melee & Justin Ranged
-			if (CP_Input_MouseClicked(MOUSE_BUTTON_LEFT)) {
+			if (CP_Input_MouseClicked()) {
 				
 				if (player.weapon == 1)
 				{
