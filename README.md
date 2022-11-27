@@ -49,9 +49,9 @@ CONTROLS:
 _____________________________________________________________________________
 |________MOVEMENT________|_________COMBAT__________|__________MISC__________|
 | Move up         : W    | Aim             : Mouse |Pause           : ESC   |
-| Move left       : A    | Attack          : LMB   |					    |
+| Move left       : A    | Attack          : LMB   |				      	    |
 | Move down       : S    | Switch Weapon   : Q	   |                        |
-| Move right      : D	 |	                	   |                        |
+| Move right      : D	 |	                	      |                        |
 -----------------------------------------------------------------------------	
 
 *Press O to toggle 1 Hit Kill*			   
