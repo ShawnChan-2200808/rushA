@@ -5,7 +5,7 @@
 @section    A
 @team		RushA
 @date       31/10/2022 (last updated)
-@brief      contains defininition of Enemy functions
+@brief      contains defininition of main menu functions
 *//*_________________________________________________________________________________*/
 
 #include "cprocessing.h"
@@ -28,7 +28,7 @@ static float deltaTime;
 int timeplayer, timegamename, lerpMax;
 float rateplayer, lerpplayer, lerpplayerReturn, finalLerp, player_xpos, ass_xpos, player_return_xpos, ass_return_xpos, gamename_ypos, lerpgamename, rategamename;
 
-int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE;
+int currentFrameP, currentFrameE, animTotalFramesP, animTotalFramesE, animationSpeedP, animationSpeedE, creditsPage;
 float SpriteHeight, displayTime;
 static float animationElapsedTimeE, animationElapsedTimeP;
 BOOL firstrun, secondrun, settings, SFX = TRUE, MUSIC = TRUE, credits;
@@ -56,6 +56,7 @@ void Mainmenu_Init(void)
 	timegamename = 2;
 	finalLerp = 1;
 	lerpMax = 1;
+	creditsPage = 1;
 
 	//BOOL
 	firstrun = FALSE;
@@ -276,28 +277,46 @@ void Mainmenu_Update(void)
 		CP_Graphics_ClearBackground(gray);
 		CP_Settings_ImageMode(CP_POSITION_CORNER);
 		CP_Image_Draw(Background, 0, 0, (float)CP_Image_GetWidth(Background) * 2, (float)CP_Image_GetHeight(Background) * 2, 255);
-		RollCredits();
 		// BACK button
 		if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) == 1)
 		{
 			if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 			{
 				credits = FALSE;
+				creditsPage = 1;
+			}
+			if (IsAreaClicked((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				creditsPage = 2;
+			}
+			if (IsAreaClicked((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				creditsPage = 1;
 			}
 		}
-		// BACK BUTTON
-		//
-		CP_Settings_Fill(red);
-		//draw the draw 4th rect in the middle of the anchor point //draw exit button
-		CP_Graphics_DrawRect((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80);
-		CP_Settings_TextSize(50.0f);
-		CP_Settings_Fill(black);
-		CP_Font_DrawText("Back", (float)(windowWidth / 2), (float)(windowHeight / 2) + 350);
+		if (creditsPage == 1)
+		{
+			RollCredits();
+			//next button light up
+			if (IsAreaClicked((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				IfMouseover((float)(windowWidth * 0.935), (float)(windowHeight / 2) + 350, 220, 80, "Next");
+
+			}
+		}
+		else
+		{
+			CreditsDigipen();
+			if (IsAreaClicked((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
+			{
+				IfMouseover((float)(windowWidth * 0.065), (float)(windowHeight / 2) + 350, 220, 80, "Previous");
+			}
+		}
+
 		//back button light up
 		if (IsAreaClicked((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 200, 80, CP_Input_GetMouseX(), CP_Input_GetMouseY()) == 1)
 		{
 			IfMouseover((float)(windowWidth / 2), (float)(windowHeight / 2) + 350, 220, 80, "Back");
-
 		}
 	}
 

@@ -10,7 +10,7 @@
 			spawning enemies and transitioning throught the weeks and to the end, 
 			rendering background, spawning of powerups, audio.
 
-	Justin: worked on 
+	Justin: worked on pause code, weapon switching, ranged attack logic and simulation, current weapon HUD, game over/reset function
 
    Wei Hao: worked on collision
 
